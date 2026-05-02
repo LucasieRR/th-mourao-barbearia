@@ -1,0 +1,60 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1777720165364,
+  "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
+  "techStack": {
+    "languages": [],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": null,
+    "lintCommand": null,
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "assets"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "assets": {
+      "path": "assets",
+      "purpose": "Static assets",
+      "fileCount": 10,
+      "lastAccessed": 1777720165321,
+      "keyFiles": [
+        "foto-area.jpg",
+        "foto-bar.jpg",
+        "foto-hero.jpg",
+        "foto-lavatorio.jpg",
+        "foto-lounge.jpg"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "index.html",
+      "accessCount": 8,
+      "lastAccessed": 1777720255942,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
