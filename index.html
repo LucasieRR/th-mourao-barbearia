@@ -125,8 +125,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: relative; z-index: 2;
   width: 100%; max-width: 1280px;
   margin: 0 auto; padding: 140px 28px 100px;
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 60px; align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 .hero-card {
   background: rgba(13,13,11,0.45);
@@ -796,6 +797,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <a href="#galeria">Espaço</a>
       <a href="#equipe">Equipe</a>
       <a href="#contato">Contato</a>
+      <a href="#">Blog</a>
+      <a href="#">Store</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-outline" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendar Agora</a>
@@ -809,18 +812,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-inner">
-    <div class="hero-card fade-up">
-      <div class="hero-eyebrow">• 2020 · BLUMENAU · SC</div>
-      <h1 class="hero-h1">A Primeira Barbearia nas Alturas</h1>
-      <p class="hero-sub">Baviera Office · Sala 1001 · Área Nobre</p>
-      <div class="hero-actions">
-        <a class="btn btn-verde" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendar Horário →</a>
-        <a class="hero-link" href="#galeria">Conheça o Espaço →</a>
-      </div>
-    </div>
     <div class="hero-right fade-up">
       <div class="hero-display">ONDE TRADIÇÃO<br />ENCONTRA ESTILO<br />MODERNO</div>
       <div class="hero-tagline">Thiago Mourão · Barbearia & Spa · Desde 2020</div>
+      <div class="hero-actions" style="margin-top:36px;justify-content:flex-end;">
+        <a class="btn btn-verde" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendar Horário →</a>
+      </div>
     </div>
   </div>
   <a href="#sobre" class="hero-scroll" aria-label="Rolar para baixo">
