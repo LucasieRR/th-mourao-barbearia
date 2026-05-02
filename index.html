@@ -422,23 +422,36 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   letter-spacing: 0.005em;
   line-height: 1.0;
 }
-.price-list { list-style: none; margin-bottom: 44px; }
-.price-list li {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 0;
+.price-table { width: 100%; border-collapse: collapse; margin-bottom: 44px; }
+.price-table thead tr {
+  border-bottom: 2px solid var(--verde);
+}
+.price-table thead th {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--verde);
+  font-weight: 600;
+  padding: 0 0 12px;
+}
+.price-table thead th:last-child { text-align: right; }
+.price-table tbody tr {
   border-bottom: 1px solid var(--creme3);
+}
+.price-table tbody tr:last-child { border-bottom: none; }
+.price-table tbody td {
+  padding: 15px 0;
   font-size: 14.5px;
   letter-spacing: 0.01em;
   color: var(--preto);
-  gap: 20px;
 }
-.price-list .price {
+.price-table tbody td.price {
+  text-align: right;
   font-family: var(--font-serif);
   font-weight: 700;
   color: var(--verde);
-  font-size: 16px;
-  flex-shrink: 0;
+  font-size: 15px;
+  white-space: nowrap;
 }
 
 .reviews-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
@@ -497,7 +510,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .equipe-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr) 1.1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 16px;
 }
 .barber-card {
@@ -558,13 +571,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .barber-icons svg { width: 14px; height: 14px; }
 
 .join-card {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  background: url('assets/foto-neon.jpg') center / cover no-repeat;
-  min-height: 380px;
-  display: flex; align-items: flex-end;
-  padding: 28px;
+  display: none;
 }
 .join-card::before {
   content: ''; position: absolute; inset: 0;
@@ -915,15 +922,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     <div class=”servicos-right fade-up”>
       <div class=”eyebrow”>NOSSOS SERVIÇOS</div>
       <h2 class=”servicos-h2”>NOSSOS PREÇOS</h2>
-      <ul class=”price-list”>
-        <li><span>Cabelo</span><span class=”price”>R$ 70</span></li>
-        <li><span>Cabelo + Barba</span><span class=”price”>R$ 135</span></li>
-        <li><span>Cabelo + Sobrancelha</span><span class=”price”>R$ 88</span></li>
-        <li><span>Cabelo + Barba + Sobrancelha</span><span class=”price”>R$ 153</span></li>
-        <li><span>Cabelo + Limpeza de Pele</span><span class=”price”>R$ 135</span></li>
-        <li><span>Cabelo + depilação (nariz + orelha)</span><span class=”price”>R$ 100</span></li>
-        <li><span>Cabelo + barba + sobrancelha + depilação</span><span class=”price”>R$ 183</span></li>
-      </ul>
+      <table class=”price-table”>
+        <thead>
+          <tr>
+            <th>Serviço</th>
+            <th>Preço</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Cabelo</td><td class=”price”>R$ 70</td></tr>
+          <tr><td>Cabelo + Barba</td><td class=”price”>R$ 135</td></tr>
+          <tr><td>Cabelo + Sobrancelha</td><td class=”price”>R$ 88</td></tr>
+          <tr><td>Cabelo + Barba + Sobrancelha</td><td class=”price”>R$ 153</td></tr>
+          <tr><td>Cabelo + Limpeza de Pele</td><td class=”price”>R$ 135</td></tr>
+          <tr><td>Cabelo + depilação (nariz + orelha)</td><td class=”price”>R$ 100</td></tr>
+          <tr><td>Cabelo + barba + sobrancelha + depilação</td><td class=”price”>R$ 183</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
