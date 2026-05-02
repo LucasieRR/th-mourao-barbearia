@@ -1,0 +1,44 @@
+{
+  "agents": [
+    {
+      "agent_id": "ae6751337c3a79630",
+      "agent_type": "document-specialist",
+      "started_at": "2026-05-01T01:31:10.205Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-01T01:32:02.759Z",
+      "duration_ms": 52554
+    },
+    {
+      "agent_id": "a5709afb9afd59636",
+      "agent_type": "document-specialist",
+      "started_at": "2026-05-01T01:52:14.191Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-01T01:58:50.556Z",
+      "duration_ms": 396365
+    },
+    {
+      "agent_id": "a8aeefc4a2b41506d",
+      "agent_type": "executor",
+      "started_at": "2026-05-01T02:15:03.834Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-01T02:27:29.982Z",
+      "duration_ms": 746148
+    },
+    {
+      "agent_id": "a9343189712928bbc",
+      "agent_type": "executor",
+      "started_at": "2026-05-01T21:04:41.467Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-01T21:09:20.464Z",
+      "duration_ms": 278997
+    }
+  ],
+  "total_spawned": 4,
+  "total_completed": 4,
+  "total_failed": 0,
+  "last_updated": "2026-05-01T21:11:19.501Z"
+}
