@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TH Mourão Barbearia & Spa · A Primeira Barbearia nas Alturas · Blumenau</title>
+<meta name="description" content="TH Mourão Barbearia & Spa — A primeira barbearia nas alturas. Baviera Office, Sala 1001 · Blumenau, SC. Cortes, barba, spa e experiência premium." />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --verde: #4A5A3A;
+  --verde-dark: #2e3a22;
+  --verde-light: #6b7d58;
+  --marrom: #5C3D2E;
+  --preto: #0D0D0B;
+  --escuro: #111110;
+  --escuro2: #1C1C1A;
+  --creme: #F5F0E8;
+  --creme2: #EDE8DF;
+  --creme3: #E4DDD3;
+  --bege: #C8BBA4;
+  --branco: #FDFBF7;
+  --cinza: #7A7A74;
+  --cinza-light: #AEAEA8;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--preto);
+  background: var(--branco);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+.container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--cinza);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.32,0.72,0,1);
+  cursor: pointer;
+}
+.btn-verde { background: var(--verde); color: #fff; }
+.btn-verde:hover { background: var(--verde-dark); transform: translateY(-2px); }
+.btn-dark { background: var(--preto); color: var(--creme); }
+.btn-dark:hover { background: var(--escuro2); transform: translateY(-2px); }
+.btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+.btn-outline:hover { background: #fff; color: var(--preto); }
+
+/* ========== NAVBAR ========== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 0;
+  transition: background 0.4s ease, padding 0.3s ease, backdrop-filter 0.4s ease;
+}
+.navbar.scrolled {
+  background: rgba(13,13,11,0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 0;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 12px; color: #fff; }
+.nav-brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.nav-brand-text { line-height: 1.1; }
+.nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: #fff; }
+.nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+.nav-links { display: flex; gap: 38px; }
+.nav-links a {
+  color: #fff; font-size: 13px; letter-spacing: 0.08em;
+  text-transform: uppercase; font-weight: 400;
+  transition: color 0.2s ease;
+}
+.nav-links a:hover { color: var(--bege); }
+.nav-cta { display: flex; align-items: center; gap: 18px; }
+.nav-cta .btn { padding: 12px 22px; }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+.hamburger span { width: 22px; height: 1.5px; background: #fff; transition: all 0.3s ease; }
+
+/* ========== HERO ========== */
+.hero {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  background: url('assets/foto-vista.jpg') center 35% / cover no-repeat;
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.6) 100%);
+}
+.hero-inner {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1280px;
+  margin: 0 auto; padding: 140px 28px 100px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 60px; align-items: center;
+}
+.hero-card {
+  background: rgba(13,13,11,0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 48px 42px;
+  border-radius: 4px;
+  max-width: 520px;
+}
+.hero-eyebrow {
+  font-size: 11px; letter-spacing: 0.32em;
+  color: rgba(245,240,232,0.75);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 28px;
+}
+.hero-h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(40px, 5.2vw, 68px);
+  color: var(--creme);
+  line-height: 1.05;
+  margin-bottom: 22px;
+  letter-spacing: -0.01em;
+}
+.hero-sub {
+  font-size: 14px;
+  color: rgba(245,240,232,0.78);
+  letter-spacing: 0.04em;
+  margin-bottom: 36px;
+}
+.hero-actions { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.hero-link {
+  font-size: 12px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--creme);
+  border-bottom: 1px solid rgba(245,240,232,0.4);
+  padding-bottom: 4px;
+  transition: border-color 0.3s ease;
+}
+.hero-link:hover { border-bottom-color: var(--creme); }
+
+.hero-right { text-align: right; }
+.hero-display {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6.5vw, 100px);
+  color: #fff;
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  margin-bottom: 28px;
+}
+.hero-tagline {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 16px;
+  color: rgba(245,240,232,0.75);
+  letter-spacing: 0.02em;
+}
+
+.hero-scroll {
+  position: absolute; bottom: 32px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  color: #fff;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 8px;
+  animation: bounce 2.4s ease-in-out infinite;
+}
+.hero-scroll-text { font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; opacity: 0.7; }
+.hero-scroll svg { width: 18px; height: 18px; }
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+/* ========== SOBRE ========== */
+.sobre {
+  background: var(--creme2);
+  padding: 110px 0;
+}
+.sobre-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+}
+.sobre-left .eyebrow { margin-bottom: 24px; }
+.sobre-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 3.8vw, 54px);
+  line-height: 1.0;
+  color: var(--preto);
+  margin-bottom: 28px;
+  letter-spacing: 0.005em;
+}
+.sobre-p {
+  font-size: 15px;
+  color: var(--cinza);
+  line-height: 1.75;
+  margin-bottom: 36px;
+  max-width: 380px;
+}
+.sobre-map {
+  width: 100%; height: 100%;
+  min-height: 380px;
+  border: 0;
+  border-radius: 4px;
+  filter: grayscale(0.2) contrast(1.05);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+}
+.sobre-cards { display: flex; flex-direction: column; gap: 0; }
+.info-card {
+  background: #fff;
+  padding: 26px 28px;
+  border-bottom: 1px solid var(--creme3);
+  display: flex; gap: 18px;
+  align-items: flex-start;
+}
+.info-card:last-child { border-bottom: none; border-radius: 0 0 4px 4px; }
+.info-card:first-child { border-radius: 4px 4px 0 0; }
+.info-icon {
+  font-size: 22px;
+  flex-shrink: 0;
+  width: 36px;
+  text-align: center;
+  filter: grayscale(0.2);
+}
+.info-label {
+  font-size: 10px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--verde);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.info-text {
+  font-size: 13.5px;
+  color: var(--preto);
+  line-height: 1.65;
+}
+.info-text a:hover { color: var(--verde); }
+
+/* ========== MURAL ========== */
+.mural {
+  position: relative;
+  height: 460px;
+  background: url('assets/foto-hero.jpg') center 55% / cover no-repeat;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.mural::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.35) 50%, rgba(0,0,0,0.15) 100%);
+}
+.mural-inner {
+  position: relative; z-index: 2;
+  width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 32px;
+}
+.mural-text { max-width: 540px; }
+.mural-eyebrow {
+  font-size: 11px; letter-spacing: 0.32em;
+  color: rgba(245,240,232,0.7);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.mural-words {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  color: var(--creme);
+  font-size: clamp(38px, 4.5vw, 62px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.mural-words span { display: block; }
+.mural-cta { flex-shrink: 0; }
+
+/* ========== GALERIA ========== */
+.galeria {
+  background: var(--escuro2);
+  padding: 110px 0 120px;
+  color: var(--creme);
+}
+.galeria-head { text-align: center; margin-bottom: 56px; }
+.galeria-head .eyebrow { color: var(--cinza-light); margin-bottom: 18px; }
+.galeria-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.4vw, 60px);
+  color: var(--creme);
+  letter-spacing: 0.01em;
+  line-height: 1.0;
+}
+.galeria-grid {
+  display: grid;
+  grid-template-areas: "a b c" "a d e";
+  grid-template-columns: 1.45fr 1fr 1fr;
+  grid-template-rows: 288px 288px;
+  gap: 6px;
+}
+.gi {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  cursor: pointer;
+}
+.gi img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.32,0.72,0,1);
+}
+.gi-1 { grid-area: a; }
+.gi-2 { grid-area: b; }
+.gi-3 { grid-area: c; }
+.gi-4 { grid-area: d; }
+.gi-5 { grid-area: e; }
+.gi-cap {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end;
+  padding: 24px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%);
+  opacity: 0; transition: opacity 0.4s ease;
+}
+.gi-cap span {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  color: #fff;
+  font-size: 22px;
+  letter-spacing: 0.005em;
+}
+.gi:hover img { transform: scale(1.05); }
+.gi:hover .gi-cap { opacity: 1; }
+
+/* ========== SERVIÇOS ========== */
+.servicos {
+  background: var(--creme2);
+  padding: 110px 0;
+}
+.servicos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.testimonial-card {
+  background: var(--verde);
+  color: var(--creme);
+  padding: 52px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 460px;
+}
+.testimonial-stars {
+  color: #f4c869;
+  font-size: 16px; letter-spacing: 4px;
+  margin-bottom: 28px;
+}
+.testimonial-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.35;
+  color: var(--creme);
+  margin-bottom: 28px;
+}
+.testimonial-foot { display: flex; justify-content: space-between; align-items: center; }
+.testimonial-name { font-size: 14px; letter-spacing: 0.16em; text-transform: uppercase; }
+.testimonial-arrows { display: flex; gap: 12px; }
+.testimonial-arrows button {
+  width: 36px; height: 36px;
+  border: 1px solid rgba(245,240,232,0.4);
+  border-radius: 50%;
+  color: var(--creme);
+  font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.25s ease;
+}
+.testimonial-arrows button:hover { background: var(--creme); color: var(--verde); border-color: var(--creme); }
+
+.servicos-right {}
+.servicos-right .eyebrow { color: var(--verde); margin-bottom: 16px; }
+.servicos-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 3.8vw, 52px);
+  color: var(--preto);
+  margin-bottom: 32px;
+  letter-spacing: 0.005em;
+  line-height: 1.0;
+}
+.price-list { list-style: none; margin-bottom: 44px; }
+.price-list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--creme3);
+  font-size: 14.5px;
+  letter-spacing: 0.01em;
+  color: var(--preto);
+  gap: 20px;
+}
+.price-list .price {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: var(--verde);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.reviews-head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.reviews-head svg { width: 22px; height: 22px; }
+.reviews-head-text { font-size: 14px; font-weight: 500; }
+.reviews-head-text strong { font-weight: 600; }
+.reviews-stars { color: #f4c869; letter-spacing: 2px; margin-left: 4px; }
+.review-cards { display: flex; flex-direction: column; gap: 12px; }
+.review-card {
+  background: #fff;
+  border: 1px solid var(--creme3);
+  padding: 18px 20px;
+  border-radius: 4px;
+  display: flex; gap: 14px;
+}
+.review-avatar {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.review-avatar.verde { background: var(--verde); }
+.review-avatar.marrom { background: var(--marrom); }
+.review-avatar.verde-dark { background: var(--verde-dark); }
+.review-body {}
+.review-name {
+  font-size: 13px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 4px;
+}
+.review-name .stars { color: #f4c869; font-size: 11px; letter-spacing: 1px; font-weight: 400; }
+.review-text { font-size: 13px; color: var(--cinza); line-height: 1.55; }
+
+/* ========== EQUIPE ========== */
+.equipe {
+  background: var(--branco);
+  padding: 120px 0;
+}
+.equipe-head { text-align: center; margin-bottom: 64px; }
+.equipe-head .eyebrow { color: var(--verde); margin-bottom: 18px; }
+.equipe-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.4vw, 60px);
+  color: var(--preto);
+  letter-spacing: 0.005em;
+  line-height: 1.0;
+  margin-bottom: 16px;
+}
+.equipe-sub {
+  font-size: 15px;
+  color: var(--cinza);
+  max-width: 540px; margin: 0 auto;
+}
+.equipe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr) 1.1fr;
+  gap: 16px;
+}
+.barber-card {
+  background: #1a1a1a;
+  border: 1px solid var(--creme3);
+  padding: 36px 28px;
+  border-radius: 4px;
+  display: flex; flex-direction: column;
+  gap: 18px;
+  color: var(--creme);
+  min-height: 380px;
+  position: relative;
+}
+.barber-avatar {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #fff;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.02em;
+}
+.barber-avatar.verde { background: var(--verde); }
+.barber-avatar.marrom { background: var(--marrom); }
+.barber-avatar.verde-dark { background: var(--verde-dark); }
+.barber-role {
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--cinza-light);
+}
+.barber-name {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.005em;
+}
+.barber-desc {
+  font-size: 13.5px;
+  color: rgba(245,240,232,0.6);
+  line-height: 1.65;
+  flex-grow: 1;
+}
+.barber-icons {
+  display: flex; gap: 12px;
+  margin-top: auto;
+}
+.barber-icons a {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(245,240,232,0.18);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--creme);
+  transition: all 0.25s ease;
+}
+.barber-icons a:hover { background: var(--verde); border-color: var(--verde); }
+.barber-icons svg { width: 14px; height: 14px; }
+
+.join-card {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  background: url('assets/foto-neon.jpg') center / cover no-repeat;
+  min-height: 380px;
+  display: flex; align-items: flex-end;
+  padding: 28px;
+}
+.join-card::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.85) 100%);
+}
+.join-bubble {
+  position: relative; z-index: 2;
+  background: rgba(255,255,255,0.96);
+  padding: 22px 24px;
+  border-radius: 4px;
+  width: 100%;
+  backdrop-filter: blur(6px);
+}
+.join-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 22px;
+  margin-bottom: 8px;
+  color: var(--preto);
+}
+.join-text {
+  font-size: 13px;
+  color: var(--cinza);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.join-bubble .btn { width: 100%; justify-content: center; }
+
+/* ========== NEON STRIP ========== */
+.neon-strip {
+  background: var(--preto);
+  padding: 110px 0;
+  text-align: center;
+  color: var(--creme);
+  position: relative;
+  overflow: hidden;
+}
+.neon-strip::before {
+  content: ''; position: absolute;
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 120%; height: 200%;
+  background: radial-gradient(ellipse at center, rgba(74,90,58,0.18) 0%, rgba(13,13,11,0) 60%);
+  pointer-events: none;
+}
+.neon-inner { position: relative; z-index: 2; }
+.neon-h2 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(40px, 5vw, 72px);
+  color: var(--creme);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 18px;
+}
+.neon-sub {
+  font-size: 13px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(245,240,232,0.6);
+  margin-bottom: 36px;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  background: var(--escuro);
+  color: rgba(245,240,232,0.78);
+  padding: 90px 0 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 56px;
+  margin-bottom: 64px;
+}
+.footer-brand-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.footer-brand-row img { width: 48px; height: 48px; border-radius: 50%; }
+.footer-brand-name { color: #fff; font-family: var(--font-serif); font-weight: 700; font-size: 18px; line-height: 1.1; }
+.footer-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(245,240,232,0.55); }
+.footer-text {
+  font-size: 13.5px; line-height: 1.75;
+  margin-bottom: 18px;
+  color: rgba(245,240,232,0.6);
+}
+.footer-social {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(245,240,232,0.15);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--creme);
+  transition: all 0.25s ease;
+}
+.footer-social:hover { background: var(--verde); border-color: var(--verde); }
+.footer-social svg { width: 14px; height: 14px; }
+
+.footer-col-title {
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--creme);
+  margin-bottom: 22px;
+  font-weight: 600;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a {
+  font-size: 14px;
+  color: rgba(245,240,232,0.65);
+  transition: color 0.2s ease;
+}
+.footer-col a:hover { color: var(--creme); }
+.footer-hours-row { font-size: 14px; margin-bottom: 8px; color: rgba(245,240,232,0.7); }
+.footer-hours-row span { color: var(--creme); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(245,240,232,0.08);
+  padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px;
+  color: rgba(245,240,232,0.4);
+  letter-spacing: 0.04em;
+}
+
+/* ========== FLOATING CTA ========== */
+.float-cta {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 90;
+  background: var(--verde);
+  color: #fff;
+  padding: 14px 22px 14px 18px;
+  border-radius: 60px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  box-shadow: 0 14px 36px rgba(74,90,58,0.36);
+  transition: all 0.3s cubic-bezier(0.32,0.72,0,1);
+}
+.float-cta:hover { background: var(--verde-dark); transform: translateY(-3px); }
+.float-cta-dot {
+  width: 9px; height: 9px;
+  background: #92e16f;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(146,225,111,0.25);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(146,225,111,0.25); }
+  50% { box-shadow: 0 0 0 8px rgba(146,225,111,0); }
+}
+
+/* ========== ANIMATIONS ========== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.32,0.72,0,1), transform 0.75s cubic-bezier(0.32,0.72,0,1);
+}
+.fade-up.visible { opacity: 1; transform: none; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; padding: 130px 28px 90px; }
+  .hero-right { text-align: left; }
+  .sobre-grid { grid-template-columns: 1fr; gap: 32px; }
+  .sobre-map { min-height: 320px; }
+  .galeria-grid {
+    grid-template-areas: "a a" "b c" "d e";
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 320px 240px 240px;
+  }
+  .servicos-grid { grid-template-columns: 1fr; gap: 40px; }
+  .equipe-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .mural-inner { flex-direction: column; align-items: flex-start; justify-content: center; gap: 28px; }
+  .mural { height: auto; padding: 80px 0; }
+}
+@media (max-width: 720px) {
+  .container { padding: 0 20px; }
+  .nav-links, .nav-cta .btn { display: none; }
+  .hamburger { display: flex; }
+  .hero-card { padding: 32px 26px; }
+  .hero-inner { padding: 120px 20px 80px; }
+  .sobre, .servicos, .equipe, .neon-strip { padding: 80px 0; }
+  .galeria { padding: 80px 0; }
+  .galeria-grid {
+    grid-template-areas: "a" "b" "c" "d" "e";
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 240px);
+  }
+  .equipe-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .testimonial-card { padding: 36px 28px; min-height: 360px; }
+  .float-cta { padding: 12px 18px; font-size: 11px; }
+  .nav-mobile-open .nav-links {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(13,13,11,0.98);
+    padding: 24px; gap: 18px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#hero" class="nav-brand">
+      <img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" />
+      <div class="nav-brand-text">
+        <div class="nav-brand-name">TH Mourão</div>
+        <div class="nav-brand-sub">Barbearia & Spa</div>
+      </div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#hero">Início</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#galeria">Espaço</a>
+      <a href="#equipe">Equipe</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-outline" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendar Agora</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-card fade-up">
+      <div class="hero-eyebrow">• 2020 · BLUMENAU · SC</div>
+      <h1 class="hero-h1">A Primeira Barbearia nas Alturas</h1>
+      <p class="hero-sub">Baviera Office · Sala 1001 · Área Nobre</p>
+      <div class="hero-actions">
+        <a class="btn btn-verde" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendar Horário →</a>
+        <a class="hero-link" href="#galeria">Conheça o Espaço →</a>
+      </div>
+    </div>
+    <div class="hero-right fade-up">
+      <div class="hero-display">ONDE TRADIÇÃO<br />ENCONTRA ESTILO<br />MODERNO</div>
+      <div class="hero-tagline">Thiago Mourão · Barbearia & Spa · Desde 2020</div>
+    </div>
+  </div>
+  <a href="#sobre" class="hero-scroll" aria-label="Rolar para baixo">
+    <span class="hero-scroll-text">Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+  </a>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="container sobre-grid">
+    <div class="sobre-left fade-up">
+      <div class="eyebrow">SERVIÇO ALÉM DA EXPECTATIVA</div>
+      <h2 class="sobre-h2">UMA EXPERIÊNCIA QUE VAI ALÉM DO CORTE</h2>
+      <p class="sobre-p">Mais que uma barbearia, um refúgio masculino no 10º andar do Baviera Office. Vista panorâmica de Blumenau, ambiente acolhedor, profissionais selecionados e cada detalhe pensado para entregar uma experiência que vai muito além do corte.</p>
+      <a class="btn btn-dark" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendar Agora →</a>
+    </div>
+    <div class="fade-up">
+      <iframe class="sobre-map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3598.2!2d-49.0661!3d-26.9197!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94df1e7c4a2b8d3f%3A0x5e6b5f4c2d1a9e8b!2sR.%20Nereu%20Ramos%2C%20165%20-%20Jardim%20Blumenau%2C%20Blumenau%20-%20SC%2C%2089010-400!5e0!3m2!1spt-BR!2sbr!4v1714500000000!5m2!1spt-BR!2sbr"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen title="TH Mourão Barbearia — R. Nereu Ramos, 165, Blumenau"></iframe>
+    </div>
+    <div class="sobre-cards fade-up" id="contato">
+      <div class="info-card">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Localização</div>
+          <div class="info-text">Baviera Office · Sala 1001<br/>R. Nereu Ramos, 165<br/>Jardim Blumenau — SC</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">Contato</div>
+          <div class="info-text"><a href="tel:+5547996786835">(47) 99678-6835</a><br/>Seg-Sex: 9h–20h · Sáb: 9h–18h</div>
+        </div>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">📷</div>
+        <div>
+          <div class="info-label">Instagram</div>
+          <div class="info-text"><a href="https://www.instagram.com/thmouraobarbearia/" target="_blank" rel="noopener">@thmouraobarbearia</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MURAL STRIP -->
+<section class="mural">
+  <div class="mural-inner">
+    <div class="mural-text fade-up">
+      <div class="mural-eyebrow">ARTE & IDENTIDADE</div>
+      <div class="mural-words">
+        <span>Legado.</span>
+        <span>Estilo.</span>
+        <span>Excelência.</span>
+      </div>
+    </div>
+    <div class="mural-cta fade-up">
+      <a class="btn btn-verde" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendar Agora →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <div class="container">
+    <div class="galeria-head fade-up">
+      <div class="eyebrow">Conheça o Espaço</div>
+      <h2 class="galeria-h2">UM AMBIENTE FEITO PARA VOCÊ</h2>
+    </div>
+    <div class="galeria-grid fade-up">
+      <div class="gi gi-1"><img src="assets/foto-vista.jpg" alt="Vista privilegiada de Blumenau" loading="eager" /><div class="gi-cap"><span>Vista Privilegiada</span></div></div>
+      <div class="gi gi-2"><img src="assets/foto-lounge.jpg" alt="Lounge premium" loading="eager" /><div class="gi-cap"><span>Lounge Premium</span></div></div>
+      <div class="gi gi-3"><img src="assets/foto-area.jpg" alt="Lounge e bar" loading="eager" /><div class="gi-cap"><span>Lounge & Bar</span></div></div>
+      <div class="gi gi-4"><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="eager" /><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
+      <div class="gi gi-5"><img src="assets/foto-lavatorio.jpg" alt="Spa e tratamento" loading="eager" /><div class="gi-cap"><span>Spa & Tratamento</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="servicos" id="servicos">
+  <div class="container servicos-grid">
+    <div class=”testimonial-card fade-up”>
+      <div>
+        <div class=”testimonial-stars”>★ ★ ★ ★ ★</div>
+        <p class=”testimonial-quote” id=”testimonialQuote”>”Melhor barbearia de Blumenau, sem dúvida. O ambiente é incrível, atendimento impecável e o corte ficou perfeito. Virei cliente fiel desde o primeiro dia.”</p>
+      </div>
+      <div class=”testimonial-foot”>
+        <div class=”testimonial-name” id=”testimonialName”>— João D.</div>
+        <div class=”testimonial-arrows”>
+          <button aria-label=”Anterior” id=”testimonialPrev”>←</button>
+          <button aria-label=”Próximo” id=”testimonialNext”>→</button>
+        </div>
+      </div>
+    </div>
+    <div class=”servicos-right fade-up”>
+      <div class=”eyebrow”>NOSSOS SERVIÇOS</div>
+      <h2 class=”servicos-h2”>NOSSOS PREÇOS</h2>
+      <ul class=”price-list”>
+        <li><span>Cabelo</span><span class=”price”>R$ 70</span></li>
+        <li><span>Cabelo + Barba</span><span class=”price”>R$ 135</span></li>
+        <li><span>Cabelo + Sobrancelha</span><span class=”price”>R$ 88</span></li>
+        <li><span>Cabelo + Barba + Sobrancelha</span><span class=”price”>R$ 153</span></li>
+        <li><span>Cabelo + Limpeza de Pele</span><span class=”price”>R$ 135</span></li>
+        <li><span>Cabelo + depilação (nariz + orelha)</span><span class=”price”>R$ 100</span></li>
+        <li><span>Cabelo + barba + sobrancelha + depilação</span><span class=”price”>R$ 183</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EQUIPE -->
+<section class="equipe" id="equipe">
+  <div class="container">
+    <div class="equipe-head fade-up">
+      <div class="eyebrow">NOSSA EQUIPE</div>
+      <h2 class="equipe-h2">CONHEÇA OS ESPECIALISTAS</h2>
+      <p class="equipe-sub">Profissionais selecionados, treinamento contínuo e paixão pela arte da barbearia. Cada barbeiro do TH Mourão entrega técnica, cuidado e estilo.</p>
+    </div>
+    <div class="equipe-grid fade-up">
+      <div class="barber-card">
+        <div class="barber-avatar verde">T</div>
+        <div class="barber-role">Fundador · Master Barber</div>
+        <div class="barber-name">Thiago</div>
+        <p class="barber-desc">Idealizador da TH Mourão. Mais de uma década refinando técnicas e elevando a experiência da barbearia em Blumenau a outro patamar.</p>
+        <div class="barber-icons">
+          <a href="https://www.instagram.com/thmouraobarbearia/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.91.33 4.14.63a5.92 5.92 0 0 0-2.13 1.39A5.92 5.92 0 0 0 .62 4.15c-.3.77-.5 1.64-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.14.56 2.91.31.79.74 1.46 1.39 2.13.67.65 1.34 1.08 2.13 1.39.77.3 1.64.5 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.14-.26 2.91-.56.79-.31 1.46-.74 2.13-1.39.65-.67 1.08-1.34 1.39-2.13.3-.77.5-1.64.55-2.91.06-1.27.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.05-1.27-.25-2.14-.55-2.91a5.92 5.92 0 0 0-1.39-2.13A5.92 5.92 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
+          </a>
+          <a href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener" aria-label="Agendar com Thiago">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="barber-card">
+        <div class="barber-avatar marrom">C</div>
+        <div class="barber-role">Barbeiro</div>
+        <div class="barber-name">Carioca</div>
+        <p class="barber-desc">Estilo, presença e mão precisa. Carioca traz técnica apurada e atendimento atencioso para cortes clássicos e contemporâneos.</p>
+        <div class="barber-icons">
+          <a href="https://www.instagram.com/thmouraobarbearia/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.91.33 4.14.63a5.92 5.92 0 0 0-2.13 1.39A5.92 5.92 0 0 0 .62 4.15c-.3.77-.5 1.64-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.14.56 2.91.31.79.74 1.46 1.39 2.13.67.65 1.34 1.08 2.13 1.39.77.3 1.64.5 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.14-.26 2.91-.56.79-.31 1.46-.74 2.13-1.39.65-.67 1.08-1.34 1.39-2.13.3-.77.5-1.64.55-2.91.06-1.27.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.05-1.27-.25-2.14-.55-2.91a5.92 5.92 0 0 0-1.39-2.13A5.92 5.92 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="barber-card">
+        <div class="barber-avatar verde-dark">MM</div>
+        <div class="barber-role">Barbeiro</div>
+        <div class="barber-name">Mauricio Miranda</div>
+        <p class="barber-desc">Cuidado nos detalhes e visão estética. Mauricio traz personalidade e técnica para entregar o corte ideal para cada cliente.</p>
+        <div class="barber-icons">
+          <a href="https://www.instagram.com/thmouraobarbearia/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.91.33 4.14.63a5.92 5.92 0 0 0-2.13 1.39A5.92 5.92 0 0 0 .62 4.15c-.3.77-.5 1.64-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.14.56 2.91.31.79.74 1.46 1.39 2.13.67.65 1.34 1.08 2.13 1.39.77.3 1.64.5 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.14-.26 2.91-.56.79-.31 1.46-.74 2.13-1.39.65-.67 1.08-1.34 1.39-2.13.3-.77.5-1.64.55-2.91.06-1.27.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.05-1.27-.25-2.14-.55-2.91a5.92 5.92 0 0 0-1.39-2.13A5.92 5.92 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="join-card">
+        <div class="join-bubble">
+          <div class="join-title">Faça parte do time</div>
+          <p class="join-text">É barbeiro e quer trabalhar em um ambiente premium em Blumenau? Envie seu currículo e venha somar com a TH Mourão.</p>
+          <a class="btn btn-verde" href="mailto:contato@thmouraobarbearia.com.br?subject=Oportunidade%20de%20trabalho">Enviar currículo →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEON STRIP -->
+<section class="neon-strip">
+  <div class="container neon-inner fade-up">
+    <h2 class="neon-h2">A Primeira Barbearia nas Alturas</h2>
+    <div class="neon-sub">Blumenau · SC · Desde 2020</div>
+    <a class="btn btn-verde" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Reservar Agora →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand-row">
+          <img src="assets/logo.png" alt="TH Mourão" />
+          <div>
+            <div class="footer-brand-name">TH Mourão</div>
+            <div class="footer-brand-sub">Barbearia & Spa</div>
+          </div>
+        </div>
+        <p class="footer-text">Baviera Office · Sala 1001<br/>R. Nereu Ramos, 165 — Jardim Blumenau, SC<br/>(47) 99678-6835</p>
+        <a class="footer-social" href="https://www.instagram.com/thmouraobarbearia/" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.91.33 4.14.63a5.92 5.92 0 0 0-2.13 1.39A5.92 5.92 0 0 0 .62 4.15c-.3.77-.5 1.64-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.14.56 2.91.31.79.74 1.46 1.39 2.13.67.65 1.34 1.08 2.13 1.39.77.3 1.64.5 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.14-.26 2.91-.56.79-.31 1.46-.74 2.13-1.39.65-.67 1.08-1.34 1.39-2.13.3-.77.5-1.64.55-2.91.06-1.27.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.05-1.27-.25-2.14-.55-2.91a5.92 5.92 0 0 0-1.39-2.13A5.92 5.92 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Menu</div>
+        <ul>
+          <li><a href="#hero">Início</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#galeria">Espaço</a></li>
+          <li><a href="#servicos">Serviços</a></li>
+          <li><a href="#equipe">Equipe</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul>
+          <li><a href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Agendamento</a></li>
+          <li><a href="https://www.instagram.com/thmouraobarbearia/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:contato@thmouraobarbearia.com.br">Oportunidades</a></li>
+          <li><a href="#contato">Localização & Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Horários</div>
+        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 9h00–20h00</div>
+        <div class="footer-hours-row"><span>Sábado</span> · 9h00–18h00</div>
+        <div class="footer-hours-row" style="margin-bottom:22px;"><span>Domingo</span> · Fechado</div>
+        <a class="btn btn-verde" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">Reserve Agora →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 TH Mourão Barbearia & Spa. Todos os direitos reservados.</div>
+      <div>@thmouraobarbearia</div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<a class="float-cta" href="https://thmouraobarbearia.ageenda.com.br" target="_blank" rel="noopener">
+  <span class="float-cta-dot"></span>
+  Agendar Agora
+</a>
+
+<script>
+(function() {
+  // Navbar scroll
+  var navbar = document.getElementById('navbar');
+  function onScroll() {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Mobile menu
+  var hamburger = document.getElementById('hamburger');
+  if (hamburger) {
+    hamburger.addEventListener('click', function() {
+      navbar.classList.toggle('nav-mobile-open');
+    });
+  }
+
+  // Fade-up reveal
+  var fades = document.querySelectorAll('.fade-up');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    fades.forEach(function(el) { io.observe(el); });
+  } else {
+    fades.forEach(function(el) { el.classList.add('visible'); });
+  }
+
+  // Fallback: ensure visibility after 1s
+  setTimeout(function() {
+    document.querySelectorAll('.fade-up').forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }, 1000);
+
+  // Testimonial carousel
+  var testimonials = [
+    { quote: '"Melhor barbearia de Blumenau, sem dúvida. O ambiente é incrível, atendimento impecável e o corte ficou perfeito. Virei cliente fiel desde o primeiro dia."', name: '— João D.' },
+    { quote: '"Lugar incrível, atendimento de primeira. O Thiago é excelente profissional e o ambiente é único em Blumenau. Recomendo demais!"', name: '— Rafael S.' },
+    { quote: '"Vista privilegiada, corte impecável. É realmente a primeira barbearia nas alturas — referência na cidade."', name: '— Marcos L.' },
+    { quote: '"Melhor experiência que já tive em barbearia. Ambiente sofisticado, música boa, corte perfeito. Virei cliente fixo."', name: '— Felipe A.' }
+  ];
+  var tIdx = 0;
+  var tQuote = document.getElementById('testimonialQuote');
+  var tName = document.getElementById('testimonialName');
+  function setTestimonial(i) {
+    if (!tQuote || !tName) return;
+    tQuote.style.opacity = '0';
+    tName.style.opacity = '0';
+    setTimeout(function() {
+      tQuote.textContent = testimonials[i].quote;
+      tName.textContent = testimonials[i].name;
+      tQuote.style.opacity = '1';
+      tName.style.opacity = '1';
+    }, 220);
+  }
+  var tPrev = document.getElementById('testimonialPrev');
+  var tNext = document.getElementById('testimonialNext');
+  if (tPrev) tPrev.addEventListener('click', function() {
+    tIdx = (tIdx - 1 + testimonials.length) % testimonials.length;
+    setTestimonial(tIdx);
+  });
+  if (tNext) tNext.addEventListener('click', function() {
+    tIdx = (tIdx + 1) % testimonials.length;
+    setTestimonial(tIdx);
+  });
+  if (tQuote) { tQuote.style.transition = 'opacity 0.22s ease'; }
+  if (tName) { tName.style.transition = 'opacity 0.22s ease'; }
+
+  // Smooth scroll for in-page anchors
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      var id = this.getAttribute('href');
+      if (id.length > 1) {
+        var target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          navbar.classList.remove('nav-mobile-open');
+        }
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
