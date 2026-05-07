@@ -1,11 +1,20 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1777720165364,
+  "lastScanned": 1778192351948,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
-    "languages": [],
+    "languages": [
+      {
+        "name": "JavaScript/TypeScript",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "package.json"
+        ]
+      }
+    ],
     "frameworks": [],
-    "packageManager": null,
+    "packageManager": "npm",
     "runtime": null
   },
   "build": {
@@ -38,7 +47,7 @@
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 10,
-      "lastAccessed": 1777720165321,
+      "lastAccessed": 1778192351829,
       "keyFiles": [
         "foto-area.jpg",
         "foto-bar.jpg",
@@ -51,8 +60,8 @@
   "hotPaths": [
     {
       "path": "index.html",
-      "accessCount": 15,
-      "lastAccessed": 1777722189760,
+      "accessCount": 20,
+      "lastAccessed": 1778192869769,
       "type": "file"
     }
   ],
