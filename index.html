@@ -539,6 +539,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .barber-avatar.verde { background: var(--verde); }
 .barber-avatar.marrom { background: var(--marrom); }
 .barber-avatar.verde-dark { background: var(--verde-dark); }
+.barber-photo {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top;
+}
 .barber-role {
   font-size: 11px;
   letter-spacing: 0.26em;
@@ -892,11 +898,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <h2 class="galeria-h2">UM AMBIENTE FEITO PARA VOCÊ</h2>
     </div>
     <div class="galeria-grid fade-up">
-      <div class="gi gi-1"><img src="assets/foto-vista.jpg" alt="Vista privilegiada de Blumenau" loading="eager" /><div class="gi-cap"><span>Vista Privilegiada</span></div></div>
-      <div class="gi gi-2"><img src="assets/foto-lounge.jpg" alt="Lounge premium" loading="eager" /><div class="gi-cap"><span>Lounge Premium</span></div></div>
-      <div class="gi gi-3"><img src="assets/foto-area.jpg" alt="Lounge e bar" loading="eager" /><div class="gi-cap"><span>Lounge & Bar</span></div></div>
-      <div class="gi gi-4"><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="eager" /><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
-      <div class="gi gi-5"><img src="assets/foto-lavatorio.jpg" alt="Spa e tratamento" loading="eager" /><div class="gi-cap"><span>Spa & Tratamento</span></div></div>
+      <div class="gi gi-1"><img src="assets/espaco-1.jpg" alt="Espaço TH Mourão" loading="eager" /><div class="gi-cap"><span>O Espaço</span></div></div>
+      <div class="gi gi-2"><img src="assets/espaco-2.jpg" alt="Ambiente TH Mourão" loading="eager" /><div class="gi-cap"><span>O Ambiente</span></div></div>
+      <div class="gi gi-3"><img src="assets/espaco-3.jpg" alt="Estrutura TH Mourão" loading="eager" /><div class="gi-cap"><span>A Estrutura</span></div></div>
     </div>
   </div>
 </section>
@@ -966,7 +970,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
 
       <div class="barber-card">
-        <div class="barber-avatar marrom">C</div>
+        <img src="assets/foto-carioca.jpg" alt="Carioca" class="barber-photo" />
         <div class="barber-role">Barbeiro</div>
         <div class="barber-name">Carioca</div>
         <p class="barber-desc">Estilo, presença e mão precisa. Carioca traz técnica apurada e atendimento atencioso para cortes clássicos e contemporâneos.</p>
@@ -978,7 +982,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
 
       <div class="barber-card">
-        <div class="barber-avatar verde-dark">MM</div>
+        <img src="assets/foto-miranda.jpg" alt="Mauricio Miranda" class="barber-photo" />
         <div class="barber-role">Barbeiro</div>
         <div class="barber-name">Mauricio Miranda</div>
         <p class="barber-desc">Cuidado nos detalhes e visão estética. Mauricio traz personalidade e técnica para entregar o corte ideal para cada cliente.</p>
