@@ -60,8 +60,20 @@
   "hotPaths": [
     {
       "path": "index.html",
-      "accessCount": 41,
-      "lastAccessed": 1778195812201,
+      "accessCount": 53,
+      "lastAccessed": 1778197233386,
+      "type": "file"
+    },
+    {
+      "path": "blog.html",
+      "accessCount": 4,
+      "lastAccessed": 1778197097703,
+      "type": "file"
+    },
+    {
+      "path": "blog-post.html",
+      "accessCount": 1,
+      "lastAccessed": 1778197223242,
       "type": "file"
     }
   ],

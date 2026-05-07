@@ -1,3 +1,10 @@
 {"t":0,"agent":"system","event":"skill_activated","skill_name":"daily","skill_source":"user"}
 {"t":0,"agent":"acd8032","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"a23b677","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"acd8032","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":78520}
+{"t":0,"agent":"a23b677","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":84955}
+{"t":0,"agent":"a147182","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a147182","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":34653}
+{"t":0,"agent":"ac683f4","agent_type":"Plan","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"ac683f4","agent_type":"Plan","event":"agent_stop","success":true,"duration_ms":184151}
+{"t":0,"agent":"a39c919","agent_type":"unknown","event":"agent_stop","success":true}

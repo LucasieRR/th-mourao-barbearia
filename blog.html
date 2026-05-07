@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | TH Mourão Barbearia & Spa</title>
+  <meta name="description" content="Dicas de barbearia, cuidados masculinos, tendências de grooming e estilo para o homem moderno. Blog da TH Mourão — Baviera Office, Blumenau." />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --verde: #4A5A3A;
+      --verde-dark: #2e3a22;
+      --verde-light: #6b7d58;
+      --marrom: #5C3D2E;
+      --preto: #0D0D0B;
+      --escuro: #111110;
+      --escuro2: #1C1C1A;
+      --creme: #F5F0E8;
+      --creme2: #EDE8DF;
+      --creme3: #E4DDD3;
+      --bege: #C8BBA4;
+      --branco: #FDFBF7;
+      --cinza: #7A7A74;
+      --cinza-light: #AEAEA8;
+      --dourado: #D4A017;
+      --dourado-dark: #a07c10;
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-sans: 'Inter', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-sans);
+      font-weight: 400;
+      color: var(--preto);
+      background: var(--branco);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    .container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+    /* ── Botões ── */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 28px; font-family: var(--font-sans);
+      font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+      font-weight: 500; border-radius: 2px;
+      transition: all 0.3s cubic-bezier(0.32,0.72,0,1); cursor: pointer;
+    }
+    .btn-verde { background: var(--verde); color: #fff; }
+    .btn-verde:hover { background: var(--verde-dark); transform: translateY(-2px); }
+    .btn-dark { background: var(--preto); color: var(--creme); }
+    .btn-dark:hover { background: var(--escuro2); transform: translateY(-2px); }
+    .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+    .btn-outline:hover { background: #fff; color: var(--preto); }
+
+    /* ── Navbar ── */
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100; padding: 16px 0;
+      transition: background 0.4s ease, padding 0.3s ease, backdrop-filter 0.4s ease;
+    }
+    .navbar.scrolled {
+      background: rgba(13,13,11,0.97);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 10px 0;
+    }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-brand { display: flex; align-items: center; gap: 12px; color: #fff; }
+    .nav-brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .nav-brand-text { line-height: 1.1; }
+    .nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: #fff; }
+    .nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+    .nav-links { display: flex; gap: 38px; }
+    .nav-links a {
+      color: rgba(255,255,255,0.75); font-size: 13px; letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 400;
+      transition: color 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--bege); }
+    .nav-links a.active { color: #fff; font-weight: 600; }
+    .nav-cta { display: flex; align-items: center; gap: 18px; }
+    .nav-cta .btn { padding: 12px 22px; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+    .hamburger span { width: 22px; height: 1.5px; background: #fff; transition: all 0.3s ease; }
+
+    /* ── Fade-up ── */
+    .fade-up {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .d100 { transition-delay: 100ms; }
+    .d200 { transition-delay: 200ms; }
+    .d300 { transition-delay: 300ms; }
+
+    /* ── Card lift ── */
+    .card-lift {
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+    .card-lift:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 28px 56px -16px rgba(0,0,0,0.15);
+    }
+
+    /* ── Skeleton ── */
+    .skeleton {
+      background: linear-gradient(90deg, var(--creme2) 25%, var(--creme3) 50%, var(--creme2) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ── Line clamp ── */
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ── Paginação ── */
+    .pagination-btn {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.875rem; font-weight: 600;
+      border: 1.5px solid rgba(74,90,58,0.25);
+      transition: all 0.2s; cursor: pointer;
+      background: transparent; color: var(--preto);
+      font-family: var(--font-sans);
+    }
+    .pagination-btn:hover { border-color: var(--dourado); color: var(--dourado); }
+    .pagination-btn.active { background: var(--verde); color: #fff; border-color: var(--verde); }
+    .pagination-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* ── Eyebrow ── */
+    .eyebrow {
+      font-family: var(--font-sans); font-size: 11px;
+      letter-spacing: 0.28em; text-transform: uppercase;
+      font-weight: 500; color: var(--cinza);
+    }
+
+    /* ── Hero ── */
+    .blog-hero {
+      padding: 140px 0 80px;
+      background: radial-gradient(ellipse 80% 60% at 60% 40%, rgba(74,90,58,0.07) 0%, transparent 70%);
+    }
+    .blog-hero-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .accent-bar {
+      width: 44px; height: 3px; background: var(--dourado);
+      border-radius: 99px; margin-top: 18px; margin-bottom: 24px;
+    }
+
+    /* ── Grid de posts ── */
+    .posts-section { padding-bottom: 112px; }
+    #posts-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    /* ── Card de post ── */
+    .post-card {
+      background: var(--creme); border-radius: 1.5rem;
+      overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+    .post-card-img-wrap { overflow: hidden; }
+    .post-card-img-wrap img {
+      width: 100%; height: 208px; object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.32,0.72,0,1);
+    }
+    .post-card:hover .post-card-img-wrap img { transform: scale(1.05); }
+    .post-card-img-placeholder {
+      width: 100%; height: 208px;
+      background: linear-gradient(135deg, rgba(74,90,58,0.1), rgba(212,160,23,0.07));
+      display: flex; align-items: center; justify-content: center;
+    }
+    .post-card-body { padding: 2rem; }
+    .post-cat-badge {
+      display: inline-block; font-size: 10px; font-weight: 700;
+      color: var(--verde); background: rgba(74,90,58,0.1);
+      border-radius: 99px; padding: 4px 12px;
+      margin-bottom: 14px; letter-spacing: 0.12em; text-transform: uppercase;
+    }
+    .post-card-title {
+      font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700;
+      margin-bottom: 10px; line-height: 1.3; color: var(--preto);
+    }
+    .post-card-title a { transition: color 0.2s; }
+    .post-card-title a:hover { color: var(--dourado); }
+    .post-card-excerpt {
+      color: var(--cinza); font-size: 14px; line-height: 1.65;
+      margin-bottom: 22px;
+    }
+    .post-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .post-card-date { font-size: 11px; color: var(--cinza-light); }
+    .post-card-link {
+      font-size: 13px; font-weight: 600; color: var(--dourado);
+      display: flex; align-items: center; gap: 6px; transition: color 0.2s;
+    }
+    .post-card-link:hover { color: var(--dourado-dark); }
+
+    /* ── Estados vazio/erro ── */
+    .state-box { text-align: center; padding: 80px 0; }
+    .state-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      background: var(--escuro);
+      color: rgba(245,240,232,0.55);
+      padding: 72px 0 40px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px; margin-bottom: 56px;
+    }
+    .footer-brand-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .footer-brand-row img { width: 48px; height: 48px; border-radius: 50%; }
+    .footer-brand-name { color: #fff; font-family: var(--font-serif); font-weight: 700; font-size: 18px; line-height: 1.1; }
+    .footer-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(245,240,232,0.55); }
+    .footer-text { font-size: 13px; line-height: 1.7; max-width: 260px; }
+    .footer-social {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(245,240,232,0.5); margin-top: 20px;
+      transition: all 0.2s ease;
+    }
+    .footer-social:hover { background: var(--verde); border-color: var(--verde); color: #fff; }
+    .footer-social svg { width: 14px; height: 14px; }
+    .footer-col-title {
+      font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase;
+      font-weight: 600; color: rgba(245,240,232,0.4);
+      margin-bottom: 20px;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 12px; }
+    .footer-col a { font-size: 14px; color: rgba(245,240,232,0.55); transition: color 0.2s; }
+    .footer-col a:hover { color: var(--creme); }
+    .footer-hours-row { font-size: 14px; margin-bottom: 8px; color: rgba(245,240,232,0.7); }
+    .footer-hours-row span { color: var(--creme); }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 28px; border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 12px;
+    }
+
+    /* ── Responsivo ── */
+    @media (max-width: 1024px) {
+      .blog-hero-grid { grid-template-columns: 1fr; }
+      .blog-hero-illustration { display: none; }
+      #posts-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #posts-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+      .nav-mobile-open .nav-links {
+        display: flex; flex-direction: column;
+        position: absolute; top: 100%; left: 0; right: 0;
+        background: rgba(13,13,11,0.98);
+        padding: 24px; gap: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" />
+      <div class="nav-brand-text">
+        <div class="nav-brand-name">TH Mourão</div>
+        <div class="nav-brand-sub">Barbearia & Spa</div>
+      </div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#hero">Início</a>
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#galeria">Espaço</a>
+      <a href="index.html#equipe">Equipe</a>
+      <a href="index.html#contato">Contato</a>
+      <a href="blog.html" class="active">Blog</a>
+      <a href="#">Store</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-outline" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendar Agora</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="blog-hero">
+  <div class="container">
+    <div class="blog-hero-grid">
+
+      <!-- Texto -->
+      <div>
+        <div class="fade-up eyebrow" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;color:var(--dourado);">
+          <span style="width:32px;height:1px;background:var(--dourado);display:inline-block;"></span>
+          Conteúdo & Estilo
+        </div>
+        <h1 class="fade-up d100" style="font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:900;line-height:1;color:var(--preto);margin-bottom:8px;">
+          Blog TH Mourão
+        </h1>
+        <div class="fade-up d100 accent-bar"></div>
+        <p class="fade-up d200" style="font-size:1.05rem;color:var(--cinza);line-height:1.75;max-width:46ch;margin-bottom:32px;">
+          Dicas de barbearia, cuidados com a pele, tendências de grooming e tudo sobre o universo do homem moderno.
+        </p>
+        <div class="fade-up d300" style="display:flex;flex-wrap:wrap;gap:8px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(74,90,58,0.1);color:var(--verde);font-size:11px;font-weight:700;padding:6px 12px;border-radius:99px;letter-spacing:0.1em;text-transform:uppercase;">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--verde);display:inline-block;"></span>Cuidados Masculinos
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:var(--preto);color:var(--creme);font-size:11px;font-weight:700;padding:6px 12px;border-radius:99px;letter-spacing:0.1em;text-transform:uppercase;">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--dourado);display:inline-block;"></span>Barbearia
+          </span>
+          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(212,160,23,0.1);color:var(--dourado-dark);font-size:11px;font-weight:700;padding:6px 12px;border-radius:99px;letter-spacing:0.1em;text-transform:uppercase;">
+            <span style="width:6px;height:6px;border-radius:50%;background:var(--dourado);display:inline-block;"></span>Estilo & Grooming
+          </span>
+        </div>
+      </div>
+
+      <!-- Ilustração -->
+      <div class="fade-up d200 blog-hero-illustration" style="display:flex;justify-content:flex-end;">
+        <div style="position:relative;width:100%;max-width:360px;">
+          <div style="background:var(--creme);border-radius:2rem;padding:2rem;box-shadow:0 30px 60px -15px rgba(0,0,0,0.12);position:relative;z-index:1;">
+            <svg viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
+              <!-- Cadeira de barbearia -->
+              <rect x="100" y="168" width="120" height="12" rx="4" fill="#2e3a22"/>
+              <rect x="108" y="104" width="104" height="66" rx="10" fill="#4A5A3A"/>
+              <rect x="120" y="80" width="80" height="30" rx="10" fill="#6b7d58"/>
+              <rect x="100" y="132" width="16" height="36" rx="4" fill="#2e3a22"/>
+              <rect x="204" y="132" width="16" height="36" rx="4" fill="#2e3a22"/>
+              <!-- Tesoura -->
+              <path d="M202 56 L222 86 M212 56 L192 86" stroke="#D4A017" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="200" cy="54" r="6" stroke="#D4A017" stroke-width="2.5" fill="none"/>
+              <circle cx="214" cy="54" r="6" stroke="#D4A017" stroke-width="2.5" fill="none"/>
+              <!-- Pente -->
+              <rect x="80" y="68" width="4" height="30" rx="2" fill="#C8BBA4"/>
+              <rect x="88" y="73" width="2" height="20" rx="1" fill="#C8BBA4"/>
+              <rect x="93" y="73" width="2" height="20" rx="1" fill="#C8BBA4"/>
+              <rect x="98" y="73" width="2" height="20" rx="1" fill="#C8BBA4"/>
+              <!-- Chip experiência -->
+              <rect x="200" y="36" width="90" height="36" rx="12" fill="#D4A017"/>
+              <text x="245" y="49" text-anchor="middle" fill="white" font-size="8" font-weight="700" font-family="sans-serif">EXPERIÊNCIA</text>
+              <text x="245" y="62" text-anchor="middle" fill="white" font-size="11" font-weight="900" font-family="sans-serif">+6 anos</text>
+              <!-- Chip clientes -->
+              <rect x="30" y="42" width="90" height="36" rx="12" fill="#2e3a22"/>
+              <text x="75" y="55" text-anchor="middle" fill="#D4A017" font-size="8" font-weight="700" font-family="sans-serif">CLIENTES</text>
+              <text x="75" y="68" text-anchor="middle" fill="white" font-size="11" font-weight="900" font-family="sans-serif">+1.200</text>
+            </svg>
+          </div>
+          <div style="position:absolute;bottom:-16px;right:-16px;width:100%;height:100%;border-radius:2rem;background:rgba(74,90,58,0.07);z-index:0;"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GRID DE POSTS -->
+<section class="posts-section">
+  <div class="container">
+
+    <!-- Contador -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
+      <p id="posts-count" style="font-size:14px;color:var(--cinza);"></p>
+    </div>
+
+    <!-- Grid -->
+    <div id="posts-grid">
+      <!-- Skeletons iniciais -->
+      <div class="post-card">
+        <div class="skeleton" style="height:208px;width:100%;"></div>
+        <div class="post-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="skeleton" style="height:14px;width:80px;border-radius:99px;"></div>
+          <div class="skeleton" style="height:22px;width:100%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:67%;border-radius:8px;"></div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="skeleton" style="height:208px;width:100%;"></div>
+        <div class="post-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="skeleton" style="height:14px;width:96px;border-radius:99px;"></div>
+          <div class="skeleton" style="height:22px;width:100%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:50%;border-radius:8px;"></div>
+        </div>
+      </div>
+      <div class="post-card">
+        <div class="skeleton" style="height:208px;width:100%;"></div>
+        <div class="post-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="skeleton" style="height:14px;width:64px;border-radius:99px;"></div>
+          <div class="skeleton" style="height:22px;width:100%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:67%;border-radius:8px;"></div>
+        </div>
+      </div>
+      <div class="post-card" style="display:none;" id="sk4">
+        <div class="skeleton" style="height:208px;width:100%;"></div>
+        <div class="post-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="skeleton" style="height:14px;width:80px;border-radius:99px;"></div>
+          <div class="skeleton" style="height:22px;width:100%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
+        </div>
+      </div>
+      <div class="post-card" style="display:none;" id="sk5">
+        <div class="skeleton" style="height:208px;width:100%;"></div>
+        <div class="post-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="skeleton" style="height:14px;width:80px;border-radius:99px;"></div>
+          <div class="skeleton" style="height:22px;width:100%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
+        </div>
+      </div>
+      <div class="post-card" style="display:none;" id="sk6">
+        <div class="skeleton" style="height:208px;width:100%;"></div>
+        <div class="post-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="skeleton" style="height:14px;width:80px;border-radius:99px;"></div>
+          <div class="skeleton" style="height:22px;width:100%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado de erro -->
+    <div id="error-state" style="display:none;" class="state-box">
+      <div class="state-icon" style="background:rgba(74,90,58,0.08);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="#4A5A3A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 style="font-family:var(--font-serif);font-size:1.25rem;font-weight:700;margin-bottom:8px;">Não foi possível carregar os posts</h3>
+      <p style="color:var(--cinza);margin-bottom:32px;">Verifique sua conexão e tente novamente.</p>
+      <button onclick="loadPage(currentPage)" class="btn btn-dark">Tentar novamente</button>
+    </div>
+
+    <!-- Estado vazio -->
+    <div id="empty-state" style="display:none;" class="state-box">
+      <div class="state-icon" style="background:var(--creme2);">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
+          <path d="M9 12h6m-3-3v6M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z" stroke="#AEAEA8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h3 style="font-family:var(--font-serif);font-size:1.25rem;font-weight:700;margin-bottom:8px;">Nenhum post encontrado</h3>
+      <p style="color:var(--cinza);">Em breve publicaremos novos conteúdos.</p>
+    </div>
+
+    <!-- Paginação -->
+    <div id="pagination" style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:64px;"></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand-row">
+          <img src="assets/logo.png" alt="TH Mourão" />
+          <div>
+            <div class="footer-brand-name">TH Mourão</div>
+            <div class="footer-brand-sub">Barbearia & Spa</div>
+          </div>
+        </div>
+        <p class="footer-text">Baviera Office · Sala 1001<br/>R. Nereu Ramos, 165 — Jardim Blumenau, SC<br/>(47) 99678-6835</p>
+        <a class="footer-social" href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Menu</div>
+        <ul>
+          <li><a href="index.html#hero">Início</a></li>
+          <li><a href="index.html#sobre">Sobre</a></li>
+          <li><a href="index.html#galeria">Espaço</a></li>
+          <li><a href="index.html#servicos">Serviços</a></li>
+          <li><a href="index.html#equipe">Equipe</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul>
+          <li><a href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendamento</a></li>
+          <li><a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="mailto:contato@thmouraobarbearia.com.br">Oportunidades</a></li>
+          <li><a href="index.html#contato">Localização & Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Horários</div>
+        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 9h00–20h00</div>
+        <div class="footer-hours-row"><span>Sábado</span> · 9h00–18h00</div>
+        <div class="footer-hours-row" style="margin-bottom:22px;"><span>Domingo</span> · Fechado</div>
+        <a class="btn btn-verde" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Reserve Agora →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 TH Mourão Barbearia & Spa. Todos os direitos reservados.</div>
+      <div>@thmouraobarbearia</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const WP_SITE = 'thmourao4.wordpress.com';
+  const API = `https://public-api.wordpress.com/wp/v2/sites/${WP_SITE}/posts`;
+  const CACHE_TTL = 5 * 60 * 1000;
+  let currentPage = 1;
+  let totalPages = 1;
+
+  // ── Cache ──
+  function cacheGet(key) {
+    try {
+      const item = JSON.parse(sessionStorage.getItem(key));
+      if (!item) return null;
+      if (Date.now() - item.ts > CACHE_TTL) { sessionStorage.removeItem(key); return null; }
+      return item.data;
+    } catch { return null; }
+  }
+  function cacheSet(key, data) {
+    try { sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch {}
+  }
+
+  // ── Fetch ──
+  async function fetchPosts(page) {
+    const key = `th_posts_p${page}`;
+    const cached = cacheGet(key);
+    if (cached) return cached;
+
+    const res = await fetch(`${API}?per_page=9&page=${page}&_embed=1`);
+    if (!res.ok) throw new Error('API error');
+
+    const tp = parseInt(res.headers.get('X-WP-TotalPages')) || 1;
+    const total = parseInt(res.headers.get('X-WP-Total')) || 0;
+    const posts = await res.json();
+
+    const result = { posts, totalPages: tp, total };
+    cacheSet(key, result);
+    return result;
+  }
+
+  function extractPost(post) {
+    return {
+      id: post.id,
+      slug: post.slug,
+      title: post.title?.rendered || 'Sem título',
+      excerpt: post.excerpt?.rendered || '',
+      date: new Date(post.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }),
+      featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || null,
+      imageAlt: post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || '',
+      categories: post._embedded?.['wp:term']?.[0]?.map(c => c.name) || [],
+      link: `blog-post.html?slug=${post.slug}`,
+    };
+  }
+
+  // ── Render Card ──
+  function renderCard(post, index) {
+    const delay = index < 3 ? ` d${(index + 1) * 100}` : '';
+
+    const imgBlock = post.featuredImage
+      ? `<div class="post-card-img-wrap">
+           <a href="${post.link}">
+             <img src="${post.featuredImage}" alt="${post.imageAlt}" loading="lazy" />
+           </a>
+         </div>`
+      : `<a href="${post.link}" class="post-card-img-placeholder">
+           <svg width="40" height="40" viewBox="0 0 24 24" fill="none">
+             <rect x="3" y="3" width="18" height="18" rx="3" stroke="#4A5A3A" stroke-width="1.4"/>
+             <path d="M3 15l5-5 4 4 3-3 6 5" stroke="#4A5A3A" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+           </svg>
+         </a>`;
+
+    const HIDDEN_CATS = ['uncategorized', 'sem categoria', 'sem-categoria'];
+    const visibleCat = post.categories.find(c => !HIDDEN_CATS.includes(c.toLowerCase()));
+    const categoryBadge = visibleCat
+      ? `<span class="post-cat-badge">${visibleCat}</span>`
+      : '';
+
+    const excerptText = post.excerpt.replace(/<[^>]*>/g, '').trim();
+
+    return `
+      <article class="post-card card-lift fade-up${delay}">
+        ${imgBlock}
+        <div class="post-card-body">
+          ${categoryBadge}
+          <h2 class="post-card-title">
+            <a href="${post.link}">${post.title}</a>
+          </h2>
+          <p class="post-card-excerpt line-clamp-3">${excerptText}</p>
+          <div class="post-card-footer">
+            <time class="post-card-date">${post.date}</time>
+            <a href="${post.link}" class="post-card-link">
+              Ler mais
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  // ── Paginação ──
+  function renderPagination(current, total) {
+    const container = document.getElementById('pagination');
+    if (total <= 1) { container.innerHTML = ''; return; }
+
+    let html = '';
+    html += `<button class="pagination-btn" onclick="loadPage(${current - 1})" ${current === 1 ? 'disabled' : ''}>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L6 8l4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>`;
+
+    const start = Math.max(1, current - 2);
+    const end = Math.min(total, start + 4);
+    for (let p = start; p <= end; p++) {
+      html += `<button class="pagination-btn ${p === current ? 'active' : ''}" onclick="loadPage(${p})">${p}</button>`;
+    }
+
+    html += `<button class="pagination-btn" onclick="loadPage(${current + 1})" ${current === total ? 'disabled' : ''}>
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l4 5-4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>`;
+
+    container.innerHTML = html;
+  }
+
+  // ── Skeleton dinâmico ──
+  function skeletonHTML() {
+    return `
+      <div class="post-card">
+        <div class="skeleton" style="height:208px;width:100%;"></div>
+        <div class="post-card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <div class="skeleton" style="height:14px;width:80px;border-radius:99px;"></div>
+          <div class="skeleton" style="height:22px;width:100%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
+          <div class="skeleton" style="height:14px;width:67%;border-radius:8px;"></div>
+        </div>
+      </div>
+    `;
+  }
+
+  // ── Load Page ──
+  async function loadPage(page) {
+    currentPage = page;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    const grid = document.getElementById('posts-grid');
+    const errorState = document.getElementById('error-state');
+    const emptyState = document.getElementById('empty-state');
+    const countEl = document.getElementById('posts-count');
+
+    errorState.style.display = 'none';
+    emptyState.style.display = 'none';
+    grid.style.display = 'grid';
+
+    const cached = cacheGet(`th_posts_p${page}`);
+    if (!cached) {
+      grid.innerHTML = Array(6).fill(0).map(() => skeletonHTML()).join('');
+    }
+
+    try {
+      const { posts, totalPages: tp, total } = await fetchPosts(page);
+      totalPages = tp;
+
+      if (!posts || posts.length === 0) {
+        grid.style.display = 'none';
+        emptyState.style.display = 'block';
+        countEl.textContent = '';
+        document.getElementById('pagination').innerHTML = '';
+        return;
+      }
+
+      countEl.textContent = `${total} ${total === 1 ? 'publicação' : 'publicações'}`;
+      grid.innerHTML = posts.map((p, i) => renderCard(extractPost(p), i)).join('');
+      renderPagination(page, tp);
+
+      requestAnimationFrame(() => {
+        document.querySelectorAll('.fade-up').forEach(el => {
+          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+        });
+      });
+      setupScrollReveal();
+
+    } catch (err) {
+      console.error(err);
+      grid.style.display = 'none';
+      errorState.style.display = 'block';
+      countEl.textContent = '';
+    }
+  }
+
+  // ── Scroll Reveal ──
+  function setupScrollReveal() {
+    if (!('IntersectionObserver' in window)) {
+      document.querySelectorAll('.fade-up').forEach(el => el.classList.add('visible'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => io.observe(el));
+  }
+
+  // ── Navbar ──
+  (function() {
+    var navbar = document.getElementById('navbar');
+    function onScroll() { navbar.classList.toggle('scrolled', window.scrollY > 60); }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    var hamburger = document.getElementById('hamburger');
+    if (hamburger) {
+      hamburger.addEventListener('click', function() {
+        navbar.classList.toggle('nav-mobile-open');
+      });
+    }
+  })();
+
+  // Init
+  loadPage(1);
+  setupScrollReveal();
+</script>
+</body>
+</html>
