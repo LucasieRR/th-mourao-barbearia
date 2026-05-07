@@ -327,9 +327,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .galeria-grid {
   display: grid;
-  grid-template-areas: "a b c" "a d e" "f g h";
+  grid-template-areas: "a b c" "a d e";
   grid-template-columns: 1.45fr 1fr 1fr;
-  grid-template-rows: 288px 288px 288px;
+  grid-template-rows: 288px 288px;
   gap: 6px;
 }
 .gi {
@@ -548,26 +548,26 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   width: 100%; height: 100%;
   object-fit: cover;
   object-position: top;
+  transform: scale(1.05);
   z-index: 0;
   border-radius: 4px;
 }
 .barber-card:has(.barber-photo) {
   overflow: hidden;
+  justify-content: flex-end;
 }
 .barber-card:has(.barber-photo) > *:not(.barber-photo) {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  color: #fff;
 }
 .barber-card:has(.barber-photo)::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.18) 60%, rgba(0,0,0,0) 100%);
-  z-index: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 55%, rgba(0,0,0,0) 100%);
+  z-index: 1;
   border-radius: 4px;
-}
-.barber-card:has(.barber-photo) > *:not(.barber-photo) {
-  z-index: 2;
 }
 .barber-role {
   font-size: 11px;
@@ -924,12 +924,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     <div class="galeria-grid fade-up">
       <div class="gi gi-1"><img src="assets/foto-vista.jpg" alt="Vista privilegiada de Blumenau" loading="eager" /><div class="gi-cap"><span>Vista Privilegiada</span></div></div>
       <div class="gi gi-2"><img src="assets/foto-lounge.jpg" alt="Lounge premium" loading="eager" /><div class="gi-cap"><span>Lounge Premium</span></div></div>
-      <div class="gi gi-3"><img src="assets/foto-area.jpg" alt="Lounge e bar" loading="eager" /><div class="gi-cap"><span>Lounge & Bar</span></div></div>
-      <div class="gi gi-4"><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="eager" /><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
-      <div class="gi gi-5"><img src="assets/foto-lavatorio.jpg" alt="Spa e tratamento" loading="eager" /><div class="gi-cap"><span>Spa & Tratamento</span></div></div>
-      <div class="gi gi-6"><img src="assets/espaco-1.jpg" alt="Espaço TH Mourão" loading="eager" /><div class="gi-cap"><span>O Espaço</span></div></div>
-      <div class="gi gi-7"><img src="assets/espaco-2.jpg" alt="Ambiente TH Mourão" loading="eager" /><div class="gi-cap"><span>O Ambiente</span></div></div>
-      <div class="gi gi-8"><img src="assets/espaco-3.jpg" alt="Estrutura TH Mourão" loading="eager" /><div class="gi-cap"><span>A Estrutura</span></div></div>
+      <div class="gi gi-3"><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="eager" /><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
+      <div class="gi gi-4"><img src="assets/espaco-1.jpg" alt="Espaço TH Mourão" loading="eager" /><div class="gi-cap"><span>O Espaço</span></div></div>
+      <div class="gi gi-5"><img src="assets/espaco-3.jpg" alt="Estrutura TH Mourão" loading="eager" /><div class="gi-cap"><span>A Estrutura</span></div></div>
     </div>
   </div>
 </section>

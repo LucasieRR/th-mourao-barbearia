@@ -2,3 +2,4 @@
 {"t":0,"agent":"a4f3d91","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":21851}
 {"t":0,"agent":"af1cfeb","agent_type":"Explore","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"af1cfeb","agent_type":"Explore","event":"agent_stop","success":true,"duration_ms":18400}
+{"t":0,"agent":"system","event":"skill_activated","skill_name":"daily","skill_source":"user"}

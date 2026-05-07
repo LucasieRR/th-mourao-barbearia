@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-07T22:36:37.221Z",
+  "updatedAt": "2026-05-07T23:16:38.703Z",
   "missions": [
     {
       "id": "session:062f75ba-3c89-40df-89d5-6f497e47971d:none",
@@ -72,6 +72,64 @@
           "agent": "Explore:af1cfeb",
           "detail": "completed",
           "sourceKey": "session-stop:af1cfebc66adb828a"
+        }
+      ]
+    },
+    {
+      "id": "session:68f5949a-04aa-4e30-830e-9fa4485ac10c:none",
+      "source": "session",
+      "name": "none",
+      "objective": "Session mission",
+      "createdAt": "2026-05-07T23:16:32.787Z",
+      "updatedAt": "2026-05-07T23:16:38.703Z",
+      "status": "running",
+      "workerCount": 2,
+      "taskCounts": {
+        "total": 2,
+        "pending": 0,
+        "blocked": 0,
+        "inProgress": 2,
+        "completed": 0,
+        "failed": 0
+      },
+      "agents": [
+        {
+          "name": "Explore:acd8032",
+          "role": "Explore",
+          "ownership": "acd8032f33a87d8d5",
+          "status": "running",
+          "currentStep": null,
+          "latestUpdate": null,
+          "completedSummary": null,
+          "updatedAt": "2026-05-07T23:16:32.787Z"
+        },
+        {
+          "name": "Explore:a23b677",
+          "role": "Explore",
+          "ownership": "a23b6777b7eec2004",
+          "status": "running",
+          "currentStep": null,
+          "latestUpdate": null,
+          "completedSummary": null,
+          "updatedAt": "2026-05-07T23:16:38.703Z"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "session-start:acd8032f33a87d8d5:2026-05-07T23:16:32.787Z",
+          "at": "2026-05-07T23:16:32.787Z",
+          "kind": "update",
+          "agent": "Explore:acd8032",
+          "detail": "started Explore:acd8032",
+          "sourceKey": "session-start:acd8032f33a87d8d5"
+        },
+        {
+          "id": "session-start:a23b6777b7eec2004:2026-05-07T23:16:38.703Z",
+          "at": "2026-05-07T23:16:38.703Z",
+          "kind": "update",
+          "agent": "Explore:a23b677",
+          "detail": "started Explore:a23b677",
+          "sourceKey": "session-start:a23b6777b7eec2004"
         }
       ]
     }
