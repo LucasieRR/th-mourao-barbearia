@@ -554,21 +554,32 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .barber-card:has(.barber-photo) {
   overflow: hidden;
-  justify-content: flex-end;
+  padding: 0;
 }
-.barber-card:has(.barber-photo) > *:not(.barber-photo) {
-  position: relative;
-  z-index: 2;
-  color: #fff;
-}
-.barber-card:has(.barber-photo)::after {
-  content: '';
+.barber-caption {
   position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 55%, rgba(0,0,0,0) 100%);
-  z-index: 1;
-  border-radius: 4px;
+  bottom: 0; left: 0; right: 0;
+  z-index: 3;
+  background: rgba(13,13,11,0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+.barber-caption .barber-name {
+  font-size: 18px;
+  color: #fff;
+  margin: 0;
+}
+.barber-caption a {
+  color: rgba(255,255,255,0.75);
+  display: flex;
+  transition: color 0.2s;
+}
+.barber-caption a:hover { color: #fff; }
+.barber-caption svg { width: 20px; height: 20px; }
 .barber-role {
   font-size: 11px;
   letter-spacing: 0.26em;
@@ -997,10 +1008,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
       <div class="barber-card">
         <img src="assets/foto-carioca.jpg" alt="Carioca" class="barber-photo" />
-        <div class="barber-role">Barbeiro</div>
-        <div class="barber-name">Carioca</div>
-        <p class="barber-desc">Estilo, presença e mão precisa. Carioca traz técnica apurada e atendimento atencioso para cortes clássicos e contemporâneos.</p>
-        <div class="barber-icons">
+        <div class="barber-caption">
+          <div class="barber-name">Carioca</div>
           <a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.91.33 4.14.63a5.92 5.92 0 0 0-2.13 1.39A5.92 5.92 0 0 0 .62 4.15c-.3.77-.5 1.64-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.14.56 2.91.31.79.74 1.46 1.39 2.13.67.65 1.34 1.08 2.13 1.39.77.3 1.64.5 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.14-.26 2.91-.56.79-.31 1.46-.74 2.13-1.39.65-.67 1.08-1.34 1.39-2.13.3-.77.5-1.64.55-2.91.06-1.27.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.05-1.27-.25-2.14-.55-2.91a5.92 5.92 0 0 0-1.39-2.13A5.92 5.92 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
           </a>
@@ -1009,10 +1018,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
       <div class="barber-card">
         <img src="assets/foto-miranda.jpg" alt="Mauricio Miranda" class="barber-photo" />
-        <div class="barber-role">Barbeiro</div>
-        <div class="barber-name">Mauricio Miranda</div>
-        <p class="barber-desc">Cuidado nos detalhes e visão estética. Mauricio traz personalidade e técnica para entregar o corte ideal para cada cliente.</p>
-        <div class="barber-icons">
+        <div class="barber-caption">
+          <div class="barber-name">Mauricio Miranda</div>
           <a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.91.33 4.14.63a5.92 5.92 0 0 0-2.13 1.39A5.92 5.92 0 0 0 .62 4.15c-.3.77-.5 1.64-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.14.56 2.91.31.79.74 1.46 1.39 2.13.67.65 1.34 1.08 2.13 1.39.77.3 1.64.5 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.14-.26 2.91-.56.79-.31 1.46-.74 2.13-1.39.65-.67 1.08-1.34 1.39-2.13.3-.77.5-1.64.55-2.91.06-1.27.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.05-1.27-.25-2.14-.55-2.91a5.92 5.92 0 0 0-1.39-2.13A5.92 5.92 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
           </a>

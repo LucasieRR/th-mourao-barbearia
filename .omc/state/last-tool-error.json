@@ -1,7 +1,0 @@
-{
-  "tool_name": "Read",
-  "tool_input_preview": "{\"file_path\":\"/Users/lucasreis/ObsidianVault/Projects/BlogAI.md\"}",
-  "error": "File does not exist. Note: your current working directory is /Users/lucasreis/Desktop/TH - LP. Did you mean BlogAI.canvas?",
-  "timestamp": "2026-05-07T23:17:00.524Z",
-  "retry_count": 2
-}
