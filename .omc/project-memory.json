@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1778192351948,
+  "lastScanned": 1778836164780,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
     "languages": [
@@ -46,14 +46,14 @@
     "assets": {
       "path": "assets",
       "purpose": "Static assets",
-      "fileCount": 10,
-      "lastAccessed": 1778192351829,
+      "fileCount": 15,
+      "lastAccessed": 1778836164685,
       "keyFiles": [
+        "espaco-1.jpg",
+        "espaco-2.jpg",
+        "espaco-3.jpg",
         "foto-area.jpg",
-        "foto-bar.jpg",
-        "foto-hero.jpg",
-        "foto-lavatorio.jpg",
-        "foto-lounge.jpg"
+        "foto-bar.jpg"
       ]
     }
   },
@@ -66,8 +66,8 @@
     },
     {
       "path": "blog.html",
-      "accessCount": 4,
-      "lastAccessed": 1778197097703,
+      "accessCount": 6,
+      "lastAccessed": 1778836213649,
       "type": "file"
     },
     {

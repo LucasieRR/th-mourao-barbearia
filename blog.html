@@ -570,11 +570,17 @@
     return result;
   }
 
+  function decodeHTML(str) {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = str;
+    return txt.value;
+  }
+
   function extractPost(post) {
     return {
       id: post.id,
       slug: post.slug,
-      title: post.title?.rendered || 'Sem título',
+      title: decodeHTML(post.title?.rendered || 'Sem título'),
       excerpt: post.excerpt?.rendered || '',
       date: new Date(post.date).toLocaleDateString('pt-BR', { day: '2-digit', month: 'long', year: 'numeric' }),
       featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || null,
