@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1778836164780,
+  "lastScanned": 1778951100351,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
     "languages": [
@@ -47,7 +47,7 @@
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 15,
-      "lastAccessed": 1778836164685,
+      "lastAccessed": 1778951100132,
       "keyFiles": [
         "espaco-1.jpg",
         "espaco-2.jpg",
@@ -60,20 +60,20 @@
   "hotPaths": [
     {
       "path": "index.html",
-      "accessCount": 57,
-      "lastAccessed": 1778198421682,
+      "accessCount": 2,
+      "lastAccessed": 1778951139337,
       "type": "file"
     },
     {
       "path": "blog.html",
-      "accessCount": 6,
-      "lastAccessed": 1778836213649,
+      "accessCount": 2,
+      "lastAccessed": 1778951140408,
       "type": "file"
     },
     {
       "path": "blog-post.html",
-      "accessCount": 1,
-      "lastAccessed": 1778197223242,
+      "accessCount": 2,
+      "lastAccessed": 1778951141643,
       "type": "file"
     }
   ],
