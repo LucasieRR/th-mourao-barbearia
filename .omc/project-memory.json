@@ -60,20 +60,38 @@
   "hotPaths": [
     {
       "path": "index.html",
-      "accessCount": 6,
-      "lastAccessed": 1778968220512,
+      "accessCount": 12,
+      "lastAccessed": 1778976434368,
       "type": "file"
     },
     {
       "path": "blog.html",
-      "accessCount": 3,
-      "lastAccessed": 1778951602591,
+      "accessCount": 6,
+      "lastAccessed": 1778976445109,
       "type": "file"
     },
     {
       "path": "blog-post.html",
-      "accessCount": 3,
-      "lastAccessed": 1778951604202,
+      "accessCount": 6,
+      "lastAccessed": 1778976446266,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 1,
+      "lastAccessed": 1778975007441,
+      "type": "file"
+    },
+    {
+      "path": "vercel.json",
+      "accessCount": 1,
+      "lastAccessed": 1778975011347,
+      "type": "file"
+    },
+    {
+      "path": "store.html",
+      "accessCount": 1,
+      "lastAccessed": 1778976420812,
       "type": "file"
     }
   ],

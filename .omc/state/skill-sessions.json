@@ -1,16 +1,10 @@
 {
   "sessions": {
-    "062f75ba-3c89-40df-89d5-6f497e47971d": {
+    "4d553db4-1358-48d3-937a-0bf4a9ee8991": {
       "injectedPaths": [
         "/Users/lucasreis/.claude/skills/omc-learned/daily/SKILL.md"
       ],
-      "timestamp": 1778195351321
-    },
-    "68f5949a-04aa-4e30-830e-9fa4485ac10c": {
-      "injectedPaths": [
-        "/Users/lucasreis/.claude/skills/omc-learned/daily/SKILL.md"
-      ],
-      "timestamp": 1778195785144
+      "timestamp": 1778974982177
     }
   }
 }
