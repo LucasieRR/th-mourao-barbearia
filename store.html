@@ -129,7 +129,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ========== STORE HERO ========== */
 .store-hero {
   background: linear-gradient(135deg, var(--escuro) 0%, var(--verde-dark) 60%, var(--escuro2) 100%);
-  padding: 160px 0 90px;
+  padding: 100px 0 32px;
   position: relative;
   overflow: hidden;
 }
@@ -144,25 +144,25 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .store-hero-text { max-width: 560px; }
 .store-hero-eyebrow {
-  font-size: 11px; letter-spacing: 0.32em;
+  font-size: 10px; letter-spacing: 0.28em;
   color: var(--dourado);
   text-transform: uppercase; font-weight: 500;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
 }
 .store-hero-h1 {
   font-family: var(--font-display);
-  font-size: clamp(52px, 7vw, 96px);
+  font-size: clamp(32px, 4vw, 52px);
   color: var(--creme);
   line-height: 0.95;
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   letter-spacing: 0.01em;
 }
 .store-hero-h1 span { color: var(--dourado); }
 .store-hero-sub {
-  font-size: 15px;
+  font-size: 13px;
   color: rgba(245,240,232,0.72);
-  line-height: 1.7;
-  margin-bottom: 40px;
+  line-height: 1.6;
+  margin-bottom: 20px;
   max-width: 440px;
 }
 .store-hero-stats {
@@ -197,11 +197,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 /* ========== CATEGORY BAR ========== */
 .category-bar {
   background: var(--branco);
-  border-top: 1px solid var(--creme3);
   border-bottom: 1px solid var(--creme3);
   padding: 0;
-  position: sticky; top: 72px; z-index: 90;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  position: sticky; top: 0; z-index: 90;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 .category-bar-inner {
   display: flex; align-items: center; gap: 0;
@@ -366,7 +365,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .product-stars {
   display: flex; align-items: center; gap: 5px;
 }
-.stars { color: var(--dourado); font-size: 12px; letter-spacing: -1px; }
+.stars { display: inline-flex; align-items: center; gap: 1px; }
+.stars svg { display: block; }
 .stars-count { font-size: 11px; color: var(--cinza-light); }
 .product-pricing { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
 .product-price-original {
@@ -1115,9 +1115,12 @@ function formatPrice(price) {
 
 function renderStars(rating) {
   const full = Math.floor(rating);
-  const half = rating % 1 >= 0.5 ? 1 : 0;
-  let stars = '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(5 - full - half);
-  return stars;
+  const half = rating % 1 >= 0.3 ? 1 : 0;
+  const empty = 5 - full - half;
+  const svgFull = `<svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A017"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+  const svgHalf = `<svg width="13" height="13" viewBox="0 0 24 24"><defs><linearGradient id="hg"><stop offset="50%" stop-color="#D4A017"/><stop offset="50%" stop-color="#D4A017" stop-opacity="0.2"/></linearGradient></defs><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" fill="url(#hg)"/></svg>`;
+  const svgEmpty = `<svg width="13" height="13" viewBox="0 0 24 24" fill="#D4A017" opacity="0.2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`;
+  return svgFull.repeat(full) + (half ? svgHalf : '') + svgEmpty.repeat(empty);
 }
 
 function getBadgeLabel(badge) {
@@ -1234,9 +1237,17 @@ function observeFadeUps() {
 }
 
 // ========== NAVBAR SCROLL ==========
+function updateCategoryBarTop() {
+  const navH = document.getElementById('navbar').getBoundingClientRect().height;
+  document.getElementById('categoryBar').style.top = navH + 'px';
+}
 window.addEventListener('scroll', function() {
-  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 60);
+  const scrolled = window.scrollY > 60;
+  document.getElementById('navbar').classList.toggle('scrolled', scrolled);
+  updateCategoryBarTop();
 });
+window.addEventListener('resize', updateCategoryBarTop);
+updateCategoryBarTop();
 
 // ========== HAMBURGER ==========
 var hamburger = document.getElementById('hamburger');
