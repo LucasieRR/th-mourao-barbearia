@@ -59,6 +59,12 @@
   },
   "hotPaths": [
     {
+      "path": "store.html",
+      "accessCount": 16,
+      "lastAccessed": 1778977297350,
+      "type": "file"
+    },
+    {
       "path": "index.html",
       "accessCount": 12,
       "lastAccessed": 1778976434368,
@@ -86,12 +92,6 @@
       "path": "vercel.json",
       "accessCount": 1,
       "lastAccessed": 1778975011347,
-      "type": "file"
-    },
-    {
-      "path": "store.html",
-      "accessCount": 1,
-      "lastAccessed": 1778976420812,
       "type": "file"
     }
   ],

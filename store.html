@@ -196,10 +196,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ========== CATEGORY BAR ========== */
 .category-bar {
-  background: var(--creme2);
+  background: var(--branco);
+  border-top: 1px solid var(--creme3);
   border-bottom: 1px solid var(--creme3);
   padding: 0;
   position: sticky; top: 72px; z-index: 90;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
 .category-bar-inner {
   display: flex; align-items: center; gap: 0;
@@ -631,27 +633,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     <div class="store-hero-text fade-up">
       <div class="store-hero-eyebrow">Curadoria TH Mourão · Grooming Masculino</div>
       <h1 class="store-hero-h1">PRODUTOS<br/>DE <span>ELITE</span><br/>PARA O<br/>HOMEM</h1>
-      <p class="store-hero-sub">Selecionamos os melhores produtos de cuidado masculino disponíveis no Mercado Livre. Barba impecável, cabelo estilado, pele cuidada.</p>
+      <p class="store-hero-sub">Selecionamos os melhores produtos de cuidado masculino disponíveis no Mercado Livre. Tudo para sua pele, cabelo e barba em um só lugar.</p>
       <a href="#produtos" class="btn btn-outline">Explorar Produtos →</a>
-      <div class="store-hero-stats">
-        <div class="store-stat">
-          <div class="store-stat-num">6</div>
-          <div class="store-stat-label">Categorias</div>
-        </div>
-        <div class="store-stat">
-          <div class="store-stat-num">16%</div>
-          <div class="store-stat-label">Comissão ML</div>
-        </div>
-        <div class="store-stat">
-          <div class="store-stat-num">4.8★</div>
-          <div class="store-stat-label">Avaliação Média</div>
-        </div>
-      </div>
-    </div>
-    <div class="store-hero-badge fade-up">
-      <div class="store-hero-badge-icon">💈</div>
-      <div class="store-hero-badge-title">Curadoria<br/>Independente</div>
-      <div class="store-hero-badge-sub">Produtos verificados<br/>e avaliados</div>
     </div>
   </div>
 </section>
@@ -659,27 +642,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <!-- CATEGORY BAR -->
 <div class="category-bar" id="categoryBar">
   <div class="container category-bar-inner">
-    <button class="cat-btn cat-all active" data-filter="todos">
-      <span class="cat-icon">🛍️</span> Todos
-    </button>
-    <button class="cat-btn" data-filter="barba">
-      <span class="cat-icon">🪒</span> Barba
-    </button>
-    <button class="cat-btn" data-filter="cabelo">
-      <span class="cat-icon">💇</span> Cabelo
-    </button>
-    <button class="cat-btn" data-filter="skincare">
-      <span class="cat-icon">🧴</span> Skincare
-    </button>
-    <button class="cat-btn" data-filter="aparadores">
-      <span class="cat-icon">⚡</span> Aparadores
-    </button>
-    <button class="cat-btn" data-filter="higiene">
-      <span class="cat-icon">🧼</span> Higiene
-    </button>
-    <button class="cat-btn" data-filter="perfumaria">
-      <span class="cat-icon">🌿</span> Perfumaria
-    </button>
+    <button class="cat-btn cat-all active" data-filter="todos">Todos</button>
+    <button class="cat-btn" data-filter="barba">Barba</button>
+    <button class="cat-btn" data-filter="cabelo">Cabelo</button>
+    <button class="cat-btn" data-filter="skincare">Skincare</button>
+    <button class="cat-btn" data-filter="aparadores">Aparadores</button>
+    <button class="cat-btn" data-filter="higiene">Higiene</button>
+    <button class="cat-btn" data-filter="perfumaria">Perfumaria</button>
   </div>
 </div>
 
@@ -708,12 +677,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <div class="sidebar-title">Categorias</div>
           <ul class="sidebar-cat-list" id="sidebarCats">
             <li><button class="active" data-filter="todos">Todos os produtos <span class="cat-count">—</span></button></li>
-            <li><button data-filter="barba">🪒 Barba <span class="cat-count">—</span></button></li>
-            <li><button data-filter="cabelo">💇 Cabelo <span class="cat-count">—</span></button></li>
-            <li><button data-filter="skincare">🧴 Skincare <span class="cat-count">—</span></button></li>
-            <li><button data-filter="aparadores">⚡ Aparadores <span class="cat-count">—</span></button></li>
-            <li><button data-filter="higiene">🧼 Higiene <span class="cat-count">—</span></button></li>
-            <li><button data-filter="perfumaria">🌿 Perfumaria <span class="cat-count">—</span></button></li>
+            <li><button data-filter="barba">Barba <span class="cat-count">—</span></button></li>
+            <li><button data-filter="cabelo">Cabelo <span class="cat-count">—</span></button></li>
+            <li><button data-filter="skincare">Skincare <span class="cat-count">—</span></button></li>
+            <li><button data-filter="aparadores">Aparadores <span class="cat-count">—</span></button></li>
+            <li><button data-filter="higiene">Higiene <span class="cat-count">—</span></button></li>
+            <li><button data-filter="perfumaria">Perfumaria <span class="cat-count">—</span></button></li>
           </ul>
         </div>
 
@@ -766,17 +735,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   <div class="container">
     <div class="trust-grid">
       <div class="trust-item fade-up">
-        <div class="trust-icon">🎯</div>
-        <div class="trust-title">Curadoria Independente</div>
-        <div class="trust-text">Cada produto é selecionado manualmente pela equipe TH Mourão com base em performance, avaliações e custo-benefício.</div>
+        <div class="trust-title">Seleção Exclusiva</div>
+        <div class="trust-text">Cada produto é selecionado manualmente pela equipe TH Mourão para sua melhor experiência.</div>
       </div>
       <div class="trust-item fade-up">
-        <div class="trust-icon">⭐</div>
         <div class="trust-title">Avaliações Verificadas</div>
         <div class="trust-text">Apresentamos apenas produtos com avaliação mínima de 4.5 estrelas e centenas de reviews no Mercado Livre.</div>
       </div>
       <div class="trust-item fade-up">
-        <div class="trust-icon">🔒</div>
         <div class="trust-title">Compra Segura no ML</div>
         <div class="trust-text">Você compra diretamente no Mercado Livre com toda a proteção, garantia e facilidade de pagamento da plataforma.</div>
       </div>
@@ -788,8 +754,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <div class="disclosure">
   <div class="container">
     <p class="disclosure-text">
-      Este site contém <strong>links de afiliados</strong> do Mercado Livre. Ao clicar e comprar, você não paga nada a mais — nós recebemos uma pequena comissão que ajuda a manter este conteúdo gratuito.
-      A curadoria é sempre independente e os produtos são selecionados pelo mérito.
+      Este site contém <strong>links de afiliados</strong> do Mercado Livre.
     </p>
   </div>
 </div>
@@ -830,7 +795,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <li><a href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendamento</a></li>
           <li><a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
           <li><a href="blog.html">Blog</a></li>
-          <li><a href="mailto:contato@thmouraobarbearia.com.br">Oportunidades</a></li>
+
           <li><a href="index.html#contato">Localização & Contato</a></li>
         </ul>
       </div>
@@ -1235,7 +1200,7 @@ function buildCard(produto) {
   return `
     <div class="product-card fade-up">
       <div class="product-img-wrap">
-        <div class="product-placeholder">${produto.emoji}</div>
+        <div class="product-placeholder"></div>
         ${produto.badge ? `<span class="product-badge ${produto.badgeClass}">${getBadgeLabel(produto.badge)}</span>` : ''}
       </div>
       <div class="product-body">
