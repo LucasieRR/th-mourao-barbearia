@@ -229,10 +229,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: var(--branco);
 }
 .store-layout {
-  display: grid;
-  grid-template-columns: 240px 1fr;
-  gap: 40px;
-  align-items: start;
+  display: block;
 }
 
 /* ========== SIDEBAR ========== */
@@ -304,27 +301,27 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: 13px; color: var(--cinza);
 }
 .products-count strong { color: var(--preto); }
-.products-sort-mobile { display: none; }
 
 /* ========== PRODUCT GRID ========== */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
 }
 
 /* ========== PRODUCT CARD ========== */
 .product-card {
   background: #fff;
   border: 1px solid var(--creme3);
-  border-radius: 4px;
+  border-radius: 6px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   display: flex; flex-direction: column;
+  text-decoration: none; color: inherit;
 }
 .product-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.09);
 }
 .product-img-wrap {
   position: relative;
@@ -340,14 +337,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 }
 .product-card:hover .product-img-wrap img { transform: scale(1.04); }
 .product-placeholder {
-  font-size: 56px;
-  opacity: 0.35;
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg, var(--creme2) 0%, var(--creme3) 100%);
 }
 .product-badge {
-  position: absolute; top: 12px; left: 12px;
-  padding: 4px 10px;
-  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-  font-weight: 600; border-radius: 2px;
+  position: absolute; top: 10px; left: 10px;
+  padding: 3px 8px;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  font-weight: 600; border-radius: 3px;
 }
 .badge-sold { background: var(--verde); color: #fff; }
 .badge-offer { background: var(--dourado); color: #fff; }
@@ -355,60 +352,49 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .badge-new { background: var(--marrom); color: #fff; }
 
 .product-body {
-  padding: 18px 20px 20px;
-  flex: 1; display: flex; flex-direction: column;
-}
-.product-cat-tag {
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--verde); font-weight: 500; margin-bottom: 8px;
+  padding: 14px 16px 18px;
+  flex: 1; display: flex; flex-direction: column; gap: 6px;
 }
 .product-name {
-  font-family: var(--font-sans);
-  font-size: 14px; font-weight: 500;
-  color: var(--preto); line-height: 1.4;
-  margin-bottom: 10px;
+  font-size: 13px; font-weight: 400;
+  color: var(--preto); line-height: 1.45;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .product-stars {
-  display: flex; align-items: center; gap: 6px;
-  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 5px;
 }
-.stars { color: var(--dourado); font-size: 13px; letter-spacing: -1px; }
+.stars { color: var(--dourado); font-size: 12px; letter-spacing: -1px; }
 .stars-count { font-size: 11px; color: var(--cinza-light); }
-.product-pricing {
-  margin-bottom: 16px;
-}
-.product-price {
-  font-size: 20px; font-weight: 600; color: var(--verde-dark);
-  line-height: 1;
-}
+.product-pricing { display: flex; flex-direction: column; gap: 2px; margin-top: 4px; }
 .product-price-original {
   font-size: 12px; color: var(--cinza-light);
-  text-decoration: line-through; margin-top: 3px;
+  text-decoration: line-through;
+}
+.product-price-row { display: flex; align-items: center; gap: 8px; }
+.product-price {
+  font-size: 22px; font-weight: 600; color: var(--preto);
+  line-height: 1;
 }
 .product-discount {
-  display: inline-block;
-  background: #fff3cd; color: #856404;
-  font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-  padding: 2px 7px; border-radius: 2px; margin-top: 4px;
+  background: #fff3e0; color: #e65100;
+  font-size: 11px; font-weight: 700;
+  padding: 2px 6px; border-radius: 3px;
 }
-.product-cta {
-  margin-top: auto;
-  display: flex; align-items: center; gap: 10px;
-  padding: 13px 18px;
-  background: var(--verde);
-  color: #fff;
-  border-radius: 2px;
-  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
-  font-weight: 500;
-  transition: all 0.25s ease;
-  justify-content: center;
+.product-installment {
+  font-size: 12px; color: var(--cinza);
 }
-.product-cta:hover { background: var(--verde-dark); transform: translateY(-1px); }
-.product-cta svg { width: 14px; height: 14px; flex-shrink: 0; }
+.product-shipping {
+  font-size: 12px; color: #00a650; font-weight: 500; margin-top: 2px;
+}
+.shipping-full {
+  background: #00a650; color: #fff;
+  font-size: 10px; font-weight: 700;
+  padding: 1px 5px; border-radius: 2px;
+  letter-spacing: 0.05em;
+}
 
 /* ========== FEATURED SECTION ========== */
 .featured-section {
@@ -558,13 +544,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
-  .store-layout { grid-template-columns: 1fr; }
-  .store-sidebar { position: static; display: flex; gap: 16px; flex-wrap: wrap; }
-  .sidebar-block { flex: 1; min-width: 200px; margin-bottom: 0; }
   .featured-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-  .store-hero-badge { display: none; }
-  .products-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (max-width: 720px) {
@@ -578,23 +560,22 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
     backdrop-filter: blur(10px);
   }
   .navbar { position: fixed; }
-  .store-hero { padding: 120px 0 60px; }
+  .store-hero { padding: 90px 0 28px; }
+  .store-hero-h1 { font-size: 36px; margin-bottom: 12px; }
+  .store-hero-sub { font-size: 13px; margin-bottom: 20px; }
+  .store-hero-inner { gap: 0; }
   .store-hero-stats { gap: 20px; }
   .store-hero-inner { flex-direction: column; }
-  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .featured-grid { grid-template-columns: repeat(2, 1fr); }
   .trust-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; padding-bottom: 40px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
-  .sidebar-block { min-width: 100%; }
   .products-header { flex-direction: column; align-items: flex-start; gap: 12px; }
-  .products-sort-mobile { display: block; width: 100%; }
   .category-bar { top: 62px; }
 }
 
-@media (max-width: 400px) {
-  .products-grid { grid-template-columns: 1fr; }
-}
+
 </style>
 </head>
 <body>
@@ -616,7 +597,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <a href="index.html#equipe">Equipe</a>
       <a href="index.html#contato">Contato</a>
       <a href="blog.html">Blog</a>
-      <a href="store.html" class="active">Store</a>
+      <a href="store" class="active">Store</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-outline" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendar Agora</a>
@@ -631,7 +612,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <section class="store-hero">
   <div class="container store-hero-inner">
     <div class="store-hero-text fade-up">
-      <div class="store-hero-eyebrow">Curadoria TH Mourão · Grooming Masculino</div>
+      <div class="store-hero-eyebrow">Curadoria TH Mourão</div>
       <h1 class="store-hero-h1">PRODUTOS<br/>DE <span>ELITE</span><br/>PARA O<br/>HOMEM</h1>
       <p class="store-hero-sub">Selecionamos os melhores produtos de cuidado masculino disponíveis no Mercado Livre. Tudo para sua pele, cabelo e barba em um só lugar.</p>
       <a href="#produtos" class="btn btn-outline">Explorar Produtos →</a>
@@ -671,49 +652,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   <div class="container">
     <div class="store-layout">
 
-      <!-- SIDEBAR -->
-      <aside class="store-sidebar">
-        <div class="sidebar-block">
-          <div class="sidebar-title">Categorias</div>
-          <ul class="sidebar-cat-list" id="sidebarCats">
-            <li><button class="active" data-filter="todos">Todos os produtos <span class="cat-count">—</span></button></li>
-            <li><button data-filter="barba">Barba <span class="cat-count">—</span></button></li>
-            <li><button data-filter="cabelo">Cabelo <span class="cat-count">—</span></button></li>
-            <li><button data-filter="skincare">Skincare <span class="cat-count">—</span></button></li>
-            <li><button data-filter="aparadores">Aparadores <span class="cat-count">—</span></button></li>
-            <li><button data-filter="higiene">Higiene <span class="cat-count">—</span></button></li>
-            <li><button data-filter="perfumaria">Perfumaria <span class="cat-count">—</span></button></li>
-          </ul>
-        </div>
-
-        <div class="sidebar-block">
-          <div class="sidebar-title">Faixa de Preço</div>
-          <div class="price-range">
-            <div class="price-inputs">
-              <input type="number" class="price-input" id="priceMin" placeholder="R$ mín" min="0" />
-              <span class="price-sep">–</span>
-              <input type="number" class="price-input" id="priceMax" placeholder="R$ máx" min="0" />
-            </div>
-            <button class="price-apply" id="priceApply">Aplicar</button>
-          </div>
-        </div>
-
-        <div class="sidebar-block">
-          <div class="sidebar-title">Ordenar por</div>
-          <select class="sort-select" id="sortSelect">
-            <option value="featured">Mais Vendidos</option>
-            <option value="price-asc">Menor Preço</option>
-            <option value="price-desc">Maior Preço</option>
-            <option value="rating">Maior Avaliação</option>
-          </select>
-        </div>
-      </aside>
-
       <!-- PRODUCTS AREA -->
       <div class="products-area">
         <div class="products-header">
           <div class="products-count" id="productsCount">Carregando produtos...</div>
-          <select class="sort-select products-sort-mobile" id="sortSelectMobile">
+          <select class="sort-select" id="sortSelectMobile" style="width:auto;">
             <option value="featured">Mais Vendidos</option>
             <option value="price-asc">Menor Preço</option>
             <option value="price-desc">Maior Preço</option>
@@ -1163,8 +1106,6 @@ const produtos = [
 // ========== STATE ==========
 let activeFilter = 'todos';
 let activeSort = 'featured';
-let priceMin = null;
-let priceMax = null;
 let visibleCount = 9;
 
 // ========== HELPERS ==========
@@ -1197,30 +1138,30 @@ function catLabel(cat) {
 // ========== CARD BUILDER ==========
 function buildCard(produto) {
   const discount = getDiscount(produto.preco, produto.precoOriginal);
+  const installment = Math.ceil(produto.preco / 12);
   return `
-    <div class="product-card fade-up">
+    <a class="product-card fade-up" href="${produto.link}" target="_blank" rel="noopener noreferrer">
       <div class="product-img-wrap">
         <div class="product-placeholder"></div>
         ${produto.badge ? `<span class="product-badge ${produto.badgeClass}">${getBadgeLabel(produto.badge)}</span>` : ''}
       </div>
       <div class="product-body">
-        <div class="product-cat-tag">${catLabel(produto.categoria)}</div>
         <div class="product-name">${produto.nome}</div>
         <div class="product-stars">
           <span class="stars">${renderStars(produto.avaliacao)}</span>
           <span class="stars-count">(${produto.avaliacoes.toLocaleString('pt-BR')})</span>
         </div>
         <div class="product-pricing">
-          <div class="product-price">${formatPrice(produto.preco)}</div>
           ${produto.precoOriginal ? `<div class="product-price-original">${formatPrice(produto.precoOriginal)}</div>` : ''}
-          ${discount ? `<span class="product-discount">−${discount}% OFF</span>` : ''}
+          <div class="product-price-row">
+            <span class="product-price">${formatPrice(produto.preco)}</span>
+            ${discount ? `<span class="product-discount">${discount}% OFF</span>` : ''}
+          </div>
+          <div class="product-installment">em 12x R$ ${installment.toLocaleString('pt-BR', {minimumFractionDigits: 2})} sem juros</div>
+          ${produto.badge === 'Frete Grátis' ? `<div class="product-shipping">Frete grátis <span class="shipping-full">⚡ FULL</span></div>` : ''}
         </div>
-        <a class="product-cta" href="${produto.link}" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
-          Ver oferta no Mercado Livre
-        </a>
       </div>
-    </div>
+    </a>
   `;
 }
 
@@ -1231,9 +1172,6 @@ function getFiltered() {
   if (activeFilter !== 'todos') {
     result = result.filter(p => p.categoria === activeFilter);
   }
-
-  if (priceMin !== null) result = result.filter(p => p.preco >= priceMin);
-  if (priceMax !== null) result = result.filter(p => p.preco <= priceMax);
 
   if (activeSort === 'price-asc') result.sort((a, b) => a.preco - b.preco);
   else if (activeSort === 'price-desc') result.sort((a, b) => b.preco - a.preco);
@@ -1274,17 +1212,6 @@ function renderFeatured() {
   observeFadeUps();
 }
 
-// ========== UPDATE SIDEBAR COUNTS ==========
-function updateCounts() {
-  document.querySelectorAll('#sidebarCats button').forEach(btn => {
-    const filter = btn.dataset.filter;
-    let count;
-    if (filter === 'todos') count = produtos.length;
-    else count = produtos.filter(p => p.categoria === filter).length;
-    btn.querySelector('.cat-count').textContent = count;
-  });
-}
-
 // ========== SET FILTER ==========
 function setFilter(filter) {
   activeFilter = filter;
@@ -1292,11 +1219,6 @@ function setFilter(filter) {
 
   // Update category bar
   document.querySelectorAll('.cat-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.filter === filter);
-  });
-
-  // Update sidebar
-  document.querySelectorAll('#sidebarCats button').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.filter === filter);
   });
 
@@ -1328,29 +1250,13 @@ document.querySelectorAll('.cat-btn').forEach(btn => {
   btn.addEventListener('click', () => setFilter(btn.dataset.filter));
 });
 
-// ========== SIDEBAR CATEGORY EVENTS ==========
-document.querySelectorAll('#sidebarCats button').forEach(btn => {
-  btn.addEventListener('click', () => setFilter(btn.dataset.filter));
-});
-
 // ========== SORT EVENTS ==========
 function handleSort(val) {
   activeSort = val;
   visibleCount = 9;
   renderProducts();
 }
-document.getElementById('sortSelect').addEventListener('change', e => handleSort(e.target.value));
 document.getElementById('sortSelectMobile').addEventListener('change', e => handleSort(e.target.value));
-
-// ========== PRICE FILTER ==========
-document.getElementById('priceApply').addEventListener('click', () => {
-  const minVal = parseFloat(document.getElementById('priceMin').value);
-  const maxVal = parseFloat(document.getElementById('priceMax').value);
-  priceMin = isNaN(minVal) ? null : minVal;
-  priceMax = isNaN(maxVal) ? null : maxVal;
-  visibleCount = 9;
-  renderProducts();
-});
 
 // ========== LOAD MORE ==========
 document.getElementById('loadMoreBtn').addEventListener('click', () => {
@@ -1359,7 +1265,6 @@ document.getElementById('loadMoreBtn').addEventListener('click', () => {
 });
 
 // ========== INIT ==========
-updateCounts();
 renderFeatured();
 renderProducts();
 observeFadeUps();

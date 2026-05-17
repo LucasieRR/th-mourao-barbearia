@@ -5,3 +5,5 @@
 {"t":0,"agent":"a493e2c","agent_type":"document-specialist","event":"agent_stop","success":true,"duration_ms":234103}
 {"t":0,"agent":"system","event":"skill_invoked","skill_name":"daily"}
 {"t":0,"agent":"aae116c","agent_type":"unknown","event":"agent_stop","success":true}
+{"t":0,"agent":"a5343f5","agent_type":"executor","event":"agent_start","parent_mode":"none"}
+{"t":0,"agent":"a5343f5","agent_type":"executor","event":"agent_stop","success":true,"duration_ms":224987}
