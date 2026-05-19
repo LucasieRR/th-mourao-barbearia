@@ -698,7 +698,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .footer {
   background: var(--escuro);
   color: rgba(245,240,232,0.78);
-  padding: 90px 0 32px;
+  padding: 90px 0 0;
+}
+.footer > .container {
+  position: relative;
 }
 .footer-grid {
   display: grid;
@@ -746,9 +749,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .footer-hours-row span { color: var(--creme); }
 
 .footer-bottom {
+  position: relative;
+  overflow: hidden;
   border-top: 1px solid rgba(245,240,232,0.08);
-  padding-top: 28px;
+  padding: 28px 24px 32px;
+  min-height: 96px;
   display: flex; justify-content: space-between; align-items: center;
+  gap: 24px;
   font-size: 12px;
   color: rgba(245,240,232,0.4);
   letter-spacing: 0.04em;

@@ -1,0 +1,413 @@
+/*
+ * TH Mourão Barbearia & Spa — Design System
+ * Fonte única de verdade para identidade visual.
+ * Importe este arquivo em qualquer nova página antes de estilos locais.
+ *
+ * <link rel="stylesheet" href="assets/design-system.css" />
+ */
+
+/* ─────────────────────────────────────────
+   TOKENS
+───────────────────────────────────────── */
+:root {
+  /* Cores primárias */
+  --verde:       #4A5A3A;   /* ação principal, badges, ícones ativos */
+  --verde-dark:  #2e3a22;   /* hover de verde, fundos escuros verdes */
+  --verde-light: #6b7d58;   /* estados desabilitados, tints */
+  --marrom:      #5C3D2E;   /* avatares secundários */
+
+  /* Neutros escuros */
+  --preto:   #0D0D0B;   /* texto principal, fundos máximos */
+  --escuro:  #111110;   /* footer, seções escuras */
+  --escuro2: #1C1C1A;   /* cards escuros, navbar scrolled */
+
+  /* Neutros claros */
+  --branco:      #FDFBF7;   /* background padrão de página */
+  --creme:       #F5F0E8;   /* superfície primária clara, texto em fundo escuro */
+  --creme2:      #EDE8DF;   /* superfície secundária (seções alternadas) */
+  --creme3:      #E4DDD3;   /* bordas, divisores */
+  --bege:        #C8BBA4;   /* texto secundário em fundo escuro, detalhes */
+
+  /* Cinzas */
+  --cinza:       #7A7A74;   /* body text secundário */
+  --cinza-light: #AEAEA8;   /* placeholders, metadados */
+
+  /* ── SEM DOURADO ──
+     A identidade TH Mourão não usa dourado.
+     Não adicione --dourado em nenhuma nova página. */
+
+  /* Tipografia */
+  --font-serif:   'Playfair Display', Georgia, serif;   /* títulos editoriais, itálico */
+  --font-display: 'Bebas Neue', sans-serif;             /* display / hero */
+  --font-sans:    'Inter', system-ui, sans-serif;       /* corpo, UI */
+
+  /* Espaçamento de seção */
+  --section-pad: 110px;
+  --section-pad-md: 80px;
+
+  /* Raios */
+  --radius-sm: 2px;    /* botões, badges */
+  --radius-md: 4px;    /* cards, iframes */
+  --radius-full: 50%;  /* avatares, ícones circulares */
+
+  /* Sombras */
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.06);
+  --shadow-float: 0 14px 40px rgba(0,0,0,0.08);
+  --shadow-verde: 0 14px 36px rgba(74,90,58,0.36);
+
+  /* Transições */
+  --ease-out: cubic-bezier(0.32,0.72,0,1);
+  --ease-spring: cubic-bezier(0.16,1,0.3,1);
+  --duration-fast: 0.2s;
+  --duration-base: 0.3s;
+  --duration-slow: 0.75s;
+}
+
+/* ─────────────────────────────────────────
+   RESET BASE (igual ao da LP)
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--preto);
+  background: var(--branco);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* ─────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────── */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 28px;
+}
+
+/* ─────────────────────────────────────────
+   TIPOGRAFIA
+───────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--cinza);
+}
+
+.eyebrow-verde { color: var(--verde); }
+
+/* Display: Bebas Neue, sempre uppercase */
+.text-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.005em;
+  line-height: 1.0;
+}
+
+/* Serif: Playfair Display */
+.text-serif {
+  font-family: var(--font-serif);
+}
+
+/* ─────────────────────────────────────────
+   BOTÕES
+───────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-base) var(--ease-out);
+  cursor: pointer;
+}
+
+/* Verde — ação primária */
+.btn-verde { background: var(--verde); color: #fff; }
+.btn-verde:hover { background: var(--verde-dark); transform: translateY(-2px); }
+
+/* Escuro — ação secundária */
+.btn-dark { background: var(--preto); color: var(--creme); }
+.btn-dark:hover { background: var(--escuro2); transform: translateY(-2px); }
+
+/* Outline — sobre fundos escuros/imagens */
+.btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+.btn-outline:hover { background: #fff; color: var(--preto); }
+
+/* ─────────────────────────────────────────
+   NAVBAR (padrão do site)
+───────────────────────────────────────── */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 0;
+  transition: background 0.4s ease, padding 0.3s ease, backdrop-filter 0.4s ease;
+}
+.navbar.scrolled {
+  background: rgba(13,13,11,0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 0;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 12px; color: #fff; }
+.nav-brand img { width: 40px; height: 40px; border-radius: var(--radius-full); object-fit: cover; }
+.nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: #fff; }
+.nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+.nav-links { display: flex; gap: 38px; }
+.nav-links a {
+  color: rgba(255,255,255,0.75); font-size: 13px; letter-spacing: 0.08em;
+  text-transform: uppercase; font-weight: 400;
+  transition: color var(--duration-fast) ease;
+}
+.nav-links a:hover { color: var(--bege); }
+.nav-links a.active { color: #fff; font-weight: 600; }
+.nav-cta { display: flex; align-items: center; gap: 18px; }
+.nav-cta .btn { padding: 12px 22px; }
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+.hamburger span { width: 22px; height: 1.5px; background: #fff; transition: all 0.3s ease; }
+
+/* ─────────────────────────────────────────
+   CARDS
+───────────────────────────────────────── */
+
+/* Card padrão — superfície creme, borda sutil, raio editorial */
+.card {
+  background: var(--creme2);
+  border: 1px solid var(--creme3);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+/* Card escuro — equipe, galeria */
+.card-dark {
+  background: #1a1a1a;
+  border: 1px solid var(--creme3);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Hover lift */
+.card-lift {
+  transition: transform var(--duration-base) var(--ease-spring),
+              box-shadow var(--duration-base) var(--ease-spring);
+}
+.card-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 28px 56px -16px rgba(0,0,0,0.15);
+}
+
+/* ─────────────────────────────────────────
+   BADGES / TAGS
+───────────────────────────────────────── */
+
+/* Badge verde (categoria, label) */
+.badge-verde {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  color: var(--verde);
+  background: rgba(74,90,58,0.1);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* Badge escuro */
+.badge-dark {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  color: var(--creme);
+  background: var(--preto);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────
+   ACCENT BAR
+───────────────────────────────────────── */
+.accent-bar {
+  width: 44px; height: 3px;
+  background: var(--verde);   /* SEMPRE verde — nunca dourado */
+  border-radius: 99px;
+}
+
+/* ─────────────────────────────────────────
+   FOOTER (padrão do site)
+───────────────────────────────────────── */
+.footer {
+  background: var(--escuro);
+  color: rgba(245,240,232,0.78);
+  padding: 90px 0 32px;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 56px;
+  margin-bottom: 64px;
+}
+.footer-brand-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.footer-brand-row img { width: 48px; height: 48px; border-radius: var(--radius-full); }
+.footer-brand-name { color: #fff; font-family: var(--font-serif); font-weight: 700; font-size: 18px; line-height: 1.1; }
+.footer-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(245,240,232,0.55); }
+.footer-text { font-size: 13.5px; line-height: 1.75; margin-bottom: 18px; color: rgba(245,240,232,0.6); }
+.footer-social {
+  width: 38px; height: 38px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(245,240,232,0.15);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--creme);
+  transition: all var(--duration-fast) ease;
+}
+.footer-social:hover { background: var(--verde); border-color: var(--verde); }
+.footer-social svg { width: 14px; height: 14px; }
+.footer-col-title {
+  font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--creme); margin-bottom: 22px; font-weight: 600;
+}
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a { font-size: 14px; color: rgba(245,240,232,0.65); transition: color var(--duration-fast) ease; }
+.footer-col a:hover { color: var(--creme); }
+.footer-hours-row { font-size: 14px; margin-bottom: 8px; color: rgba(245,240,232,0.7); }
+.footer-hours-row span { color: var(--creme); }
+.footer-bottom {
+  border-top: 1px solid rgba(245,240,232,0.08);
+  padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: rgba(245,240,232,0.4); letter-spacing: 0.04em;
+}
+
+/* ─────────────────────────────────────────
+   ANIMAÇÕES
+───────────────────────────────────────── */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+.fade-up.visible { opacity: 1; transform: none; }
+.d100 { transition-delay: 100ms; }
+.d200 { transition-delay: 200ms; }
+.d300 { transition-delay: 300ms; }
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(90deg, var(--creme2) 25%, var(--creme3) 50%, var(--creme2) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─────────────────────────────────────────
+   FLOATING CTA
+───────────────────────────────────────── */
+.float-cta {
+  position: fixed;
+  bottom: 24px; right: 24px;
+  z-index: 90;
+  background: var(--verde);
+  color: #fff;
+  padding: 14px 22px 14px 18px;
+  border-radius: 60px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+  box-shadow: var(--shadow-verde);
+  transition: all var(--duration-base) var(--ease-out);
+}
+.float-cta:hover { background: var(--verde-dark); transform: translateY(-3px); }
+.float-cta-dot {
+  width: 9px; height: 9px;
+  background: #92e16f;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(146,225,111,0.25);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(146,225,111,0.25); }
+  50%       { box-shadow: 0 0 0 8px rgba(146,225,111,0); }
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVO
+───────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+@media (max-width: 720px) {
+  .container { padding: 0 20px; }
+  .nav-links, .nav-cta .btn { display: none; }
+  .hamburger { display: flex; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .float-cta { padding: 12px 18px; font-size: 11px; }
+  .nav-mobile-open .nav-links {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(13,13,11,0.98);
+    padding: 24px; gap: 18px;
+  }
+}
+
+/* ─────────────────────────────────────────
+   REGRAS DO DESIGN SYSTEM
+   (leia antes de criar qualquer nova página)
+─────────────────────────────────────────
+
+   CORES
+   • Verde (#4A5A3A) = ação primária, badges, hover, accent
+   • Preto (#0D0D0B) = ação secundária, texto, fundo máximo
+   • Creme (#F5F0E8) = texto em fundo escuro, superfície
+   • NUNCA use dourado (#D4A017) — não faz parte da identidade
+
+   TIPOGRAFIA
+   • Títulos hero/display → Bebas Neue (font-display), uppercase
+   • Títulos editoriais → Playfair Display (font-serif), peso 700/900
+   • Corpo / UI → Inter (font-sans)
+   • Eyebrow → Inter 11px, uppercase, letter-spacing 0.28em
+
+   BORDAS E RAIOS
+   • Botões e badges → border-radius: 2px
+   • Cards e iframes → border-radius: 4px
+   • Avatares e ícones circulares → border-radius: 50%
+   • NUNCA use border-radius >= 1rem em cards (rompe o visual editorial)
+
+   BOTÕES
+   • Ação primária verde  → .btn.btn-verde
+   • Ação secundária dark → .btn.btn-dark
+   • Sobre imagens/escuro → .btn.btn-outline
+   • Largura mínima de padding: 12px 22px (compacto) ou 16px 28px (padrão)
+
+   CARDS
+   • Fundo claro → background: var(--creme2), border: 1px solid var(--creme3)
+   • Fundo escuro → background: #1a1a1a, border: 1px solid var(--creme3)
+   • Hover lift opcional → adicionar classe .card-lift
+
+   SEÇÕES
+   • Alternância: branco → creme2 → escuro2 → branco
+   • Padding padrão: 110px 0 (desktop), 80px 0 (mobile)
+
+   ACCENT BAR
+   • Sempre verde: background: var(--verde)
+   • Dimensões: 44px × 3px
+
+───────────────────────────────────────── */

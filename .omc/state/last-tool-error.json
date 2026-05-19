@@ -1,7 +1,0 @@
-{
-  "tool_name": "WebFetch",
-  "tool_input_preview": "{\"url\":\"https://nilead.com/industry/men-grooming-product-website-design\",\"prompt\":\"Extract all design recommendations, layout patterns, UX best practices, visual elements, navigation structure, produc...",
-  "error": "Request failed with status code 403",
-  "timestamp": "2026-05-16T23:46:17.066Z",
-  "retry_count": 1
-}

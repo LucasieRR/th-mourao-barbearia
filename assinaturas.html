@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Planos de Assinatura · TH Mourão Barbearia & Spa</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --verde: #4A5A3A;
+  --verde-dark: #2e3a22;
+  --verde-light: #6b7d58;
+  --marrom: #5C3D2E;
+  --preto: #0D0D0B;
+  --escuro: #111110;
+  --escuro2: #1C1C1A;
+  --creme: #F5F0E8;
+  --creme2: #EDE8DF;
+  --creme3: #E4DDD3;
+  --bege: #C8BBA4;
+  --branco: #FDFBF7;
+  --cinza: #7A7A74;
+  --cinza-light: #AEAEA8;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  color: var(--preto);
+  background: var(--branco);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+.container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 28px; }
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--cinza);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 28px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border-radius: 2px;
+  transition: all 0.3s cubic-bezier(0.32,0.72,0,1);
+  cursor: pointer;
+}
+.btn-verde { background: var(--verde); color: #fff; }
+.btn-verde:hover { background: var(--verde-dark); transform: translateY(-2px); }
+.btn-dark { background: var(--preto); color: var(--creme); }
+.btn-dark:hover { background: var(--escuro2); transform: translateY(-2px); }
+.btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
+.btn-outline:hover { background: #fff; color: var(--preto); }
+.btn-full { width: 100%; justify-content: center; }
+
+/* ========== NAVBAR ========== */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 0;
+  transition: background 0.4s ease, padding 0.3s ease, backdrop-filter 0.4s ease;
+}
+.navbar.scrolled {
+  background: rgba(13,13,11,0.97);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 0;
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 12px; color: #fff; }
+.nav-brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+.nav-brand-text { line-height: 1.1; }
+.nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: #fff; }
+.nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+.nav-links { display: flex; gap: 38px; }
+.nav-links a {
+  color: #fff; font-size: 13px; letter-spacing: 0.08em;
+  text-transform: uppercase; font-weight: 400;
+  transition: color 0.2s ease;
+}
+.nav-links a:hover { color: var(--bege); }
+.nav-cta { display: flex; align-items: center; gap: 18px; }
+.nav-cta .btn { padding: 12px 22px; }
+.hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+.hamburger span { width: 22px; height: 1.5px; background: #fff; transition: all 0.3s ease; }
+
+/* ========== HERO ========== */
+.hero-assinaturas {
+  background: var(--escuro2);
+  padding: 160px 0 100px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-assinaturas::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(74,90,58,0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hero-as-inner {
+  position: relative; z-index: 2;
+  max-width: 640px;
+}
+.hero-as-eyebrow {
+  font-size: 11px; letter-spacing: 0.32em;
+  color: var(--verde-light);
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+.hero-as-h1 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: clamp(36px, 4.5vw, 60px);
+  color: var(--creme);
+  line-height: 1.08;
+  margin-bottom: 20px;
+}
+.hero-as-sub {
+  font-size: 15px;
+  color: rgba(245,240,232,0.65);
+  line-height: 1.75;
+  max-width: 480px;
+}
+.accent-bar {
+  width: 44px; height: 3px;
+  background: var(--verde);
+  border-radius: 99px;
+  margin-bottom: 28px;
+}
+
+/* ========== PLANOS ========== */
+.planos {
+  background: var(--creme2);
+  padding: 100px 0;
+}
+.planos-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+.planos-header .eyebrow { margin-bottom: 16px; }
+.planos-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 4vw, 56px);
+  color: var(--preto);
+  letter-spacing: 0.01em;
+  margin-bottom: 14px;
+}
+.planos-sub {
+  font-size: 15px;
+  color: var(--cinza);
+  max-width: 460px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+.planos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.plano-card {
+  background: #fff;
+  border: 1px solid var(--creme3);
+  border-radius: 4px;
+  padding: 44px 40px;
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.32,0.72,0,1), box-shadow 0.3s ease;
+}
+.plano-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 28px 56px -16px rgba(0,0,0,0.13);
+}
+.plano-card.destaque {
+  border-color: var(--verde);
+  border-width: 2px;
+}
+.plano-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 5px 12px;
+  border-radius: 2px;
+  margin-bottom: 28px;
+}
+.badge-verde { color: var(--verde); background: rgba(74,90,58,0.1); }
+.badge-dark { color: var(--creme); background: var(--preto); }
+.plano-nome {
+  font-family: var(--font-display);
+  font-size: 32px;
+  color: var(--preto);
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+}
+.plano-preco {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 28px;
+}
+.plano-moeda {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--cinza);
+  margin-top: 6px;
+}
+.plano-valor {
+  font-family: var(--font-display);
+  font-size: 64px;
+  color: var(--preto);
+  line-height: 1;
+}
+.plano-ciclo {
+  font-size: 13px;
+  color: var(--cinza);
+  letter-spacing: 0.06em;
+  margin-top: 8px;
+}
+.plano-divider {
+  height: 1px;
+  background: var(--creme3);
+  margin: 28px 0;
+}
+.plano-items {
+  list-style: none;
+  margin-bottom: 36px;
+}
+.plano-items li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--preto);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+.plano-items li:last-child { margin-bottom: 0; }
+.check-icon {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  background: rgba(74,90,58,0.12);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+.check-icon svg { width: 10px; height: 10px; }
+
+/* ========== FAQ ========== */
+.faq {
+  background: var(--branco);
+  padding: 100px 0;
+}
+.faq-inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+.faq-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.faq-header .eyebrow { margin-bottom: 16px; }
+.faq-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 3.5vw, 48px);
+  color: var(--preto);
+  letter-spacing: 0.01em;
+}
+.faq-item {
+  border-bottom: 1px solid var(--creme3);
+}
+.faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  padding: 22px 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--preto);
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+.faq-question:hover { color: var(--verde); }
+.faq-icon {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border: 1.5px solid var(--creme3);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.3s ease;
+}
+.faq-icon svg { width: 10px; height: 10px; transition: transform 0.3s ease; }
+.faq-item.open .faq-icon { background: var(--verde); border-color: var(--verde); }
+.faq-item.open .faq-icon svg { transform: rotate(45deg); fill: #fff; }
+.faq-answer {
+  font-size: 14px;
+  color: var(--cinza);
+  line-height: 1.75;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.32,0.72,0,1), padding 0.3s ease;
+}
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  padding-bottom: 22px;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  background: var(--escuro);
+  color: rgba(245,240,232,0.78);
+  padding: 90px 0 0;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1.2fr;
+  gap: 56px;
+  margin-bottom: 64px;
+}
+.footer-brand-row { display: flex; align-items: center; gap: 14px; margin-bottom: 22px; }
+.footer-brand-row img { width: 48px; height: 48px; border-radius: 50%; }
+.footer-brand-name { color: #fff; font-family: var(--font-serif); font-weight: 700; font-size: 18px; line-height: 1.1; }
+.footer-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(245,240,232,0.55); }
+.footer-text { font-size: 13.5px; line-height: 1.75; margin-bottom: 18px; color: rgba(245,240,232,0.6); }
+.footer-social {
+  width: 38px; height: 38px; border-radius: 50%;
+  border: 1px solid rgba(245,240,232,0.15);
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--creme); transition: all 0.25s ease;
+}
+.footer-social:hover { background: var(--verde); border-color: var(--verde); }
+.footer-social svg { width: 14px; height: 14px; }
+.footer-col-title { font-size: 11px; letter-spacing: 0.26em; text-transform: uppercase; color: var(--creme); margin-bottom: 22px; font-weight: 600; }
+.footer-col ul { list-style: none; }
+.footer-col li { margin-bottom: 12px; }
+.footer-col a { font-size: 14px; color: rgba(245,240,232,0.65); transition: color 0.2s ease; }
+.footer-col a:hover { color: var(--creme); }
+.footer-hours-row { font-size: 14px; margin-bottom: 8px; color: rgba(245,240,232,0.7); }
+.footer-hours-row span { color: var(--creme); }
+.footer-bottom {
+  position: relative; overflow: hidden;
+  border-top: 1px solid rgba(245,240,232,0.08);
+  padding: 28px 24px 32px; min-height: 96px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 24px; font-size: 12px;
+  color: rgba(245,240,232,0.4); letter-spacing: 0.04em;
+}
+
+/* ========== ANIMATIONS ========== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s cubic-bezier(0.32,0.72,0,1), transform 0.75s cubic-bezier(0.32,0.72,0,1);
+}
+.fade-up.visible { opacity: 1; transform: none; }
+.d100 { transition-delay: 0.1s; }
+.d200 { transition-delay: 0.2s; }
+.d300 { transition-delay: 0.3s; }
+
+/* ========== MODAL ========== */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(13,13,11,0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+.modal {
+  background: var(--branco);
+  border-radius: 4px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 48px 44px;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.32,0.72,0,1);
+}
+.modal-overlay.open .modal { transform: none; }
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--creme3);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cinza);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: none;
+  font-size: 18px;
+  line-height: 1;
+}
+.modal-close:hover { background: var(--creme2); color: var(--preto); }
+.modal-plano-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--verde);
+  background: rgba(74,90,58,0.08);
+  padding: 6px 14px;
+  border-radius: 2px;
+  margin-bottom: 20px;
+}
+.modal-h2 {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 26px;
+  color: var(--preto);
+  margin-bottom: 6px;
+}
+.modal-sub {
+  font-size: 13px;
+  color: var(--cinza);
+  margin-bottom: 32px;
+}
+.form-section-label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--cinza);
+  margin-bottom: 16px;
+  margin-top: 28px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--creme3);
+}
+.form-group { margin-bottom: 16px; }
+.form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cinza);
+  margin-bottom: 6px;
+}
+.form-group input {
+  width: 100%;
+  padding: 12px 14px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--preto);
+  background: #fff;
+  border: 1px solid var(--creme3);
+  border-radius: 2px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.form-group input:focus { border-color: var(--verde); }
+.form-group input.error { border-color: #c0392b; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form-optional {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--cinza-light);
+  margin-left: 6px;
+  font-style: italic;
+  text-transform: none;
+}
+.form-error-msg {
+  font-size: 12px;
+  color: #c0392b;
+  margin-top: 4px;
+  display: none;
+}
+.form-error-msg.show { display: block; }
+.modal-submit {
+  margin-top: 32px;
+}
+.btn-submit {
+  width: 100%;
+  justify-content: center;
+  padding: 18px 28px;
+  font-size: 13px;
+  position: relative;
+}
+.btn-submit .spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+.btn-submit.loading .btn-text { display: none; }
+.btn-submit.loading .spinner { display: block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Success / Error states */
+.modal-state {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 0;
+}
+.modal-state.show { display: flex; }
+.modal-form.hidden { display: none; }
+.state-icon {
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 20px;
+}
+.state-icon.success { background: rgba(74,90,58,0.12); }
+.state-icon.error { background: rgba(192,57,43,0.1); }
+.state-icon svg { width: 28px; height: 28px; }
+.state-title {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--preto);
+  margin-bottom: 10px;
+}
+.state-desc {
+  font-size: 14px;
+  color: var(--cinza);
+  line-height: 1.7;
+  max-width: 360px;
+  margin-bottom: 28px;
+}
+.alert-global {
+  background: rgba(192,57,43,0.08);
+  border: 1px solid rgba(192,57,43,0.2);
+  border-radius: 2px;
+  padding: 12px 16px;
+  font-size: 13px;
+  color: #c0392b;
+  margin-bottom: 16px;
+  display: none;
+}
+.alert-global.show { display: block; }
+
+/* ========== FLOAT CTA ========== */
+.float-cta {
+  position: fixed; bottom: 24px; right: 24px; z-index: 90;
+  background: var(--verde); color: #fff;
+  padding: 14px 22px 14px 18px;
+  border-radius: 60px;
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; letter-spacing: 0.1em;
+  text-transform: uppercase; font-weight: 500;
+  box-shadow: 0 14px 36px rgba(74,90,58,0.36);
+  transition: all 0.3s cubic-bezier(0.32,0.72,0,1);
+}
+.float-cta:hover { background: var(--verde-dark); transform: translateY(-3px); }
+.float-cta-dot {
+  width: 9px; height: 9px;
+  background: #92e16f; border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(146,225,111,0.25);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(146,225,111,0.25); }
+  50% { box-shadow: 0 0 0 8px rgba(146,225,111,0); }
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+}
+@media (max-width: 720px) {
+  .container { padding: 0 20px; }
+  .nav-links, .nav-cta .btn { display: none; }
+  .hamburger { display: flex; }
+  .planos-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
+  .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .modal { padding: 36px 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  .float-cta { padding: 12px 18px; font-size: 11px; }
+  .nav-mobile-open .nav-links {
+    display: flex; flex-direction: column;
+    position: absolute; top: 100%; left: 0; right: 0;
+    background: rgba(13,13,11,0.98);
+    padding: 24px; gap: 18px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" />
+      <div class="nav-brand-text">
+        <div class="nav-brand-name">TH Mourão</div>
+        <div class="nav-brand-sub">Barbearia & Spa</div>
+      </div>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Início</a>
+      <a href="index.html#servicos">Serviços</a>
+      <a href="index.html#galeria">Espaço</a>
+      <a href="index.html#equipe">Equipe</a>
+      <a href="index.html#contato">Contato</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-outline" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendar Agora</a>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero-assinaturas">
+  <div class="container">
+    <div class="hero-as-inner">
+      <div class="hero-as-eyebrow fade-up">Clube de Assinatura</div>
+      <div class="accent-bar fade-up d100"></div>
+      <h1 class="hero-as-h1 fade-up d200">Experiência premium,<br/>todo mês.</h1>
+      <p class="hero-as-sub fade-up d300">Escolha o plano ideal e tenha sempre prioridade no agendamento, atendimento VIP e muito mais — sem surpresas na conta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PLANOS -->
+<section class="planos" id="planos">
+  <div class="container">
+    <div class="planos-header fade-up">
+      <div class="eyebrow">Nossos Planos</div>
+      <h2 class="planos-h2">Escolha o seu plano</h2>
+      <p class="planos-sub">Mensalidades simples, sem fidelidade mínima. Cancele quando quiser.</p>
+    </div>
+    <div class="planos-grid">
+
+      <!-- Plano Corte -->
+      <div class="plano-card fade-up d100">
+        <div class="plano-badge badge-dark">Plano Corte</div>
+        <div class="plano-nome">Corte Mensal</div>
+        <div class="plano-preco">
+          <span class="plano-moeda">R$</span>
+          <span class="plano-valor">89</span>
+          <span class="plano-ciclo">/mês</span>
+        </div>
+        <div class="plano-divider"></div>
+        <ul class="plano-items">
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            1 corte por mês
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Agendamento prioritário
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Atendimento exclusivo para assinantes
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Cobrança automática no cartão
+          </li>
+        </ul>
+        <button class="btn btn-dark btn-full" onclick="abrirModal('corte')">Assinar Agora →</button>
+      </div>
+
+      <!-- Plano Corte + Barba -->
+      <div class="plano-card destaque fade-up d200">
+        <div class="plano-badge badge-verde">Mais Popular</div>
+        <div class="plano-nome">Corte + Barba</div>
+        <div class="plano-preco">
+          <span class="plano-moeda">R$</span>
+          <span class="plano-valor">139</span>
+          <span class="plano-ciclo">/mês</span>
+        </div>
+        <div class="plano-divider"></div>
+        <ul class="plano-items">
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            1 corte + 1 barba por mês
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Agendamento prioritário
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Atendimento exclusivo para assinantes
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Cobrança automática no cartão
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#4A5A3A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            Economia de R$30 vs. avulso
+          </li>
+        </ul>
+        <button class="btn btn-verde btn-full" onclick="abrirModal('corte-barba')">Assinar Agora →</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="container">
+    <div class="faq-inner">
+      <div class="faq-header fade-up">
+        <div class="eyebrow" style="color:var(--verde-light);margin-bottom:12px;">Dúvidas Frequentes</div>
+        <h2 class="faq-h2">Perguntas & Respostas</h2>
+      </div>
+
+      <div class="faq-item fade-up d100">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Como funciona a cobrança mensal?
+          <span class="faq-icon"><svg viewBox="0 0 12 12" fill="var(--cinza)"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-answer">A cobrança é feita automaticamente no cartão de crédito cadastrado, todo mês na mesma data da sua primeira assinatura. Você recebe uma notificação por e-mail antes de cada cobrança.</div>
+      </div>
+
+      <div class="faq-item fade-up d200">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Posso cancelar quando quiser?
+          <span class="faq-icon"><svg viewBox="0 0 12 12" fill="var(--cinza)"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-answer">Sim, sem fidelidade mínima. Basta entrar em contato conosco pelo WhatsApp até 5 dias antes da próxima cobrança e cancelamos sem custo adicional.</div>
+      </div>
+
+      <div class="faq-item fade-up d300">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Os serviços não utilizados acumulam?
+          <span class="faq-icon"><svg viewBox="0 0 12 12" fill="var(--cinza)"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-answer">Os serviços são mensais e não acumulam. Recomendamos usar dentro do mês vigente para aproveitar ao máximo o plano.</div>
+      </div>
+
+      <div class="faq-item fade-up">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Meus dados de cartão ficam seguros?
+          <span class="faq-icon"><svg viewBox="0 0 12 12" fill="var(--cinza)"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-answer">Sim. Utilizamos a plataforma Asaas, certificada PCI DSS, para processar todos os pagamentos. Seus dados de cartão nunca ficam armazenados em nossos servidores.</div>
+      </div>
+
+      <div class="faq-item fade-up d100">
+        <button class="faq-question" onclick="toggleFaq(this)">
+          Posso mudar de plano depois de assinar?
+          <span class="faq-icon"><svg viewBox="0 0 12 12" fill="var(--cinza)"><path d="M6 2v8M2 6h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        </button>
+        <div class="faq-answer">Claro! Entre em contato pelo WhatsApp e faremos o ajuste no próximo ciclo de cobrança, sem burocracia.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-brand-row">
+          <img src="assets/logo.png" alt="TH Mourão" />
+          <div>
+            <div class="footer-brand-name">TH Mourão</div>
+            <div class="footer-brand-sub">Barbearia & Spa</div>
+          </div>
+        </div>
+        <p class="footer-text">Baviera Office · Sala 1001<br/>R. Nereu Ramos, 165 — Jardim Blumenau, SC<br/>(47) 99678-6835</p>
+        <a class="footer-social" href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.71 3.71 0 0 1-1.38-.9 3.71 3.71 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.91.33 4.14.63a5.92 5.92 0 0 0-2.13 1.39A5.92 5.92 0 0 0 .62 4.15c-.3.77-.5 1.64-.55 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.14.56 2.91.31.79.74 1.46 1.39 2.13.67.65 1.34 1.08 2.13 1.39.77.3 1.64.5 2.91.55C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.14-.26 2.91-.56.79-.31 1.46-.74 2.13-1.39.65-.67 1.08-1.34 1.39-2.13.3-.77.5-1.64.55-2.91.06-1.27.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.05-1.27-.25-2.14-.55-2.91a5.92 5.92 0 0 0-1.39-2.13A5.92 5.92 0 0 0 19.86.63c-.77-.3-1.64-.5-2.91-.55C15.67.01 15.26 0 12 0Zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84Zm0 10.16A4 4 0 1 1 16 12a4 4 0 0 1-4 4Zm6.41-10.41a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44Z"/></svg>
+        </a>
+        <a class="footer-social" href="https://wa.me/5547996786835?text=Ol%C3%A1!%20%F0%9F%91%8B%20Vim%20pelo%20site%20da%20TH%20Mour%C3%A3o%20e%20tenho%20interesse%20em%20agendar%20um%20hor%C3%A1rio.%F0%9F%92%88" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Menu</div>
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li><a href="index.html#sobre">Sobre</a></li>
+          <li><a href="index.html#galeria">Espaço</a></li>
+          <li><a href="index.html#servicos">Serviços</a></li>
+          <li><a href="index.html#equipe">Equipe</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul>
+          <li><a href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendamento</a></li>
+          <li><a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="mailto:contato@thmouraobarbearia.com.br">Oportunidades</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Horários</div>
+        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 9h00–20h00</div>
+        <div class="footer-hours-row"><span>Sábado</span> · 9h00–18h00</div>
+        <div class="footer-hours-row" style="margin-bottom:22px;"><span>Domingo</span> · Fechado</div>
+        <a class="btn btn-verde" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Reserve Agora →</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© <script>document.write(new Date().getFullYear())</script> TH Mourão Barbearia & Spa. Todos os direitos reservados.</div>
+      <div>@thmouraobarbearia</div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING CTA -->
+<a class="float-cta" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">
+  <span class="float-cta-dot"></span>
+  Agendar Agora
+</a>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="fecharModalOverlay(event)">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" onclick="fecharModal()" aria-label="Fechar">×</button>
+
+    <!-- Form state -->
+    <div class="modal-form" id="modalForm">
+      <div class="modal-plano-tag" id="modalPlanoTag">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="#4A5A3A" stroke-width="1.2"/><path d="M6 3v3l2 1" stroke="#4A5A3A" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <span id="modalPlanoNome">Plano Corte Mensal</span>
+      </div>
+      <h2 class="modal-h2" id="modalTitle">Preencha seus dados</h2>
+      <p class="modal-sub">Seus dados são protegidos e a cobrança é processada com segurança pela plataforma Asaas.</p>
+
+      <div class="alert-global" id="alertGlobal"></div>
+
+      <form id="assinaturaForm" onsubmit="submitForm(event)" novalidate>
+        <div class="form-section-label">Dados Pessoais</div>
+
+        <div class="form-group">
+          <label for="nome">Nome Completo</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome completo" autocomplete="name" />
+          <div class="form-error-msg" id="erroNome">Informe seu nome completo.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="cpf">CPF</label>
+          <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric" />
+          <div class="form-error-msg" id="erroCpf">CPF inválido.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" />
+          <div class="form-error-msg" id="erroEmail">Informe um e-mail válido.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="whatsapp">WhatsApp <span class="form-optional">opcional</span></label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="(47) 99999-9999" maxlength="15" inputmode="numeric" />
+        </div>
+
+        <div class="form-section-label">Dados do Cartão</div>
+
+        <div class="form-group">
+          <label for="cardNome">Nome no Cartão</label>
+          <input type="text" id="cardNome" name="cardNome" placeholder="Como está impresso no cartão" autocomplete="cc-name" />
+          <div class="form-error-msg" id="erroCardNome">Informe o nome como está no cartão.</div>
+        </div>
+
+        <div class="form-group">
+          <label for="cardNumero">Número do Cartão</label>
+          <input type="text" id="cardNumero" name="cardNumero" placeholder="0000 0000 0000 0000" maxlength="19" inputmode="numeric" autocomplete="cc-number" />
+          <div class="form-error-msg" id="erroCardNumero">Número de cartão inválido.</div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cardValidade">Validade</label>
+            <input type="text" id="cardValidade" name="cardValidade" placeholder="MM/AA" maxlength="5" inputmode="numeric" autocomplete="cc-exp" />
+            <div class="form-error-msg" id="erroCardValidade">Validade inválida.</div>
+          </div>
+          <div class="form-group">
+            <label for="cardCvv">CVV</label>
+            <input type="text" id="cardCvv" name="cardCvv" placeholder="000" maxlength="4" inputmode="numeric" autocomplete="cc-csc" />
+            <div class="form-error-msg" id="erroCardCvv">CVV inválido.</div>
+          </div>
+        </div>
+
+        <div class="modal-submit">
+          <button type="submit" class="btn btn-verde btn-submit" id="btnSubmit">
+            <span class="btn-text">Confirmar Assinatura →</span>
+            <span class="spinner"></span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Success state -->
+    <div class="modal-state" id="stateSuccess">
+      <div class="state-icon success">
+        <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#4A5A3A" stroke-width="1.5"/><path d="M8 14l4 4 8-8" stroke="#4A5A3A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="state-title">Assinatura confirmada!</div>
+      <p class="state-desc">Sua assinatura foi criada com sucesso. Em breve você receberá um e-mail com todos os detalhes. Bem-vindo ao clube TH Mourão.</p>
+      <button class="btn btn-verde" onclick="fecharModal()">Fechar</button>
+    </div>
+
+    <!-- Error state -->
+    <div class="modal-state" id="stateError">
+      <div class="state-icon error">
+        <svg viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="13" stroke="#c0392b" stroke-width="1.5"/><path d="M9 9l10 10M19 9L9 19" stroke="#c0392b" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="state-title">Algo deu errado</div>
+      <p class="state-desc" id="errorDesc">Não foi possível processar sua assinatura. Por favor, verifique os dados e tente novamente ou entre em contato pelo WhatsApp.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+        <button class="btn btn-dark" onclick="voltarForm()">Tentar novamente</button>
+        <a class="btn btn-verde" href="https://wa.me/5547996786835" target="_blank" rel="noopener">WhatsApp →</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var planoSelecionado = null;
+var planos = {
+  'corte': { nome: 'Plano Corte Mensal', valor: 89.00, descricao: 'Plano Corte Mensal — TH Mourão Barbearia' },
+  'corte-barba': { nome: 'Plano Corte + Barba', valor: 139.00, descricao: 'Plano Corte + Barba — TH Mourão Barbearia' }
+};
+
+/* ===== Navbar ===== */
+var navbar = document.getElementById('navbar');
+window.addEventListener('scroll', function() {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+}, { passive: true });
+document.getElementById('hamburger').addEventListener('click', function() {
+  navbar.classList.toggle('nav-mobile-open');
+});
+
+/* ===== Fade-up ===== */
+if ('IntersectionObserver' in window) {
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(function(el) { io.observe(el); });
+}
+
+/* ===== FAQ ===== */
+function toggleFaq(btn) {
+  var item = btn.closest('.faq-item');
+  var isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(function(i) { i.classList.remove('open'); });
+  if (!isOpen) item.classList.add('open');
+}
+
+/* ===== Modal ===== */
+function abrirModal(plano) {
+  planoSelecionado = plano;
+  var p = planos[plano];
+  document.getElementById('modalPlanoNome').textContent = p.nome + ' — R$' + p.valor + '/mês';
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  mostrarForm();
+}
+
+function fecharModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+  setTimeout(function() {
+    document.getElementById('assinaturaForm').reset();
+    limparErros();
+    mostrarForm();
+  }, 300);
+}
+
+function fecharModalOverlay(e) {
+  if (e.target === document.getElementById('modalOverlay')) fecharModal();
+}
+
+function mostrarForm() {
+  document.getElementById('modalForm').classList.remove('hidden');
+  document.getElementById('stateSuccess').classList.remove('show');
+  document.getElementById('stateError').classList.remove('show');
+  document.getElementById('alertGlobal').classList.remove('show');
+  document.getElementById('btnSubmit').classList.remove('loading');
+}
+
+function voltarForm() {
+  document.getElementById('stateError').classList.remove('show');
+  document.getElementById('modalForm').classList.remove('hidden');
+}
+
+/* ===== Máscaras ===== */
+document.getElementById('cpf').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,11);
+  v = v.replace(/(\d{3})(\d)/,'$1.$2')
+       .replace(/(\d{3})(\d)/,'$1.$2')
+       .replace(/(\d{3})(\d{1,2})$/,'$1-$2');
+  e.target.value = v;
+});
+
+document.getElementById('cardNumero').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,16);
+  v = v.replace(/(\d{4})(?=\d)/g,'$1 ');
+  e.target.value = v;
+});
+
+document.getElementById('cardValidade').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,4);
+  if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
+  e.target.value = v;
+});
+
+document.getElementById('cardCvv').addEventListener('input', function(e) {
+  e.target.value = e.target.value.replace(/\D/g,'').slice(0,4);
+});
+
+document.getElementById('whatsapp').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,11);
+  if (v.length > 6) v = '(' + v.slice(0,2) + ') ' + v.slice(2,7) + '-' + v.slice(7);
+  else if (v.length > 2) v = '(' + v.slice(0,2) + ') ' + v.slice(2);
+  e.target.value = v;
+});
+
+/* ===== Validação ===== */
+function limparErros() {
+  document.querySelectorAll('.form-error-msg').forEach(function(el) { el.classList.remove('show'); });
+  document.querySelectorAll('.form-group input').forEach(function(el) { el.classList.remove('error'); });
+}
+
+function mostrarErro(campo, msgId) {
+  document.getElementById(campo).classList.add('error');
+  document.getElementById(msgId).classList.add('show');
+}
+
+function validarCpf(cpf) {
+  cpf = cpf.replace(/\D/g,'');
+  if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+  var soma = 0;
+  for (var i = 0; i < 9; i++) soma += parseInt(cpf[i]) * (10 - i);
+  var r = 11 - (soma % 11); var d1 = r > 9 ? 0 : r;
+  soma = 0;
+  for (var i = 0; i < 10; i++) soma += parseInt(cpf[i]) * (11 - i);
+  r = 11 - (soma % 11); var d2 = r > 9 ? 0 : r;
+  return d1 === parseInt(cpf[9]) && d2 === parseInt(cpf[10]);
+}
+
+function validarForm() {
+  limparErros();
+  var ok = true;
+  var nome = document.getElementById('nome').value.trim();
+  if (nome.split(' ').filter(function(w){return w.length > 0;}).length < 2) {
+    mostrarErro('nome', 'erroNome'); ok = false;
+  }
+  if (!validarCpf(document.getElementById('cpf').value)) {
+    mostrarErro('cpf', 'erroCpf'); ok = false;
+  }
+  var email = document.getElementById('email').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    mostrarErro('email', 'erroEmail'); ok = false;
+  }
+  if (document.getElementById('cardNome').value.trim().length < 3) {
+    mostrarErro('cardNome', 'erroCardNome'); ok = false;
+  }
+  var cardNum = document.getElementById('cardNumero').value.replace(/\s/g,'');
+  if (cardNum.length < 13 || cardNum.length > 19 || !/^\d+$/.test(cardNum)) {
+    mostrarErro('cardNumero', 'erroCardNumero'); ok = false;
+  }
+  var val = document.getElementById('cardValidade').value;
+  if (!/^\d{2}\/\d{2}$/.test(val)) {
+    mostrarErro('cardValidade', 'erroCardValidade'); ok = false;
+  }
+  var cvv = document.getElementById('cardCvv').value;
+  if (cvv.length < 3 || !/^\d+$/.test(cvv)) {
+    mostrarErro('cardCvv', 'erroCardCvv'); ok = false;
+  }
+  return ok;
+}
+
+/* ===== Submit ===== */
+async function submitForm(e) {
+  e.preventDefault();
+  if (!validarForm()) return;
+
+  var btn = document.getElementById('btnSubmit');
+  btn.classList.add('loading');
+  document.getElementById('alertGlobal').classList.remove('show');
+
+  var validade = document.getElementById('cardValidade').value.split('/');
+  var payload = {
+    nome: document.getElementById('nome').value.trim(),
+    cpf: document.getElementById('cpf').value.replace(/\D/g,''),
+    email: document.getElementById('email').value.trim(),
+    whatsapp: document.getElementById('whatsapp').value.replace(/\D/g,''),
+    plano: planoSelecionado,
+    cartao: {
+      nomeTitular: document.getElementById('cardNome').value.trim(),
+      numero: document.getElementById('cardNumero').value.replace(/\s/g,''),
+      mesValidade: validade[0],
+      anoValidade: '20' + validade[1],
+      cvv: document.getElementById('cardCvv').value
+    }
+  };
+
+  try {
+    var resp = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    var data = await resp.json();
+
+    btn.classList.remove('loading');
+
+    if (resp.ok && data.success) {
+      document.getElementById('modalForm').classList.add('hidden');
+      document.getElementById('stateSuccess').classList.add('show');
+    } else {
+      var msg = data.message || 'Não foi possível processar sua assinatura. Verifique os dados e tente novamente.';
+      document.getElementById('alertGlobal').textContent = msg;
+      document.getElementById('alertGlobal').classList.add('show');
+    }
+  } catch (err) {
+    btn.classList.remove('loading');
+    document.getElementById('modalForm').classList.add('hidden');
+    document.getElementById('errorDesc').textContent = 'Erro de conexão. Verifique sua internet e tente novamente, ou entre em contato pelo WhatsApp.';
+    document.getElementById('stateError').classList.add('show');
+  }
+}
+
+/* ===== Keyboard ===== */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') fecharModal();
+});
+</script>
+</body>
+</html>
