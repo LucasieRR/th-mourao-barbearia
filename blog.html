@@ -74,8 +74,10 @@
     .btn-verde:hover { background: var(--verde-dark); transform: translateY(-2px); }
     .btn-dark { background: var(--preto); color: var(--creme); }
     .btn-dark:hover { background: var(--escuro2); transform: translateY(-2px); }
-    .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
-    .btn-outline:hover { background: #fff; color: var(--preto); }
+    .btn-outline { background: transparent; color: var(--preto); border: 1px solid rgba(13,13,11,0.35); }
+    .btn-outline:hover { background: var(--preto); color: var(--creme); }
+    .navbar.scrolled .btn-outline { color: #fff; border-color: rgba(255,255,255,0.4); }
+    .navbar.scrolled .btn-outline:hover { background: #fff; color: var(--preto); }
 
     /* ── Navbar ── */
     .navbar {
@@ -93,20 +95,28 @@
     .nav-brand { display: flex; align-items: center; gap: 12px; color: #fff; }
     .nav-brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
     .nav-brand-text { line-height: 1.1; }
-    .nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: #fff; }
-    .nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+    .nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: var(--preto); }
+    .nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(13,13,11,0.5); }
     .nav-links { display: flex; gap: 38px; }
     .nav-links a {
-      color: rgba(255,255,255,0.75); font-size: 13px; letter-spacing: 0.08em;
+      color: rgba(13,13,11,0.65); font-size: 13px; letter-spacing: 0.08em;
       text-transform: uppercase; font-weight: 400;
       transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: var(--bege); }
-    .nav-links a.active { color: #fff; font-weight: 600; }
+    .nav-links a:hover { color: var(--preto); }
+    .nav-links a.active { color: var(--preto); font-weight: 600; }
     .nav-cta { display: flex; align-items: center; gap: 18px; }
     .nav-cta .btn { padding: 12px 22px; }
     .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
-    .hamburger span { width: 22px; height: 1.5px; background: #fff; transition: all 0.3s ease; }
+    .hamburger span { width: 22px; height: 1.5px; background: var(--preto); transition: all 0.3s ease; }
+
+    /* Quando scrolled, navbar fica escura — links voltam a branco */
+    .navbar.scrolled .nav-brand-name { color: #fff; }
+    .navbar.scrolled .nav-brand-sub { color: rgba(255,255,255,0.65); }
+    .navbar.scrolled .nav-links a { color: rgba(255,255,255,0.75); }
+    .navbar.scrolled .nav-links a:hover { color: var(--bege); }
+    .navbar.scrolled .nav-links a.active { color: #fff; }
+    .navbar.scrolled .hamburger span { background: #fff; }
 
     /* ── Fade-up ── */
     .fade-up {
@@ -309,7 +319,7 @@
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="container nav-inner">
-    <a href="index.html" class="nav-brand">
+    <a href="/" class="nav-brand">
       <img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" />
       <div class="nav-brand-text">
         <div class="nav-brand-name">TH Mourão</div>
@@ -317,13 +327,11 @@
       </div>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html#hero">Início</a>
-      <a href="index.html#servicos">Serviços</a>
-      <a href="index.html#galeria">Espaço</a>
-      <a href="index.html#equipe">Equipe</a>
-      <a href="index.html#contato">Contato</a>
-      <a href="blog.html" class="active">Blog</a>
-      <a href="store.html">Store</a>
+      <a href="/#servicos">Serviços</a>
+      <a href="/#galeria">Espaço</a>
+      <a href="/#equipe">Equipe</a>
+      <a href="/blog" class="active">Blog</a>
+      <a href="/store">Store</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-outline" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendar Agora</a>
@@ -352,52 +360,8 @@
         <p class="fade-up d200" style="font-size:1.05rem;color:var(--cinza);line-height:1.75;max-width:46ch;margin-bottom:32px;">
           Dicas de barbearia, cuidados com a pele, tendências de grooming e tudo sobre o universo do homem moderno.
         </p>
-        <div class="fade-up d300" style="display:flex;flex-wrap:wrap;gap:8px;">
-          <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(74,90,58,0.1);color:var(--verde);font-size:11px;font-weight:600;padding:6px 12px;border-radius:2px;letter-spacing:0.16em;text-transform:uppercase;">
-            <span style="width:6px;height:6px;border-radius:50%;background:var(--verde);display:inline-block;"></span>Cuidados Masculinos
-          </span>
-          <span style="display:inline-flex;align-items:center;gap:6px;background:var(--preto);color:var(--creme);font-size:11px;font-weight:600;padding:6px 12px;border-radius:2px;letter-spacing:0.16em;text-transform:uppercase;">
-            <span style="width:6px;height:6px;border-radius:50%;background:var(--bege);display:inline-block;"></span>Barbearia
-          </span>
-          <span style="display:inline-flex;align-items:center;gap:6px;background:var(--creme2);color:var(--cinza);font-size:11px;font-weight:600;padding:6px 12px;border-radius:2px;letter-spacing:0.16em;text-transform:uppercase;border:1px solid var(--creme3);">
-            <span style="width:6px;height:6px;border-radius:50%;background:var(--bege);display:inline-block;"></span>Estilo & Grooming
-          </span>
-        </div>
       </div>
 
-      <!-- Ilustração -->
-      <div class="fade-up d200 blog-hero-illustration" style="display:flex;justify-content:flex-end;">
-        <div style="position:relative;width:100%;max-width:360px;">
-          <div style="background:var(--creme);border-radius:2rem;padding:2rem;box-shadow:0 30px 60px -15px rgba(0,0,0,0.12);position:relative;z-index:1;">
-            <svg viewBox="0 0 320 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;">
-              <!-- Cadeira de barbearia -->
-              <rect x="100" y="168" width="120" height="12" rx="4" fill="#2e3a22"/>
-              <rect x="108" y="104" width="104" height="66" rx="10" fill="#4A5A3A"/>
-              <rect x="120" y="80" width="80" height="30" rx="10" fill="#6b7d58"/>
-              <rect x="100" y="132" width="16" height="36" rx="4" fill="#2e3a22"/>
-              <rect x="204" y="132" width="16" height="36" rx="4" fill="#2e3a22"/>
-              <!-- Tesoura -->
-              <path d="M202 56 L222 86 M212 56 L192 86" stroke="#C8BBA4" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="200" cy="54" r="6" stroke="#C8BBA4" stroke-width="2.5" fill="none"/>
-              <circle cx="214" cy="54" r="6" stroke="#C8BBA4" stroke-width="2.5" fill="none"/>
-              <!-- Pente -->
-              <rect x="80" y="68" width="4" height="30" rx="2" fill="#C8BBA4"/>
-              <rect x="88" y="73" width="2" height="20" rx="1" fill="#C8BBA4"/>
-              <rect x="93" y="73" width="2" height="20" rx="1" fill="#C8BBA4"/>
-              <rect x="98" y="73" width="2" height="20" rx="1" fill="#C8BBA4"/>
-              <!-- Chip experiência -->
-              <rect x="200" y="36" width="90" height="36" rx="4" fill="#4A5A3A"/>
-              <text x="245" y="49" text-anchor="middle" fill="#F5F0E8" font-size="8" font-weight="700" font-family="sans-serif">EXPERIÊNCIA</text>
-              <text x="245" y="62" text-anchor="middle" fill="#F5F0E8" font-size="11" font-weight="900" font-family="sans-serif">+6 anos</text>
-              <!-- Chip clientes -->
-              <rect x="30" y="42" width="90" height="36" rx="4" fill="#2e3a22"/>
-              <text x="75" y="55" text-anchor="middle" fill="#C8BBA4" font-size="8" font-weight="700" font-family="sans-serif">CLIENTES</text>
-              <text x="75" y="68" text-anchor="middle" fill="#F5F0E8" font-size="11" font-weight="900" font-family="sans-serif">+1.200</text>
-            </svg>
-          </div>
-          <div style="position:absolute;bottom:-16px;right:-16px;width:100%;height:100%;border-radius:2rem;background:rgba(74,90,58,0.07);z-index:0;"></div>
-        </div>
-      </div>
 
     </div>
   </div>
@@ -516,11 +480,11 @@
       <div class="footer-col">
         <div class="footer-col-title">Menu</div>
         <ul>
-          <li><a href="index.html#hero">Início</a></li>
-          <li><a href="index.html#sobre">Sobre</a></li>
-          <li><a href="index.html#galeria">Espaço</a></li>
-          <li><a href="index.html#servicos">Serviços</a></li>
-          <li><a href="index.html#equipe">Equipe</a></li>
+          <li><a href="/#hero">Início</a></li>
+          <li><a href="/#sobre">Sobre</a></li>
+          <li><a href="/#galeria">Espaço</a></li>
+          <li><a href="/#servicos">Serviços</a></li>
+          <li><a href="/#equipe">Equipe</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -528,9 +492,9 @@
         <ul>
           <li><a href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendamento</a></li>
           <li><a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="/blog">Blog</a></li>
           <li><a href="mailto:contato@thmouraobarbearia.com.br">Oportunidades</a></li>
-          <li><a href="index.html#contato">Localização & Contato</a></li>
+          <li><a href="/#contato">Localização & Contato</a></li>
         </ul>
       </div>
       <div class="footer-col">

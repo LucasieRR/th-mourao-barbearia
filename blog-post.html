@@ -74,8 +74,10 @@
     .btn-verde:hover { background: var(--verde-dark); transform: translateY(-2px); }
     .btn-dark { background: var(--preto); color: var(--creme); }
     .btn-dark:hover { background: var(--escuro2); transform: translateY(-2px); }
-    .btn-outline { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); }
-    .btn-outline:hover { background: #fff; color: var(--preto); }
+    .btn-outline { background: transparent; color: var(--preto); border: 1px solid rgba(13,13,11,0.35); }
+    .btn-outline:hover { background: var(--preto); color: var(--creme); }
+    .navbar.scrolled .btn-outline { color: #fff; border-color: rgba(255,255,255,0.4); }
+    .navbar.scrolled .btn-outline:hover { background: #fff; color: var(--preto); }
 
     /* ── Navbar ── */
     .navbar {
@@ -93,20 +95,28 @@
     .nav-brand { display: flex; align-items: center; gap: 12px; color: #fff; }
     .nav-brand img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
     .nav-brand-text { line-height: 1.1; }
-    .nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: #fff; }
-    .nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+    .nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 16px; color: var(--preto); }
+    .nav-brand-sub { font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(13,13,11,0.5); }
     .nav-links { display: flex; gap: 38px; }
     .nav-links a {
-      color: rgba(255,255,255,0.75); font-size: 13px; letter-spacing: 0.08em;
+      color: rgba(13,13,11,0.65); font-size: 13px; letter-spacing: 0.08em;
       text-transform: uppercase; font-weight: 400;
       transition: color 0.2s ease;
     }
-    .nav-links a:hover { color: var(--bege); }
-    .nav-links a.active { color: #fff; font-weight: 600; }
+    .nav-links a:hover { color: var(--preto); }
+    .nav-links a.active { color: var(--preto); font-weight: 600; }
     .nav-cta { display: flex; align-items: center; gap: 18px; }
     .nav-cta .btn { padding: 12px 22px; }
     .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
-    .hamburger span { width: 22px; height: 1.5px; background: #fff; transition: all 0.3s ease; }
+    .hamburger span { width: 22px; height: 1.5px; background: var(--preto); transition: all 0.3s ease; }
+
+    /* Quando scrolled, navbar fica escura — links voltam a branco */
+    .navbar.scrolled .nav-brand-name { color: #fff; }
+    .navbar.scrolled .nav-brand-sub { color: rgba(255,255,255,0.65); }
+    .navbar.scrolled .nav-links a { color: rgba(255,255,255,0.75); }
+    .navbar.scrolled .nav-links a:hover { color: var(--bege); }
+    .navbar.scrolled .nav-links a.active { color: #fff; }
+    .navbar.scrolled .hamburger span { background: #fff; }
 
     /* ── Fade-up ── */
     .fade-up {
@@ -298,7 +308,7 @@
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="container nav-inner">
-    <a href="index.html" class="nav-brand">
+    <a href="/" class="nav-brand">
       <img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" />
       <div class="nav-brand-text">
         <div class="nav-brand-name">TH Mourão</div>
@@ -306,13 +316,11 @@
       </div>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html#hero">Início</a>
-      <a href="index.html#servicos">Serviços</a>
-      <a href="index.html#galeria">Espaço</a>
-      <a href="index.html#equipe">Equipe</a>
-      <a href="index.html#contato">Contato</a>
-      <a href="blog.html" class="active">Blog</a>
-      <a href="store.html">Store</a>
+      <a href="/#servicos">Serviços</a>
+      <a href="/#galeria">Espaço</a>
+      <a href="/#equipe">Equipe</a>
+      <a href="/blog" class="active">Blog</a>
+      <a href="/store">Store</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-outline" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendar Agora</a>
@@ -326,7 +334,7 @@
 <!-- BREADCRUMB -->
 <div style="padding-top: 96px; padding-bottom: 16px;">
   <div class="container">
-    <a href="blog.html" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--cinza);transition:color 0.2s;" onmouseover="this.style.color='var(--preto)'" onmouseout="this.style.color='var(--cinza)'">
+    <a href="/blog" style="display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--cinza);transition:color 0.2s;" onmouseover="this.style.color='var(--preto)'" onmouseout="this.style.color='var(--cinza)'">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style="transition:transform 0.2s;">
         <path d="M10 3L6 8l4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
@@ -398,7 +406,7 @@
     </div>
     <h2 style="font-family:var(--font-serif);font-size:1.5rem;font-weight:900;margin-bottom:8px;">Post não encontrado</h2>
     <p style="color:var(--cinza);margin-bottom:32px;">O post que você procura não existe ou foi removido.</p>
-    <a href="blog.html" class="btn btn-dark">
+    <a href="/blog" class="btn btn-dark">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L6 8l4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Ver todos os posts
     </a>
@@ -419,7 +427,7 @@
       <a href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener" class="btn btn-dark" style="background:var(--creme);color:var(--preto);">
         Agendar Agora →
       </a>
-      <a href="blog.html" style="display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,0.55);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;padding:16px;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">
+      <a href="/blog" style="display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,0.55);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;font-weight:500;padding:16px;transition:color 0.2s;" onmouseover="this.style.color='rgba(255,255,255,0.9)'" onmouseout="this.style.color='rgba(255,255,255,0.55)'">
         Ver mais posts
         <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
@@ -447,11 +455,11 @@
       <div class="footer-col">
         <div class="footer-col-title">Menu</div>
         <ul>
-          <li><a href="index.html#hero">Início</a></li>
-          <li><a href="index.html#sobre">Sobre</a></li>
-          <li><a href="index.html#galeria">Espaço</a></li>
-          <li><a href="index.html#servicos">Serviços</a></li>
-          <li><a href="index.html#equipe">Equipe</a></li>
+          <li><a href="/#hero">Início</a></li>
+          <li><a href="/#sobre">Sobre</a></li>
+          <li><a href="/#galeria">Espaço</a></li>
+          <li><a href="/#servicos">Serviços</a></li>
+          <li><a href="/#equipe">Equipe</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -459,9 +467,9 @@
         <ul>
           <li><a href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendamento</a></li>
           <li><a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="/blog">Blog</a></li>
           <li><a href="mailto:contato@thmouraobarbearia.com.br">Oportunidades</a></li>
-          <li><a href="index.html#contato">Localização & Contato</a></li>
+          <li><a href="/#contato">Localização & Contato</a></li>
         </ul>
       </div>
       <div class="footer-col">

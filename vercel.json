@@ -1,5 +1,11 @@
 {
   "version": 2,
   "builds": [{ "src": "**/*", "use": "@vercel/static" }],
-  "routes": [{ "src": "/(.*)", "dest": "/$1" }]
+  "routes": [
+    { "src": "/blog/([^/]+)", "dest": "/blog-post.html" },
+    { "src": "/blog",         "dest": "/blog.html" },
+    { "src": "/store",        "dest": "/store.html" },
+    { "src": "/assinaturas",  "dest": "/assinaturas.html" },
+    { "src": "/(.*)",         "dest": "/$1" }
+  ]
 }
