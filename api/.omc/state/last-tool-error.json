@@ -1,0 +1,7 @@
+{
+  "tool_name": "WebFetch",
+  "tool_input_preview": "{\"url\":\"https://docs.asaas.com/reference/create-credit-card-charge\",\"prompt\":\"Extract the full list of required and optional fields for creating a credit card charge, especially around customer CPF/CN...",
+  "error": "Request failed with status code 404",
+  "timestamp": "2026-05-19T14:09:05.172Z",
+  "retry_count": 3
+}

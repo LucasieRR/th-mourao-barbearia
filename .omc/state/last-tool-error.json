@@ -1,0 +1,7 @@
+{
+  "tool_name": "WebFetch",
+  "tool_input_preview": "{\"url\":\"https://meli.la/33KnRbq\",\"prompt\":\"Extract from this Mercado Livre product page: 1) Product name (from h1 with class containing \\\"ui-pdp-title\\\"), 2) Current price (from element with class \\\"a...",
+  "error": "Request failed with status code 403",
+  "timestamp": "2026-05-19T14:36:29.825Z",
+  "retry_count": 14
+}

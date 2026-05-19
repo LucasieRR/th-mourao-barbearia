@@ -1,0 +1,79 @@
+{
+  "updatedAt": "2026-05-19T14:09:46.755Z",
+  "missions": [
+    {
+      "id": "session:c4065bd4-f5f2-4f59-b063-4b2ef0d6dfcb:none",
+      "source": "session",
+      "name": "none",
+      "objective": "Session mission",
+      "createdAt": "2026-05-19T14:02:39.106Z",
+      "updatedAt": "2026-05-19T14:09:46.755Z",
+      "status": "done",
+      "workerCount": 2,
+      "taskCounts": {
+        "total": 2,
+        "pending": 0,
+        "blocked": 0,
+        "inProgress": 0,
+        "completed": 2,
+        "failed": 0
+      },
+      "agents": [
+        {
+          "name": "document-specialist:afc56b0",
+          "role": "document-specialist",
+          "ownership": "afc56b0b874012a63",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-05-19T14:03:52.503Z"
+        },
+        {
+          "name": "document-specialist:adba274",
+          "role": "document-specialist",
+          "ownership": "adba274cb8d46f132",
+          "status": "done",
+          "currentStep": null,
+          "latestUpdate": "completed",
+          "completedSummary": null,
+          "updatedAt": "2026-05-19T14:09:46.755Z"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "session-start:afc56b0b874012a63:2026-05-19T14:02:39.106Z",
+          "at": "2026-05-19T14:02:39.106Z",
+          "kind": "update",
+          "agent": "document-specialist:afc56b0",
+          "detail": "started document-specialist:afc56b0",
+          "sourceKey": "session-start:afc56b0b874012a63"
+        },
+        {
+          "id": "session-stop:afc56b0b874012a63:2026-05-19T14:03:52.503Z",
+          "at": "2026-05-19T14:03:52.503Z",
+          "kind": "completion",
+          "agent": "document-specialist:afc56b0",
+          "detail": "completed",
+          "sourceKey": "session-stop:afc56b0b874012a63"
+        },
+        {
+          "id": "session-start:adba274cb8d46f132:2026-05-19T14:07:53.003Z",
+          "at": "2026-05-19T14:07:53.003Z",
+          "kind": "update",
+          "agent": "document-specialist:adba274",
+          "detail": "started document-specialist:adba274",
+          "sourceKey": "session-start:adba274cb8d46f132"
+        },
+        {
+          "id": "session-stop:adba274cb8d46f132:2026-05-19T14:09:46.755Z",
+          "at": "2026-05-19T14:09:46.755Z",
+          "kind": "completion",
+          "agent": "document-specialist:adba274",
+          "detail": "completed",
+          "sourceKey": "session-stop:adba274cb8d46f132"
+        }
+      ]
+    }
+  ]
+}

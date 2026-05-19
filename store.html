@@ -768,29 +768,157 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 const produtos = [
   {
     id: 1,
-    nome: 'Kit Completo Cuidados para Barba — Shampoo + Óleo + Balm',
-    categoria: 'barba',
-    preco: 89.90,
-    precoOriginal: 129.90,
+    nome: 'Spray Fixador Para Cabelo Laquê Freak Show 400ml Don Alcides',
+    categoria: 'cabelo',
+    preco: 84.92,
+    precoOriginal: null,
     avaliacao: 4.8,
     avaliacoes: 1247,
     badge: 'Mais Vendido',
     badgeClass: 'badge-sold',
     featured: true,
-    link: 'https://meli.la/21BUvto'
+    link: 'https://meli.la/21BUvto',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_782990-MLB69618878064_052023-V.webp'
   },
   {
     id: 2,
-    nome: 'Aparador de Barba Philips Series 3000 — Sem fio',
-    categoria: 'aparadores',
-    preco: 179.90,
-    precoOriginal: 249.90,
+    nome: 'Kit Shampoo + Condicionador Anticaspa Nerk Therapy 240ml',
+    categoria: 'cabelo',
+    preco: 66.90,
+    precoOriginal: null,
+    avaliacao: 4.7,
+    avaliacoes: 892,
+    badge: null,
+    badgeClass: null,
+    featured: true,
+    link: 'https://meli.la/2gQ5QJG',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_964584-MLB94548607760_102025-V.webp'
+  },
+  {
+    id: 3,
+    nome: 'Condicionador Shampoo Cavalera Barba Hidratada Classic 190ml',
+    categoria: 'barba',
+    preco: 119.90,
+    precoOriginal: null,
     avaliacao: 4.8,
-    avaliacoes: 3421,
+    avaliacoes: 534,
+    badge: null,
+    badgeClass: null,
+    featured: false,
+    link: 'https://meli.la/2HkVrah',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_686986-MLA104301216852_012026-V.webp'
+  },
+  {
+    id: 4,
+    nome: 'Pomada Modeladora Anti Frizz Cement Effect Baboon 80g',
+    categoria: 'cabelo',
+    preco: 98.00,
+    precoOriginal: null,
+    avaliacao: 4.7,
+    avaliacoes: 421,
+    badge: null,
+    badgeClass: null,
+    featured: false,
+    link: 'https://meli.la/1RjV1Hd',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_607395-MLA111499713249_052026-V.webp'
+  },
+  {
+    id: 5,
+    nome: 'Pomada Em Pó Para Cabelos Baboon 15g',
+    categoria: 'cabelo',
+    preco: 87.00,
+    precoOriginal: null,
+    avaliacao: 4.6,
+    avaliacoes: 318,
+    badge: null,
+    badgeClass: null,
+    featured: false,
+    link: 'https://meli.la/1pRv28y',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_989943-MLB50135997133_052022-V.webp'
+  },
+  {
+    id: 6,
+    nome: 'Óleo Para Barba Cavalera Classic 30ml Masculino Hidrata',
+    categoria: 'barba',
+    preco: 76.90,
+    precoOriginal: null,
+    avaliacao: 4.8,
+    avaliacoes: 673,
+    badge: 'Frete Grátis',
+    badgeClass: 'badge-free',
+    featured: true,
+    link: 'https://meli.la/1uJWGxr',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_916134-MLA95082739925_102025-V.webp'
+  },
+  {
+    id: 7,
+    nome: 'Balm E Leave-in Hidratante Cavalera Classic 150ml',
+    categoria: 'barba',
+    preco: 74.90,
+    precoOriginal: null,
+    avaliacao: 4.7,
+    avaliacoes: 289,
+    badge: null,
+    badgeClass: null,
+    featured: false,
+    link: 'https://meli.la/1ET9ZzT',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_935817-MLA99842431347_112025-V.webp'
+  },
+  {
+    id: 8,
+    nome: 'Shampoo Fortalecedor Para Cabelo Classic Cavalera 250ml',
+    categoria: 'cabelo',
+    preco: 54.90,
+    precoOriginal: null,
+    avaliacao: 4.7,
+    avaliacoes: 412,
+    badge: null,
+    badgeClass: null,
+    featured: false,
+    link: 'https://meli.la/2qSHhmg',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_769170-MLA99837481213_112025-V.webp'
+  },
+  {
+    id: 9,
+    nome: 'Shampoo Fortifying 1922 By J.M. Keune Antiqueda 250ml',
+    categoria: 'cabelo',
+    preco: 144.09,
+    precoOriginal: null,
+    avaliacao: 4.9,
+    avaliacoes: 756,
     badge: 'Mais Vendido',
     badgeClass: 'badge-sold',
     featured: true,
-    link: 'https://meli.la/2gQ5QJG'
+    link: 'https://meli.la/1YEbaaU',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_880592-MLB96155049365_102025-V.webp'
+  },
+  {
+    id: 10,
+    nome: 'Keune 1922 By J.M. Keune Premium Clay Pomada 100ml',
+    categoria: 'cabelo',
+    preco: 180.80,
+    precoOriginal: null,
+    avaliacao: 4.8,
+    avaliacoes: 543,
+    badge: null,
+    badgeClass: null,
+    featured: false,
+    link: 'https://meli.la/1wE7J7c',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_787563-MLA107686638668_032026-V.webp'
+  },
+  {
+    id: 11,
+    nome: 'Keune Beard Oil Óleo De Barba Nutrição Intensa 50ml',
+    categoria: 'barba',
+    preco: 327.82,
+    precoOriginal: null,
+    avaliacao: 4.9,
+    avaliacoes: 234,
+    badge: null,
+    badgeClass: null,
+    featured: false,
+    link: 'https://meli.la/33KnRbq',
+    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_980226-MLB94580757243_102025-V.webp'
   }
 ];
 
@@ -836,6 +964,7 @@ function buildCard(produto) {
   return `
     <a class="product-card fade-up" href="${produto.link}" target="_blank" rel="noopener noreferrer">
       <div class="product-img-wrap">
+        ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" />` : ''}
         ${produto.badge ? `<span class="product-badge ${produto.badgeClass}">${getBadgeLabel(produto.badge)}</span>` : ''}
       </div>
       <div class="product-body">

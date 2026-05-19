@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3001;
 
 const ASAAS_API_KEY = process.env.ASAAS_API_KEY;
 const ASAAS_BASE_URL = process.env.ASAAS_BASE_URL || 'https://sandbox.asaas.com/api/v3';
+const ASAAS_WALLET_ID = process.env.ASAAS_WALLET_ID;
 
 if (!ASAAS_API_KEY) {
   console.error('ERRO: ASAAS_API_KEY não configurada no .env');
@@ -72,12 +73,15 @@ function validarCpf(cpf) {
 
 function validarPayload(body) {
   const erros = [];
-  const { nome, cpf, email, plano, cartao } = body;
+  const { nome, cpf, email, plano, cep, numero, cartao } = body;
 
   if (!nome || nome.trim().split(/\s+/).length < 2) erros.push('Nome completo obrigatório.');
   if (!cpf || !validarCpf(cpf)) erros.push('CPF inválido.');
   if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) erros.push('E-mail inválido.');
   if (!plano || !PLANOS[plano]) erros.push('Plano inválido.');
+
+  if (!cep || cep.replace(/\D/g,'').length !== 8) erros.push('CEP inválido.');
+  if (!numero || !numero.trim()) erros.push('Número do endereço obrigatório.');
 
   if (!cartao) {
     erros.push('Dados do cartão obrigatórios.');
@@ -113,21 +117,32 @@ app.post('/api/subscribe', limiter, async (req, res) => {
     return res.status(400).json({ success: false, message: erros.join(' ') });
   }
 
-  const { nome, cpf, email, whatsapp, plano, cartao } = req.body;
+  const { nome, cpf, email, whatsapp, cep, numero, plano, cartao } = req.body;
   const planoInfo = PLANOS[plano];
 
   let customerId;
 
+  const cpfLimpo = cpf.replace(/\D/g, '');
+  console.log('[DEBUG] CPF recebido:', cpf, '→ limpo:', cpfLimpo, '(len:', cpfLimpo.length, ')');
+  console.log('[DEBUG] Payload cliente:', JSON.stringify({ name: nome.trim(), cpfCnpj: cpfLimpo, email: email.trim().toLowerCase() }));
+
   try {
     const customerResp = await asaas.post('/customers', {
       name: nome.trim(),
-      cpfCnpj: cpf.replace(/\D/g, ''),
+      cpfCnpj: cpfLimpo,
       email: email.trim().toLowerCase(),
       ...(whatsapp && whatsapp.replace(/\D/g,'').length >= 10 && {
         mobilePhone: whatsapp.replace(/\D/g, '')
       })
     });
     customerId = customerResp.data.id;
+    console.log('[DEBUG] Cliente criado/retornado:', customerId, '| cpfCnpj no retorno:', customerResp.data.cpfCnpj);
+
+    // Se o Asaas retornou um cliente existente sem CPF, atualiza antes de criar a assinatura
+    if (!customerResp.data.cpfCnpj) {
+      console.log('[DEBUG] Cliente sem CPF — atualizando via PUT...');
+      await asaas.put(`/customers/${customerId}`, { cpfCnpj: cpfLimpo });
+    }
   } catch (err) {
     console.error('[Asaas] Erro ao criar cliente:', err?.response?.data || err.message);
     const msg = extrairMensagemAsaas(err);
@@ -137,30 +152,36 @@ app.post('/api/subscribe', limiter, async (req, res) => {
   const hoje = new Date();
   const nextDueDate = hoje.toISOString().split('T')[0];
 
+  const subscPayload = {
+    customer: customerId,
+    billingType: 'CREDIT_CARD',
+    cycle: 'MONTHLY',
+    value: planoInfo.valor,
+    nextDueDate,
+    description: planoInfo.descricao,
+    creditCard: {
+      holderName: cartao.nomeTitular.trim(),
+      number: cartao.numero.replace(/\s/g, ''),
+      expiryMonth: cartao.mesValidade,
+      expiryYear: cartao.anoValidade,
+      ccv: cartao.cvv
+    },
+    creditCardHolderInfo: {
+      name: nome.trim(),
+      cpfCnpj: cpfLimpo,
+      email: email.trim().toLowerCase(),
+      postalCode: cep.replace(/\D/g, ''),
+      addressNumber: numero,
+      ...(whatsapp && whatsapp.replace(/\D/g,'').length >= 10 && {
+        phone: whatsapp.replace(/\D/g, '')
+      })
+    },
+    ...(ASAAS_WALLET_ID && { walletId: ASAAS_WALLET_ID })
+  };
+  console.log('[DEBUG] Payload assinatura:', JSON.stringify(subscPayload, null, 2));
+
   try {
-    const subscResp = await asaas.post('/subscriptions', {
-      customer: customerId,
-      billingType: 'CREDIT_CARD',
-      cycle: 'MONTHLY',
-      value: planoInfo.valor,
-      nextDueDate,
-      description: planoInfo.descricao,
-      creditCard: {
-        holderName: cartao.nomeTitular.trim(),
-        number: cartao.numero.replace(/\s/g, ''),
-        expiryMonth: cartao.mesValidade,
-        expiryYear: cartao.anoValidade,
-        ccv: cartao.cvv
-      },
-      creditCardHolderInfo: {
-        name: nome.trim(),
-        cpfCnpj: cpf.replace(/\D/g, ''),
-        email: email.trim().toLowerCase(),
-        ...(whatsapp && whatsapp.replace(/\D/g,'').length >= 10 && {
-          phone: whatsapp.replace(/\D/g, '')
-        })
-      }
-    });
+    const subscResp = await asaas.post('/subscriptions', subscPayload);
 
     return res.status(201).json({
       success: true,

@@ -920,6 +920,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <input type="tel" id="whatsapp" name="whatsapp" placeholder="(47) 99999-9999" maxlength="15" inputmode="numeric" />
         </div>
 
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" name="cep" placeholder="00000-000" maxlength="9" inputmode="numeric" autocomplete="postal-code" />
+            <div class="form-error-msg" id="erroCep">CEP inválido.</div>
+          </div>
+          <div class="form-group">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" name="numero" placeholder="Ex: 123" maxlength="10" />
+            <div class="form-error-msg" id="erroNumero">Informe o número.</div>
+          </div>
+        </div>
+
         <div class="form-section-label">Dados do Cartão</div>
 
         <div class="form-group">
@@ -1084,6 +1097,12 @@ document.getElementById('whatsapp').addEventListener('input', function(e) {
   e.target.value = v;
 });
 
+document.getElementById('cep').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,8);
+  if (v.length > 5) v = v.slice(0,5) + '-' + v.slice(5);
+  e.target.value = v;
+});
+
 /* ===== Validação ===== */
 function limparErros() {
   document.querySelectorAll('.form-error-msg').forEach(function(el) { el.classList.remove('show'); });
@@ -1136,6 +1155,14 @@ function validarForm() {
   if (cvv.length < 3 || !/^\d+$/.test(cvv)) {
     mostrarErro('cardCvv', 'erroCardCvv'); ok = false;
   }
+  var cep = document.getElementById('cep').value.replace(/\D/g,'');
+  if (cep.length !== 8) {
+    mostrarErro('cep', 'erroCep'); ok = false;
+  }
+  var numero = document.getElementById('numero').value.trim();
+  if (!numero) {
+    mostrarErro('numero', 'erroNumero'); ok = false;
+  }
   return ok;
 }
 
@@ -1154,6 +1181,8 @@ async function submitForm(e) {
     cpf: document.getElementById('cpf').value.replace(/\D/g,''),
     email: document.getElementById('email').value.trim(),
     whatsapp: document.getElementById('whatsapp').value.replace(/\D/g,''),
+    cep: document.getElementById('cep').value.replace(/\D/g,''),
+    numero: document.getElementById('numero').value.trim(),
     plano: planoSelecionado,
     cartao: {
       nomeTitular: document.getElementById('cardNome').value.trim(),
@@ -1165,7 +1194,7 @@ async function submitForm(e) {
   };
 
   try {
-    var resp = await fetch('/api/subscribe', {
+    var resp = await fetch('http://localhost:3001/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)

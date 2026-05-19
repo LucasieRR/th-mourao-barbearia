@@ -59,6 +59,12 @@
   },
   "hotPaths": [
     {
+      "path": "api/server.js",
+      "accessCount": 8,
+      "lastAccessed": 1779199012848,
+      "type": "file"
+    },
+    {
       "path": "index.html",
       "accessCount": 7,
       "lastAccessed": 1779195258711,
@@ -66,14 +72,26 @@
     },
     {
       "path": "store.html",
-      "accessCount": 5,
-      "lastAccessed": 1779195216071,
+      "accessCount": 7,
+      "lastAccessed": 1779201829102,
       "type": "file"
     },
     {
       "path": "blog.html",
       "accessCount": 2,
       "lastAccessed": 1779194783027,
+      "type": "file"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 2,
+      "lastAccessed": 1779196750476,
+      "type": "file"
+    },
+    {
+      "path": "assinaturas.html",
+      "accessCount": 2,
+      "lastAccessed": 1779197572205,
       "type": "file"
     },
     {
@@ -89,27 +107,15 @@
       "type": "file"
     },
     {
-      "path": "assinaturas.html",
-      "accessCount": 1,
-      "lastAccessed": 1779195478999,
-      "type": "file"
-    },
-    {
-      "path": "api/server.js",
-      "accessCount": 1,
-      "lastAccessed": 1779195520155,
-      "type": "file"
-    },
-    {
       "path": "api/package.json",
       "accessCount": 1,
       "lastAccessed": 1779195537167,
       "type": "file"
     },
     {
-      "path": ".env.example",
+      "path": ".env",
       "accessCount": 1,
-      "lastAccessed": 1779195548536,
+      "lastAccessed": 1779196823774,
       "type": "file"
     }
   ],
