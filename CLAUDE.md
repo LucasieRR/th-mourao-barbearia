@@ -3,7 +3,7 @@
 ## Projeto
 
 Landing page estática (HTML/CSS/JS puro) para barbearia. Sem framework, sem bundler.
-Página de assinaturas em `/assinaturas.html` com backend Node.js/Express em `/api/server.js`.
+Página de assinaturas em `/assinaturas.html` com backend em `/api/subscribe.js` (Vercel Serverless Function — Node.js). O `api/server.js` existe apenas para rodar localmente na porta 3001.
 
 ## Estrutura
 
@@ -19,7 +19,8 @@ Página de assinaturas em `/assinaturas.html` com backend Node.js/Express em `/a
 /_redirects          ← Netlify clean URLs (rewrite 200)
 /assets/             ← imagens, logo, design-system.css
 /api/
-  server.js          ← Express API (porta 3001)
+  subscribe.js       ← Vercel Serverless Function (produção — /api/subscribe)
+  server.js          ← Express API (apenas local, porta 3001)
   package.json
 /.env                ← credenciais reais (nunca commitar)
 /.env.example        ← template
@@ -238,3 +239,28 @@ sb.auth.onAuthStateChange(async (event, session) => {
 
 5. **Mensagens de erro do Asaas são frequentemente genéricas/enganosas**
    - Não tratar a mensagem como verdade literal. Ir na doc de dúvidas frequentes do endpoint específico.
+
+6. **`creditCardHolderInfo` exige `phone` obrigatoriamente**
+   - O Asaas retorna "Informe o número de contato com DDD do titular do cartão" se `phone` estiver ausente. O campo `whatsapp` do formulário deve sempre ser mapeado para `phone` no payload — não é opcional.
+
+---
+
+## Lições aprendidas (deploy Vercel — API serverless)
+
+### O que custou tempo e como evitar da próxima vez
+
+1. **`api/server.js` não é deployado pelo Vercel automaticamente**
+   - O Vercel com `@vercel/static` serve apenas arquivos estáticos. O Express local nunca foi ao ar em produção — o frontend chamava `localhost:3001` que não existia no navegador do usuário.
+   - **Solução:** converter para Vercel Serverless Function (`api/subscribe.js` com `module.exports = async function handler(req, res)`), adicionar build `@vercel/node` no `vercel.json` e rota `/api/subscribe` antes das rotas estáticas.
+
+2. **Dependências da serverless function devem estar no `package.json` da raiz**
+   - O `axios` estava só em `api/package.json`. O Vercel instala dependências a partir do `package.json` da raiz — adicionar lá também.
+
+3. **Padrões de `source` em `headers` do `vercel.json` não aceitam grupos de captura `(.*)`**
+   - Usar `:path*` para paths genéricos e `:file.(ext1|ext2)` para extensões. Grupos `(.*)` causam erro de build "invalid source pattern".
+
+4. **`git push` não dispara deploy automático se o projeto não estiver conectado ao GitHub via Vercel Dashboard**
+   - Verificar sempre se o último deploy no Vercel corresponde ao commit atual. Se não, rodar `npx vercel --prod` manualmente.
+
+5. **Sempre testar o endpoint em produção via `curl` antes de fechar a tarefa**
+   - Um `NOT_FOUND` indica rota não registrada ou deploy desatualizado. Um erro do Asaas (ex: celular inválido) confirma que a função está rodando.

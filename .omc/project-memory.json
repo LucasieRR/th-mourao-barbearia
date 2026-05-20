@@ -78,8 +78,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 122,
-      "lastAccessed": 1779317967832,
+      "accessCount": 127,
+      "lastAccessed": 1779320244815,
       "type": "file"
     },
     {
@@ -113,6 +113,12 @@
       "type": "file"
     },
     {
+      "path": "CLAUDE.md",
+      "accessCount": 20,
+      "lastAccessed": 1779320166866,
+      "type": "file"
+    },
+    {
       "path": "supabase-migration.sql",
       "accessCount": 19,
       "lastAccessed": 1779279555975,
@@ -122,12 +128,6 @@
       "path": "blog-post.html",
       "accessCount": 15,
       "lastAccessed": 1779228663716,
-      "type": "file"
-    },
-    {
-      "path": "CLAUDE.md",
-      "accessCount": 15,
-      "lastAccessed": 1779318255586,
       "type": "file"
     },
     {
