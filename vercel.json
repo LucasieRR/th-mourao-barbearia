@@ -6,13 +6,13 @@
   ],
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/assets/:path*",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/(.*)\\.(?:jpg|jpeg|png|webp|avif|svg|ico|woff2|woff|ttf|css|js)",
+      "source": "/:file.(jpg|jpeg|png|webp|avif|svg|ico|woff2|woff|ttf|css|js)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
