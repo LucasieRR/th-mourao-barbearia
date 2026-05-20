@@ -591,13 +591,14 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
     </a>
     <div class="nav-links" id="navLinks">
+      <a href="/">Início</a>
       <a href="/#servicos">Serviços</a>
       <a href="/#equipe">Equipe</a>
-      <a href="store" class="active">Store</a>
       <a href="/blog">Blog</a>
+      <a href="store" class="active">Store</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-outline" href="minha-conta.html" style="display:none">Minha Conta</a>
+      <a class="btn btn-outline" href="minha-conta.html">Minha Conta</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -608,7 +609,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <!-- STORE HERO -->
 <section class="store-hero">
   <div class="container store-hero-inner">
-    <div class="store-hero-text fade-up">
+    <div class="store-hero-text">
       <div class="store-hero-eyebrow">Curadoria TH Mourão</div>
       <h1 class="store-hero-h1">PRODUTOS<br/>DE <span>ELITE</span><br/>PARA O<br/>HOMEM</h1>
       <p class="store-hero-sub">Selecionamos os melhores produtos de cuidado masculino disponíveis no Mercado Livre. Tudo para sua pele, cabelo e barba em um só lugar.</p>
@@ -765,7 +766,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 // ========== SUPABASE ==========
 const SUPABASE_URL = 'https://gwycwjhhdladlcvqlred.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3eWN3amhoZGxhZGxjdnFscmVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTI5MTQsImV4cCI6MjA5NDc4ODkxNH0.T_U6cQC2QpAarutCmJepe6DRINHOuvvqA30R7RgGQDw';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let supabase;
 
 // ========== STATE ==========
 let produtos = [];
@@ -986,8 +987,15 @@ function badgeClass(badge) {
 }
 
 // ========== INIT ==========
-loadProducts();
-observeFadeUps();
+document.addEventListener('DOMContentLoaded', () => {
+  if (!window.supabase) {
+    document.getElementById('productsCount').innerHTML = 'Erro: biblioteca não carregada. Recarregue a página.';
+    return;
+  }
+  supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  loadProducts();
+  observeFadeUps();
+});
 </script>
 </body>
 </html>

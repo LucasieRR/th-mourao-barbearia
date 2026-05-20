@@ -77,27 +77,33 @@
   },
   "hotPaths": [
     {
-      "path": "minha-conta.html",
-      "accessCount": 38,
-      "lastAccessed": 1779277996069,
+      "path": "store.html",
+      "accessCount": 47,
+      "lastAccessed": 1779284541767,
       "type": "file"
     },
     {
-      "path": "store.html",
-      "accessCount": 32,
-      "lastAccessed": 1779279394814,
+      "path": "minha-conta.html",
+      "accessCount": 46,
+      "lastAccessed": 1779284702415,
       "type": "file"
     },
     {
       "path": "index.html",
-      "accessCount": 25,
-      "lastAccessed": 1779228923535,
+      "accessCount": 29,
+      "lastAccessed": 1779284594196,
       "type": "file"
     },
     {
       "path": "blog.html",
       "accessCount": 22,
       "lastAccessed": 1779228662175,
+      "type": "file"
+    },
+    {
+      "path": "booking.html",
+      "accessCount": 22,
+      "lastAccessed": 1779284728409,
       "type": "file"
     },
     {
@@ -134,12 +140,6 @@
       "path": "assinaturas.html",
       "accessCount": 3,
       "lastAccessed": 1779220209040,
-      "type": "file"
-    },
-    {
-      "path": "booking.html",
-      "accessCount": 3,
-      "lastAccessed": 1779225235436,
       "type": "file"
     },
     {
