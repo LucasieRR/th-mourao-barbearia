@@ -91,6 +91,79 @@ Este erro **não** se refere ao cliente nem ao `creditCardHolderInfo`. Refere-se
 - Sandbox: `https://sandbox.asaas.com/api/v3`
 - Produção: `https://api.asaas.com/v3`
 
+## Supabase Auth — Padrões e Armadilhas
+
+### Comportamento esperado do `onAuthStateChange`
+- Dispara **imediatamente** ao carregar a página se há sessão ativa no `localStorage` — isso é correto, não é bug
+- Para testar como usuário novo: sempre usar aba anônima/privada
+- Não confundir "página carrega logada" com bug — só é bug se o logout não funcionar
+
+### Saudação com nome do usuário
+- `user.user_metadata.full_name` só existe se o usuário cadastrou via OAuth (Google) ou se foi salvo via `updateUser`
+- Usuários que se cadastraram com email/senha geralmente têm `user_metadata` vazio → fallback para `email.split('@')[0]` mostra o email
+- **Padrão correto:** mostrar metadata como fallback inicial, depois atualizar com `clients.name` após `loadClientProfile()` terminar
+  ```js
+  const metaName = session.user.user_metadata?.full_name || '';
+  document.getElementById('greeting-name').textContent = `Olá, ${metaName.split(' ')[0] || 'Você'}!`;
+  await loadClientProfile(session.user); // carrega clients.name
+  const realName = currentClient?.name || metaName;
+  if (realName) document.getElementById('greeting-name').textContent = `Olá, ${realName.split(' ')[0]}!`;
+  ```
+
+### RLS silenciosa em `user_roles`
+- Se a policy SELECT não permite que o usuário leia seu próprio registro, `maybeSingle()` retorna `data: null` sem erro — o `catch` nunca é atingido
+- **Diagnóstico:** verificar no Supabase Dashboard → Table Editor → `user_roles` → se a linha existe, o problema é RLS
+- **Fix de RLS:** `CREATE POLICY "user reads own role" ON user_roles FOR SELECT USING (auth.uid() = user_id);`
+- Isolar a query de `user_roles` em `try/catch` separado do `Promise.all` principal — se falhar não quebra o restante
+
+### Logout robusto (multi-browser, Safari)
+- `signOut()` sozinho não garante limpeza no Safari — storage pode persistir
+- Padrão completo:
+  ```js
+  await sb.auth.signOut({ scope: 'local' });
+  ['localStorage', 'sessionStorage'].forEach(store => {
+    try { Object.keys(window[store]).forEach(k => { if (k.startsWith('sb-')) window[store].removeItem(k); }); } catch(e) {}
+  });
+  localStorage.setItem('th_open_tabs', '0');
+  setTimeout(() => { window.location.href = '/minha-conta'; }, 150);
+  ```
+
+### Sessão multi-aba com expiração ao fechar (Opção C)
+Padrão implementado: sessão persiste entre abas abertas, expira quando **todas** as abas são fechadas.
+```js
+// No init do script:
+const TAB_ID = 'th_tab_' + Math.random().toString(36).slice(2);
+sessionStorage.setItem(TAB_ID, '1');
+const count = parseInt(localStorage.getItem('th_open_tabs') || '0', 10);
+localStorage.setItem('th_open_tabs', count + 1);
+// Se contador estava zerado, limpa sessão stale
+if (count === 0) { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); }
+
+window.addEventListener('beforeunload', () => {
+  sessionStorage.removeItem(TAB_ID);
+  const remaining = Math.max(0, parseInt(localStorage.getItem('th_open_tabs') || '1', 10) - 1);
+  localStorage.setItem('th_open_tabs', remaining);
+  if (remaining === 0) {
+    Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
+    localStorage.removeItem('th_open_tabs');
+  }
+});
+```
+
+---
+
+## Deploy — Vercel vs Netlify
+
+- **Este projeto usa Vercel** — `_redirects` (Netlify) é ignorado; rotas ficam em `vercel.json`
+- Ao adicionar nova página: sempre adicionar rota em `vercel.json` antes de usar URL limpa
+- `_redirects` mantido no repo por histórico mas inativo
+- **Checklist para nova página:**
+  1. Criar `pagina.html`
+  2. Adicionar `{ "src": "/pagina", "dest": "/pagina.html" }` em `vercel.json`
+  3. Usar `href="/pagina"` em todos os links internos (nunca `href="pagina.html"`)
+
+---
+
 ## Lições aprendidas (implementação de pagamentos)
 
 ### O que custou tempo e como evitar da próxima vez
