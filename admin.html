@@ -765,8 +765,7 @@ async function withBtnLoading(btn, fn) {
 // ============================================================
 // AUTH GATE
 // ============================================================
-async function checkAuthAndAdmin() {
-  const { data: { session } } = await sb.auth.getSession();
+async function checkAuthAndAdmin(session) {
   if (!session || !session.user) {
     window.location.href = '/minha-conta';
     return false;
@@ -1383,13 +1382,20 @@ async function swapProduct(id, direction) {
 // ============================================================
 $('#btnLogout').addEventListener('click', doLogout);
 
-(async function init() {
-  const ok = await checkAuthAndAdmin();
+// Usa onAuthStateChange para pegar a sessão corretamente mesmo após redirect
+// getSession() pode retornar null se o token ainda está sendo restaurado
+let _booted = false;
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (_booted) return; // só executa na primeira vez
+  if (event === 'SIGNED_OUT') { window.location.href = '/minha-conta'; return; }
+  if (!session) return; // aguarda INITIAL_SESSION ou SIGNED_IN
+  _booted = true;
+  const ok = await checkAuthAndAdmin(session);
   if (!ok) return;
   $('#authGate').style.display = 'none';
   $('#appRoot').style.display = 'block';
   await loadBarbers();
-})();
+});
 </script>
 </body>
 </html>
