@@ -1,7 +1,7 @@
 {
   "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"export NVM_DIR=\\\"$HOME/.nvm\\\" && [ -s \\\"$NVM_DIR/nvm.sh\\\" ] && \\\\. \\\"$NVM_DIR/nvm.sh\\\" && cd /tmp/puppeteer-test && cat > test_logic2.js << 'EOF'\\nconst puppeteer = require('puppeteer');\\n...",
-  "error": "Exit code 1\n\n=== CENÁRIO 1: count=0 sem nav interna → limpa sb-* ===\n[browser] initTabSession: count_before=0 isInternal=false tabs_after=1 sb-keys=0\n[browser] initTabSession: count_before=0 isInternal=false tabs_after=1 sb-keys=0\nsb-*: 0 | tabs: 1\n[PASSOU] Sessão limpa quando count=0 ✓\n\n=== CENÁRIO 2: count=0 com th_nav_ts recente → preserva sb-* ===\n[browser] initTabSession: count_before=0 isInternal=false tabs_after=1 sb-keys=0\n[browser] initTabSession: count_before=0 isInternal=true tabs_aft...",
-  "timestamp": "2026-05-20T23:03:36.248Z",
-  "retry_count": 2
+  "tool_input_preview": "{\"command\":\"cd \\\"/Users/lucasreis/Desktop/TH - LP\\\" && npx vercel --prod 2>&1\",\"timeout\":120000,\"description\":\"Force deploy to Vercel production\"}",
+  "error": "Exit code 1\n<claude-code-hint v=\"1\" type=\"plugin\" value=\"vercel@claude-plugins-official\" />\nRetrieving project…\nDeploying kings-projectz/th-mourao-barbearia\n{\n  \"status\": \"error\",\n  \"reason\": \"deploy_failed\",\n  \"message\": \"Header at index 1 has invalid `source` pattern \\\"/(.*)\\\\.(?:jpg|jpeg|png|webp|avif|svg|ico|woff2|woff|ttf|css|js)\\\".\",\n  \"next\": [\n    {\n      \"command\": \"vercel deploy\",\n      \"when\": \"retry deploy\"\n    }\n  ]\n}\nError: Header at index 1 has invalid `source` pattern \"/(.*)\\.(?:...",
+  "timestamp": "2026-05-20T23:26:27.263Z",
+  "retry_count": 1
 }
