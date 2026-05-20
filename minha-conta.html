@@ -653,10 +653,10 @@ async function onLoggedIn(session) {
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('portal').classList.add('show');
 
-  const displayName = session.user.user_metadata?.full_name ||
-    session.user.user_metadata?.name ||
-    session.user.email?.split('@')[0] || 'Você';
-  document.getElementById('greeting-name').textContent = `Olá, ${displayName.split(' ')[0]}!`;
+  // Greeting inicial com metadata enquanto perfil carrega
+  const metaName = session.user.user_metadata?.full_name ||
+    session.user.user_metadata?.name || '';
+  document.getElementById('greeting-name').textContent = `Olá, ${metaName.split(' ')[0] || 'Você'}!`;
 
   // Run profile load and appointments in parallel, admin check separately (RLS may block)
   await Promise.all([
@@ -664,9 +664,15 @@ async function onLoggedIn(session) {
     loadAppointments(),
   ]);
 
-  // Admin check — try both possible table structures
+  // Atualiza saudação com nome real do perfil (clients table tem prioridade)
+  const profileName = currentClient?.name || metaName || '';
+  if (profileName) {
+    document.getElementById('greeting-name').textContent = `Olá, ${profileName.split(' ')[0]}!`;
+  }
+
+  // Admin check
   try {
-    const { data: roleData } = await sb
+    const { data: roleData, error: roleError } = await sb
       .from('user_roles')
       .select('role')
       .eq('user_id', session.user.id)
@@ -679,7 +685,7 @@ async function onLoggedIn(session) {
       adminBtn.className = 'portal-tab';
       adminBtn.id = 'tab-btn-admin';
       adminBtn.textContent = 'Painel Admin';
-      adminBtn.onclick = () => { window.location.href = 'admin.html'; };
+      adminBtn.onclick = () => { window.location.href = '/admin'; };
       tabs.appendChild(adminBtn);
     }
   } catch (e) {
@@ -800,8 +806,10 @@ async function doGoogleLogin() {
 }
 
 async function doLogout() {
-  try { await sb.auth.signOut(); } catch (e) { console.warn('signOut error:', e); }
-  window.location.reload();
+  try { await sb.auth.signOut({ scope: 'local' }); } catch (e) { console.warn('signOut error:', e); }
+  // Limpa storage do Supabase para garantir que a sessão seja removida
+  Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
+  window.location.href = '/minha-conta';
 }
 
 // ============================================================

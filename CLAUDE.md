@@ -45,6 +45,12 @@ O arquivo `_redirects` na raiz configura rewrites silenciosos via Netlify:
 
 Exceção: `index.html` pode ser referenciado como `index.html` quando usado com âncoras (`index.html#secao`) ou como `href="/"` para a homepage.
 
+## Scripts externos e carregamento
+
+- CDNs usados por scripts inline (ex: Supabase, Stripe) devem ser carregados no `<head>` como scripts bloqueantes — nunca no fim do `<body>` junto com o script que os usa
+- Scripts inline que dependem de bibliotecas CDN devem envolver o init em `DOMContentLoaded` + guard (`if (!window.lib) { ... }`)
+- Nunca chamar `lib.createClient()` ou similar no topo do script — sempre dentro do `DOMContentLoaded`
+
 ## Rodar localmente
 
 ```bash
@@ -58,6 +64,7 @@ cd api && node server.js   # API na porta 3001
 - Fontes: Playfair Display (títulos), Bebas Neue (display), Inter (corpo)
 - Bordas: sharp (2–4px radius)
 - Animações: fade-up com IntersectionObserver
+- **Regra:** elementos acima do fold (hero, primeira seção) NUNCA devem ter `class="fade-up"` — o IntersectionObserver pode não disparar e o elemento fica invisível. `fade-up` é só para seções abaixo do fold.
 
 ## Integração Asaas
 
