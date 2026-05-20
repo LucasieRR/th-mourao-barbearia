@@ -783,12 +783,15 @@ async function checkAuthAndAdmin(session) {
   }
   state.user = session.user;
 
-  const { data: roles, error } = await sb
+  console.log('[ADMIN checkAuthAndAdmin] iniciando query user_roles para user=' + session.user.id);
+  const rolesPromise = sb
     .from('user_roles')
     .select('role')
     .eq('user_id', session.user.id)
     .eq('role', 'admin')
     .limit(1);
+  const timeoutPromise = new Promise(resolve => setTimeout(() => resolve({ data: null, error: { message: 'TIMEOUT' } }), 5000));
+  const { data: roles, error } = await Promise.race([rolesPromise, timeoutPromise]);
 
   console.log('[ADMIN checkAuthAndAdmin] user=' + session.user.id + ' roles=' + JSON.stringify(roles) + ' error=' + JSON.stringify(error));
 
