@@ -59,45 +59,69 @@
   },
   "hotPaths": [
     {
-      "path": "blog.html",
-      "accessCount": 12,
-      "lastAccessed": 1779202348600,
-      "type": "file"
-    },
-    {
-      "path": "api/server.js",
-      "accessCount": 8,
-      "lastAccessed": 1779199012848,
-      "type": "file"
-    },
-    {
-      "path": "index.html",
-      "accessCount": 7,
-      "lastAccessed": 1779195258711,
+      "path": "minha-conta.html",
+      "accessCount": 38,
+      "lastAccessed": 1779277996069,
       "type": "file"
     },
     {
       "path": "store.html",
-      "accessCount": 7,
-      "lastAccessed": 1779201829102,
+      "accessCount": 31,
+      "lastAccessed": 1779277320644,
+      "type": "file"
+    },
+    {
+      "path": "index.html",
+      "accessCount": 25,
+      "lastAccessed": 1779228923535,
+      "type": "file"
+    },
+    {
+      "path": "blog.html",
+      "accessCount": 22,
+      "lastAccessed": 1779228662175,
+      "type": "file"
+    },
+    {
+      "path": "supabase-migration.sql",
+      "accessCount": 18,
+      "lastAccessed": 1779228931837,
       "type": "file"
     },
     {
       "path": "blog-post.html",
-      "accessCount": 5,
-      "lastAccessed": 1779202387214,
+      "accessCount": 15,
+      "lastAccessed": 1779228663716,
+      "type": "file"
+    },
+    {
+      "path": "api/server.js",
+      "accessCount": 9,
+      "lastAccessed": 1779220208088,
+      "type": "file"
+    },
+    {
+      "path": "admin.html",
+      "accessCount": 6,
+      "lastAccessed": 1779277111011,
       "type": "file"
     },
     {
       "path": ".env.example",
-      "accessCount": 2,
-      "lastAccessed": 1779196750476,
+      "accessCount": 3,
+      "lastAccessed": 1779220205342,
       "type": "file"
     },
     {
       "path": "assinaturas.html",
-      "accessCount": 2,
-      "lastAccessed": 1779197572205,
+      "accessCount": 3,
+      "lastAccessed": 1779220209040,
+      "type": "file"
+    },
+    {
+      "path": "booking.html",
+      "accessCount": 3,
+      "lastAccessed": 1779225235436,
       "type": "file"
     },
     {
@@ -107,15 +131,15 @@
       "type": "file"
     },
     {
-      "path": "assets/design-system.css",
-      "accessCount": 1,
-      "lastAccessed": 1779194782381,
+      "path": "api/package.json",
+      "accessCount": 2,
+      "lastAccessed": 1779220205718,
       "type": "file"
     },
     {
-      "path": "api/package.json",
+      "path": "assets/design-system.css",
       "accessCount": 1,
-      "lastAccessed": 1779195537167,
+      "lastAccessed": 1779194782381,
       "type": "file"
     },
     {
@@ -128,6 +152,18 @@
       "path": "CLAUDE.md",
       "accessCount": 1,
       "lastAccessed": 1779202428322,
+      "type": "file"
+    },
+    {
+      "path": "package.json",
+      "accessCount": 1,
+      "lastAccessed": 1779220205541,
+      "type": "file"
+    },
+    {
+      "path": "seed-professionals.sql",
+      "accessCount": 1,
+      "lastAccessed": 1779228975186,
       "type": "file"
     }
   ],

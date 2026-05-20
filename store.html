@@ -591,16 +591,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="/#hero">Início</a>
       <a href="/#servicos">Serviços</a>
-      <a href="/#galeria">Espaço</a>
       <a href="/#equipe">Equipe</a>
-      <a href="/#contato">Contato</a>
-      <a href="/blog">Blog</a>
       <a href="store" class="active">Store</a>
+      <a href="/blog">Blog</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-outline" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendar Agora</a>
+      <a class="btn btn-outline" href="minha-conta.html" style="display:none">Minha Conta</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -763,166 +760,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   Agendar Agora
 </a>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-// ========== PRODUTOS CATÁLOGO ==========
-const produtos = [
-  {
-    id: 1,
-    nome: 'Spray Fixador Para Cabelo Laquê Freak Show 400ml Don Alcides',
-    categoria: 'cabelo',
-    preco: 84.92,
-    precoOriginal: null,
-    avaliacao: 4.8,
-    avaliacoes: 1247,
-    badge: 'Mais Vendido',
-    badgeClass: 'badge-sold',
-    featured: true,
-    link: 'https://meli.la/21BUvto',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_782990-MLB69618878064_052023-V.webp'
-  },
-  {
-    id: 2,
-    nome: 'Kit Shampoo + Condicionador Anticaspa Nerk Therapy 240ml',
-    categoria: 'cabelo',
-    preco: 66.90,
-    precoOriginal: null,
-    avaliacao: 4.7,
-    avaliacoes: 892,
-    badge: null,
-    badgeClass: null,
-    featured: true,
-    link: 'https://meli.la/2gQ5QJG',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_964584-MLB94548607760_102025-V.webp'
-  },
-  {
-    id: 3,
-    nome: 'Condicionador Shampoo Cavalera Barba Hidratada Classic 190ml',
-    categoria: 'barba',
-    preco: 119.90,
-    precoOriginal: null,
-    avaliacao: 4.8,
-    avaliacoes: 534,
-    badge: null,
-    badgeClass: null,
-    featured: false,
-    link: 'https://meli.la/2HkVrah',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_686986-MLA104301216852_012026-V.webp'
-  },
-  {
-    id: 4,
-    nome: 'Pomada Modeladora Anti Frizz Cement Effect Baboon 80g',
-    categoria: 'cabelo',
-    preco: 98.00,
-    precoOriginal: null,
-    avaliacao: 4.7,
-    avaliacoes: 421,
-    badge: null,
-    badgeClass: null,
-    featured: false,
-    link: 'https://meli.la/1RjV1Hd',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_607395-MLA111499713249_052026-V.webp'
-  },
-  {
-    id: 5,
-    nome: 'Pomada Em Pó Para Cabelos Baboon 15g',
-    categoria: 'cabelo',
-    preco: 87.00,
-    precoOriginal: null,
-    avaliacao: 4.6,
-    avaliacoes: 318,
-    badge: null,
-    badgeClass: null,
-    featured: false,
-    link: 'https://meli.la/1pRv28y',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_989943-MLB50135997133_052022-V.webp'
-  },
-  {
-    id: 6,
-    nome: 'Óleo Para Barba Cavalera Classic 30ml Masculino Hidrata',
-    categoria: 'barba',
-    preco: 76.90,
-    precoOriginal: null,
-    avaliacao: 4.8,
-    avaliacoes: 673,
-    badge: 'Frete Grátis',
-    badgeClass: 'badge-free',
-    featured: true,
-    link: 'https://meli.la/1uJWGxr',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_916134-MLA95082739925_102025-V.webp'
-  },
-  {
-    id: 7,
-    nome: 'Balm E Leave-in Hidratante Cavalera Classic 150ml',
-    categoria: 'barba',
-    preco: 74.90,
-    precoOriginal: null,
-    avaliacao: 4.7,
-    avaliacoes: 289,
-    badge: null,
-    badgeClass: null,
-    featured: false,
-    link: 'https://meli.la/1ET9ZzT',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_935817-MLA99842431347_112025-V.webp'
-  },
-  {
-    id: 8,
-    nome: 'Shampoo Fortalecedor Para Cabelo Classic Cavalera 250ml',
-    categoria: 'cabelo',
-    preco: 54.90,
-    precoOriginal: null,
-    avaliacao: 4.7,
-    avaliacoes: 412,
-    badge: null,
-    badgeClass: null,
-    featured: false,
-    link: 'https://meli.la/2qSHhmg',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_769170-MLA99837481213_112025-V.webp'
-  },
-  {
-    id: 9,
-    nome: 'Shampoo Fortifying 1922 By J.M. Keune Antiqueda 250ml',
-    categoria: 'cabelo',
-    preco: 144.09,
-    precoOriginal: null,
-    avaliacao: 4.9,
-    avaliacoes: 756,
-    badge: 'Mais Vendido',
-    badgeClass: 'badge-sold',
-    featured: true,
-    link: 'https://meli.la/1YEbaaU',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_880592-MLB96155049365_102025-V.webp'
-  },
-  {
-    id: 10,
-    nome: 'Keune 1922 By J.M. Keune Premium Clay Pomada 100ml',
-    categoria: 'cabelo',
-    preco: 180.80,
-    precoOriginal: null,
-    avaliacao: 4.8,
-    avaliacoes: 543,
-    badge: null,
-    badgeClass: null,
-    featured: false,
-    link: 'https://meli.la/1wE7J7c',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_787563-MLA107686638668_032026-V.webp'
-  },
-  {
-    id: 11,
-    nome: 'Keune Beard Oil Óleo De Barba Nutrição Intensa 50ml',
-    categoria: 'barba',
-    preco: 327.82,
-    precoOriginal: null,
-    avaliacao: 4.9,
-    avaliacoes: 234,
-    badge: null,
-    badgeClass: null,
-    featured: false,
-    link: 'https://meli.la/33KnRbq',
-    imagem: 'https://http2.mlstatic.com/D_Q_NP_2X_980226-MLB94580757243_102025-V.webp'
-  }
-];
+// ========== SUPABASE ==========
+const SUPABASE_URL = 'https://gwycwjhhdladlcvqlred.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3eWN3amhoZGxhZGxjdnFscmVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTI5MTQsImV4cCI6MjA5NDc4ODkxNH0.T_U6cQC2QpAarutCmJepe6DRINHOuvvqA30R7RgGQDw';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ========== STATE ==========
+let produtos = [];
 let activeFilter = 'todos';
 let activeSort = 'featured';
 let visibleCount = 9;
@@ -1049,10 +895,12 @@ function setFilter(filter) {
 
 // ========== FADE-UP OBSERVER ==========
 function observeFadeUps() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+  requestAnimationFrame(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.05, rootMargin: '0px 0px 60px 0px' });
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => observer.observe(el));
+  });
 }
 
 // ========== NAVBAR SCROLL ==========
@@ -1094,9 +942,51 @@ document.getElementById('loadMoreBtn').addEventListener('click', () => {
   renderProducts();
 });
 
+// ========== LOAD FROM SUPABASE ==========
+async function loadProducts() {
+  document.getElementById('productsCount').innerHTML = 'Carregando produtos...';
+  const { data, error } = await supabase
+    .from('store_products')
+    .select('*')
+    .eq('ativo', true)
+    .order('destaque', { ascending: false })
+    .order('ordem', { ascending: true });
+
+  if (error) {
+    console.error('Erro ao carregar produtos:', error);
+    document.getElementById('productsCount').innerHTML = 'Erro ao carregar produtos.';
+    return;
+  }
+
+  // Map Supabase columns to local shape
+  produtos = (data || []).map(p => ({
+    id: p.id,
+    nome: p.nome,
+    categoria: p.categoria,
+    preco: parseFloat(p.preco),
+    precoOriginal: p.preco_original ? parseFloat(p.preco_original) : null,
+    avaliacao: parseFloat(p.avaliacao) || 5.0,
+    avaliacoes: p.avaliacoes || 0,
+    badge: p.badge || null,
+    badgeClass: badgeClass(p.badge),
+    featured: p.destaque,
+    link: p.link,
+    imagem: p.imagem || null
+  }));
+
+  renderFeatured();
+  renderProducts();
+  observeFadeUps();
+}
+
+function badgeClass(badge) {
+  if (!badge) return null;
+  const map = { 'Mais Vendido': 'badge-sold', 'Oferta': 'badge-offer', 'Frete Grátis': 'badge-free', 'Novo': 'badge-new' };
+  return map[badge] || 'badge-sold';
+}
+
 // ========== INIT ==========
-renderFeatured();
-renderProducts();
+loadProducts();
 observeFadeUps();
 </script>
 </body>

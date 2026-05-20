@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QMT52J8BXW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-QMT52J8BXW');
+</script>
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+  (function(c,l,a,r,i,t,y){
+    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+  })(window, document, "clarity", "script", "ws3twk4nu5");
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Minha Conta · TH Mourão Barbearia & Spa</title>
+<meta name="description" content="Acesse sua conta na TH Mourão. Veja seus agendamentos e gerencie seu perfil." />
+<meta name="robots" content="noindex" />
+<link rel="icon" type="image/png" href="assets/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+:root {
+  --verde: #4A5A3A;
+  --verde-dark: #2e3a22;
+  --verde-light: #6b7d58;
+  --preto: #0D0D0B;
+  --escuro: #111110;
+  --escuro2: #1C1C1A;
+  --creme: #F5F0E8;
+  --creme2: #EDE8DF;
+  --creme3: #E4DDD3;
+  --bege: #C8BBA4;
+  --branco: #FDFBF7;
+  --cinza: #7A7A74;
+  --cinza-light: #AEAEA8;
+  --font-serif: 'Playfair Display', Georgia, serif;
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-font-smoothing: antialiased; }
+body { font-family: var(--font-sans); color: var(--preto); background: var(--creme2); min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+img { max-width: 100%; display: block; }
+
+/* ========== NAVBAR ========== */
+.navbar {
+  background: var(--escuro);
+  padding: 14px 0;
+  position: sticky; top: 0; z-index: 100;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.nav-inner {
+  max-width: 1000px; margin: 0 auto; padding: 0 24px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; }
+.nav-brand img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 15px; color: var(--creme); }
+.nav-back { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cinza-light); display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+.nav-back:hover { color: var(--creme); }
+
+/* ========== LAYOUT ========== */
+.page-wrap { max-width: 1000px; margin: 0 auto; padding: 40px 24px 80px; }
+
+/* ========== AUTH SCREEN ========== */
+.auth-wrap {
+  max-width: 440px; margin: 0 auto;
+  background: var(--branco); border: 1px solid var(--creme3); border-radius: 4px;
+  padding: 40px 36px;
+}
+.auth-logo { text-align: center; margin-bottom: 28px; }
+.auth-logo img { width: 56px; height: 56px; border-radius: 50%; margin: 0 auto 12px; }
+.auth-logo-title { font-family: var(--font-serif); font-size: 22px; font-weight: 700; }
+.auth-logo-sub { font-size: 13px; color: var(--cinza); margin-top: 4px; }
+
+.auth-tabs { display: flex; border-bottom: 1px solid var(--creme3); margin-bottom: 28px; }
+.auth-tab {
+  flex: 1; padding: 12px; text-align: center;
+  font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--cinza); cursor: pointer; border-bottom: 2px solid transparent;
+  transition: all 0.2s; margin-bottom: -1px;
+}
+.auth-tab.active { color: var(--verde-dark); border-bottom-color: var(--verde); }
+
+.auth-panel { display: none; }
+.auth-panel.active { display: block; }
+
+.form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.form-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; color: var(--cinza); }
+.form-input {
+  padding: 12px 14px; border: 1px solid var(--creme3); border-radius: 3px;
+  font-family: var(--font-sans); font-size: 14px; color: var(--preto);
+  background: var(--branco); transition: border-color 0.2s; outline: none;
+}
+.form-input:focus { border-color: var(--verde); }
+.form-input::placeholder { color: var(--cinza-light); }
+
+.password-wrap { position: relative; display: flex; align-items: center; }
+.password-wrap .form-input { width: 100%; padding-right: 42px; }
+.password-toggle {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; padding: 0; color: var(--cinza);
+  display: flex; align-items: center; transition: color 0.2s;
+}
+.password-toggle:hover { color: var(--verde); }
+
+.btn-submit {
+  width: 100%; padding: 14px; background: var(--verde); color: #fff;
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px;
+  border: none; cursor: pointer; transition: background 0.2s;
+  margin-top: 4px;
+}
+.btn-submit:hover { background: var(--verde-dark); }
+.btn-submit:disabled { background: var(--creme3); color: var(--cinza-light); cursor: not-allowed; }
+
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0; font-size: 12px; color: var(--cinza-light);
+}
+.divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--creme3); }
+
+.btn-google {
+  width: 100%; padding: 13px; background: var(--branco); color: var(--preto);
+  border: 1px solid var(--creme3); border-radius: 2px;
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn-google:hover { border-color: var(--bege); background: var(--creme2); }
+
+.auth-error {
+  background: #fef2f2; border: 1px solid #fecaca; border-radius: 3px;
+  padding: 10px 14px; font-size: 13px; color: #dc2626;
+  margin-bottom: 14px; display: none;
+}
+.auth-error.show { display: block; }
+.auth-success {
+  background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 3px;
+  padding: 10px 14px; font-size: 13px; color: #16a34a;
+  margin-bottom: 14px; display: none;
+}
+.auth-success.show { display: block; }
+
+/* ========== PORTAL LOGADO ========== */
+.portal { display: none; }
+.portal.show { display: block; }
+
+.portal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 32px; flex-wrap: wrap; gap: 16px;
+}
+.portal-greeting { }
+.portal-greeting-name { font-family: var(--font-serif); font-size: 28px; font-weight: 700; }
+.portal-greeting-sub { font-size: 14px; color: var(--cinza); margin-top: 4px; }
+.btn-logout {
+  font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--cinza); padding: 10px 18px; border: 1px solid var(--creme3);
+  border-radius: 2px; background: var(--branco); cursor: pointer; transition: all 0.2s;
+}
+.btn-logout:hover { border-color: var(--bege); color: var(--preto); }
+
+.portal-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--creme3); margin-bottom: 32px; }
+.portal-tab {
+  padding: 12px 24px; font-size: 13px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--cinza);
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: all 0.2s; background: none; border-left: none; border-right: none; border-top: none;
+}
+.portal-tab.active { color: var(--verde-dark); border-bottom-color: var(--verde); }
+
+.portal-panel { display: none; }
+.portal-panel.active { display: block; }
+
+/* ========== AGENDAMENTOS ========== */
+.appt-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+.appt-tab {
+  padding: 8px 18px; border-radius: 20px; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
+  border: 1px solid var(--creme3); background: var(--branco); color: var(--cinza);
+  transition: all 0.2s;
+}
+.appt-tab.active { background: var(--verde); border-color: var(--verde); color: #fff; }
+
+.appt-list { display: flex; flex-direction: column; gap: 12px; }
+.appt-card {
+  background: var(--branco); border: 1px solid var(--creme3); border-radius: 4px;
+  padding: 20px 24px; display: flex; align-items: center; gap: 20px;
+  flex-wrap: wrap;
+}
+.appt-date-block {
+  text-align: center; min-width: 52px;
+  background: var(--escuro); color: var(--creme); border-radius: 3px;
+  padding: 10px 8px;
+}
+.appt-date-day { font-family: var(--font-display); font-size: 26px; line-height: 1; }
+.appt-date-mon { font-size: 10px; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; }
+.appt-info { flex: 1; min-width: 160px; }
+.appt-service { font-weight: 600; font-size: 15px; margin-bottom: 4px; }
+.appt-meta { font-size: 13px; color: var(--cinza); }
+.appt-barber { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
+.appt-barber img { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; }
+.appt-barber-name { font-size: 12px; color: var(--cinza); }
+.appt-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.appt-price { font-size: 17px; font-weight: 600; color: var(--verde-dark); }
+.badge {
+  display: inline-block; padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+}
+.badge-scheduled { background: #dbeafe; color: #1d4ed8; }
+.badge-confirmed { background: #dcfce7; color: #15803d; }
+.badge-completed { background: #f3f4f6; color: #6b7280; }
+.badge-cancelled { background: #fee2e2; color: #dc2626; }
+.badge-no_show { background: #fef3c7; color: #92400e; }
+.btn-cancel {
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: #dc2626; padding: 6px 12px; border: 1px solid #fecaca;
+  border-radius: 2px; background: #fff5f5; cursor: pointer; transition: all 0.2s;
+}
+.btn-cancel:hover { background: #fee2e2; }
+
+.appt-empty {
+  text-align: center; padding: 48px 0; color: var(--cinza); font-size: 14px;
+}
+.appt-empty a { color: var(--verde-dark); text-decoration: underline; text-underline-offset: 3px; }
+
+.spinner {
+  width: 28px; height: 28px; border: 2px solid var(--creme3);
+  border-top-color: var(--verde); border-radius: 50%;
+  animation: spin 0.7s linear infinite; margin: 40px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========== PERFIL ========== */
+.profile-form {
+  background: var(--branco); border: 1px solid var(--creme3); border-radius: 4px;
+  padding: 32px;
+}
+.profile-section-title {
+  font-family: var(--font-serif); font-size: 18px; font-weight: 700;
+  margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--creme3);
+}
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+.form-group-inline { display: flex; flex-direction: column; gap: 6px; }
+.form-group-full { grid-column: 1 / -1; }
+
+.btn-save {
+  padding: 14px 32px; background: var(--verde); color: #fff;
+  font-family: var(--font-sans); font-size: 13px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px;
+  border: none; cursor: pointer; transition: background 0.2s; margin-top: 24px;
+}
+.btn-save:hover { background: var(--verde-dark); }
+.btn-save:disabled { background: var(--creme3); color: var(--cinza-light); cursor: not-allowed; }
+
+.profile-msg {
+  font-size: 13px; margin-top: 12px; display: none;
+}
+.profile-msg.ok { color: #16a34a; display: block; }
+.profile-msg.err { color: #dc2626; display: block; }
+
+/* ========== MODAL CANCELAMENTO ========== */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 200;
+  align-items: center; justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--branco); border-radius: 4px; padding: 32px;
+  max-width: 400px; width: 90%; text-align: center;
+}
+.modal-title { font-family: var(--font-serif); font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+.modal-sub { font-size: 14px; color: var(--cinza); line-height: 1.6; margin-bottom: 28px; }
+.modal-actions { display: flex; gap: 12px; justify-content: center; }
+.btn-modal-cancel {
+  padding: 12px 24px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+  border: 1px solid var(--creme3); border-radius: 2px; color: var(--cinza);
+  background: var(--branco); cursor: pointer; transition: all 0.2s;
+}
+.btn-modal-cancel:hover { border-color: var(--bege); }
+.btn-modal-confirm {
+  padding: 12px 24px; font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+  background: #dc2626; color: #fff; border-radius: 2px; border: none;
+  cursor: pointer; transition: background 0.2s;
+}
+.btn-modal-confirm:hover { background: #b91c1c; }
+
+@media (max-width: 680px) {
+  .appt-card { flex-direction: column; align-items: flex-start; }
+  .appt-right { align-items: flex-start; flex-direction: row; flex-wrap: wrap; }
+  .portal-tab { padding: 10px 14px; font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">
+      <img src="assets/logo.png" alt="TH Mourão" />
+      <span class="nav-brand-name">TH Mourão</span>
+    </a>
+    <a href="index.html" class="nav-back">← Voltar ao site</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- AUTH (não logado) -->
+  <div id="auth-screen">
+    <div class="auth-wrap">
+      <div class="auth-logo">
+        <img src="assets/logo.png" alt="TH Mourão" />
+        <div class="auth-logo-title">Minha Conta</div>
+        <div class="auth-logo-sub">TH Mourão Barbearia & Spa</div>
+      </div>
+
+      <div class="auth-tabs">
+        <div class="auth-tab active" onclick="switchAuthTab('login')">Entrar</div>
+        <div class="auth-tab" onclick="switchAuthTab('signup')">Cadastrar</div>
+      </div>
+
+      <!-- Login -->
+      <div class="auth-panel active" id="auth-login">
+        <div class="auth-error" id="login-error"></div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" type="email" id="login-email" placeholder="seu@email.com" autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <div class="password-wrap">
+            <input class="form-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+            <button type="button" class="password-toggle" onclick="togglePassword('login-password', this)" aria-label="Mostrar senha">
+              <svg id="eye-login-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="eye-login-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <button class="btn-submit" id="btn-login" onclick="doLogin()">Entrar</button>
+        <div class="divider">ou</div>
+        <button class="btn-google" onclick="doGoogleLogin()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Entrar com Google
+        </button>
+      </div>
+
+      <!-- Cadastro -->
+      <div class="auth-panel" id="auth-signup">
+        <div class="auth-error" id="signup-error"></div>
+        <div class="auth-success" id="signup-success"></div>
+        <div class="form-group">
+          <label class="form-label">Nome completo</label>
+          <input class="form-input" type="text" id="signup-name" placeholder="Seu nome completo" autocomplete="name" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">E-mail</label>
+          <input class="form-input" type="email" id="signup-email" placeholder="seu@email.com" autocomplete="email" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Senha</label>
+          <div class="password-wrap">
+            <input class="form-input" type="password" id="signup-password" placeholder="Mínimo 6 caracteres" autocomplete="new-password" />
+            <button type="button" class="password-toggle" onclick="togglePassword('signup-password', this)" aria-label="Mostrar senha">
+              <svg id="eye-signup-show" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg id="eye-signup-hide" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </div>
+        </div>
+        <button class="btn-submit" id="btn-signup" onclick="doSignup()">Criar conta</button>
+        <div class="divider">ou</div>
+        <button class="btn-google" onclick="doGoogleLogin()">
+          <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Cadastrar com Google
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTAL (logado) -->
+  <div class="portal" id="portal">
+    <div class="portal-header">
+      <div class="portal-greeting">
+        <div class="portal-greeting-name" id="greeting-name">Olá!</div>
+        <div class="portal-greeting-sub">Bem-vindo ao seu espaço na TH Mourão</div>
+      </div>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+
+    <div class="portal-tabs">
+      <button class="portal-tab active" onclick="switchPortalTab('agendamentos')">Meus Agendamentos</button>
+      <button class="portal-tab" onclick="switchPortalTab('perfil')">Meu Perfil</button>
+    </div>
+
+    <!-- Tab: Agendamentos -->
+    <div class="portal-panel active" id="tab-agendamentos">
+      <div class="appt-tabs">
+        <button class="appt-tab active" onclick="filterAppt('proximos')">Próximos</button>
+        <button class="appt-tab" onclick="filterAppt('historico')">Histórico</button>
+      </div>
+      <div id="appt-loading"><div class="spinner"></div></div>
+      <div class="appt-list" id="appt-list" style="display:none"></div>
+    </div>
+
+    <!-- Tab: Perfil -->
+    <div class="portal-panel" id="tab-perfil">
+      <div class="profile-form">
+        <div class="profile-section-title">Meus dados</div>
+        <div class="form-grid">
+          <div class="form-group-inline form-group-full">
+            <label class="form-label">Nome completo</label>
+            <input class="form-input" type="text" id="p-name" placeholder="Seu nome" autocomplete="name" />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">WhatsApp</label>
+            <input class="form-input" type="tel" id="p-phone" placeholder="(47) 99999-9999" autocomplete="tel" />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">E-mail</label>
+            <input class="form-input" type="email" id="p-email" placeholder="seu@email.com" disabled style="opacity:0.6" />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">CPF</label>
+            <input class="form-input" type="text" id="p-cpf" placeholder="000.000.000-00" maxlength="14" />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">Data de nascimento</label>
+            <input class="form-input" type="text" id="p-dob" placeholder="DD/MM/AAAA" maxlength="10" />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">CEP</label>
+            <input class="form-input" type="text" id="p-cep" placeholder="00000-000" maxlength="9" />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">Endereço</label>
+            <input class="form-input" type="text" id="p-address" placeholder="Rua, Avenida..." />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">Número</label>
+            <input class="form-input" type="text" id="p-address-number" placeholder="123" />
+          </div>
+          <div class="form-group-inline">
+            <label class="form-label">Complemento</label>
+            <input class="form-input" type="text" id="p-address-complement" placeholder="Apto, Bloco... (opcional)" />
+          </div>
+        </div>
+        <button class="btn-save" id="btn-save-profile" onclick="saveProfile()">Salvar alterações</button>
+        <p class="profile-msg" id="profile-msg"></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Modal cancelamento -->
+<div class="modal-overlay" id="cancel-modal">
+  <div class="modal">
+    <div class="modal-title">Cancelar agendamento?</div>
+    <div class="modal-sub">Esta ação não pode ser desfeita. O horário voltará a ficar disponível.</div>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeModal()">Voltar</button>
+      <button class="btn-modal-confirm" id="btn-confirm-cancel" onclick="confirmCancel()">Cancelar agendamento</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://gwycwjhhdladlcvqlred.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imd3eWN3amhoZGxhZGxjdnFscmVkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkyMTI5MTQsImV4cCI6MjA5NDc4ODkxNH0.T_U6cQC2QpAarutCmJepe6DRINHOuvvqA30R7RgGQDw';
+const COMPANY_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let currentUser = null;
+let currentClient = null;
+let allAppointments = [];
+let apptFilter = 'proximos';
+let cancelApptId = null;
+
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const isHidden = input.type === 'password';
+  input.type = isHidden ? 'text' : 'password';
+  btn.querySelector('svg:first-of-type').style.display = isHidden ? 'none' : '';
+  btn.querySelector('svg:last-of-type').style.display = isHidden ? '' : 'none';
+}
+
+// ============================================================
+// AUTH STATE
+// ============================================================
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (session?.user) {
+    currentUser = session.user;
+    await onLoggedIn(session);
+  } else {
+    currentUser = null;
+    showAuthScreen();
+  }
+});
+
+async function onLoggedIn(session) {
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('portal').classList.add('show');
+
+  const displayName = session.user.user_metadata?.full_name ||
+    session.user.user_metadata?.name ||
+    session.user.email?.split('@')[0] || 'Você';
+  document.getElementById('greeting-name').textContent = `Olá, ${displayName.split(' ')[0]}!`;
+
+  // Run admin check, profile load and appointments in parallel
+  const [roleData] = await Promise.all([
+    sb.from('user_roles').select('role').eq('user_id', session.user.id).maybeSingle()
+      .then(r => r.data),
+    loadClientProfile(session.user),
+    loadAppointments(),
+  ]);
+
+  if (roleData?.role === 'admin') {
+    const tabs = document.querySelector('.portal-tabs');
+    if (!document.getElementById('tab-btn-admin')) {
+      const adminBtn = document.createElement('button');
+      adminBtn.className = 'portal-tab';
+      adminBtn.id = 'tab-btn-admin';
+      adminBtn.textContent = 'Painel Admin';
+      adminBtn.onclick = () => { window.location.href = 'admin.html'; };
+      tabs.appendChild(adminBtn);
+    }
+  }
+
+  if (session.provider_token && session.user.app_metadata?.provider === 'google') {
+    linkGoogleTokenToClient(session);
+  }
+}
+
+async function loadClientProfile(user) {
+  const { data } = await sb.from('clients')
+    .select('*')
+    .eq('user_id', user.id)
+    .maybeSingle();
+
+  currentClient = data;
+
+  if (data) {
+    document.getElementById('p-name').value = data.name || '';
+    document.getElementById('p-phone').value = data.phone || '';
+    document.getElementById('p-email').value = data.email || user.email || '';
+    document.getElementById('p-cpf').value = data.cpf ? formatCpf(data.cpf) : '';
+    document.getElementById('p-dob').value = data.data_nascimento ? isoToBr(data.data_nascimento) : '';
+    document.getElementById('p-cep').value = data.cep ? formatCep(data.cep) : '';
+    document.getElementById('p-address').value = data.address || '';
+    document.getElementById('p-address-number').value = data.address_number || '';
+    document.getElementById('p-address-complement').value = data.address_complement || '';
+  } else {
+    document.getElementById('p-email').value = user.email || '';
+    document.getElementById('p-name').value = user.user_metadata?.full_name || user.user_metadata?.name || '';
+  }
+}
+
+async function linkGoogleTokenToClient(session) {
+  if (!currentClient) return;
+  await sb.from('clients').update({
+    google_calendar_enabled: true,
+  }).eq('user_id', session.user.id);
+}
+
+function showAuthScreen() {
+  document.getElementById('auth-screen').style.display = 'block';
+  document.getElementById('portal').classList.remove('show');
+}
+
+// ============================================================
+// AUTH ACTIONS
+// ============================================================
+function switchAuthTab(tab) {
+  document.querySelectorAll('.auth-tab').forEach((t, i) => {
+    t.classList.toggle('active', (i === 0 && tab === 'login') || (i === 1 && tab === 'signup'));
+  });
+  document.getElementById('auth-login').classList.toggle('active', tab === 'login');
+  document.getElementById('auth-signup').classList.toggle('active', tab === 'signup');
+}
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.remove('show');
+
+  if (!email || !password) { errEl.textContent = 'Preencha e-mail e senha.'; errEl.classList.add('show'); return; }
+
+  const btn = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = 'Entrando…';
+
+  const { error } = await sb.auth.signInWithPassword({ email, password });
+  btn.disabled = false; btn.textContent = 'Entrar';
+
+  if (error) {
+    errEl.textContent = error.message.includes('Invalid login') ? 'E-mail ou senha incorretos.' : error.message;
+    errEl.classList.add('show');
+  }
+}
+
+async function doSignup() {
+  const name = document.getElementById('signup-name').value.trim();
+  const email = document.getElementById('signup-email').value.trim();
+  const password = document.getElementById('signup-password').value;
+  const errEl = document.getElementById('signup-error');
+  const okEl = document.getElementById('signup-success');
+  errEl.classList.remove('show'); okEl.classList.remove('show');
+
+  if (!name || !email || !password) { errEl.textContent = 'Preencha todos os campos.'; errEl.classList.add('show'); return; }
+  if (password.length < 6) { errEl.textContent = 'A senha deve ter no mínimo 6 caracteres.'; errEl.classList.add('show'); return; }
+
+  const btn = document.getElementById('btn-signup');
+  btn.disabled = true; btn.textContent = 'Criando conta…';
+
+  const { error } = await sb.auth.signUp({
+    email, password,
+    options: { data: { full_name: name } }
+  });
+
+  btn.disabled = false; btn.textContent = 'Criar conta';
+
+  if (error) {
+    errEl.textContent = error.message.includes('already registered') ? 'Este e-mail já está cadastrado.' : error.message;
+    errEl.classList.add('show');
+  } else {
+    okEl.textContent = 'Conta criada! Verifique seu e-mail para confirmar o cadastro.';
+    okEl.classList.add('show');
+  }
+}
+
+async function doGoogleLogin() {
+  await sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      scopes: 'https://www.googleapis.com/auth/calendar.events',
+      queryParams: { access_type: 'offline', prompt: 'consent' },
+      redirectTo: window.location.href,
+    }
+  });
+}
+
+async function doLogout() {
+  try { await sb.auth.signOut(); } catch (e) { console.warn('signOut error:', e); }
+  window.location.reload();
+}
+
+// ============================================================
+// PORTAL TABS
+// ============================================================
+function switchPortalTab(tab) {
+  document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(`tab-${tab}`).classList.add('active');
+}
+
+// ============================================================
+// AGENDAMENTOS
+// ============================================================
+async function loadAppointments() {
+  if (!currentUser) return;
+
+  document.getElementById('appt-loading').style.display = 'block';
+  document.getElementById('appt-list').style.display = 'none';
+
+  let appointments = [];
+
+  if (currentClient?.id) {
+    const { data } = await sb
+      .from('appointments')
+      .select(`
+        id, start_time, end_time, status, service_name, service_price, duration_minutes,
+        professionals ( name, avatar_url )
+      `)
+      .eq('client_id', currentClient.id)
+      .order('start_time', { ascending: false });
+    appointments = data || [];
+  }
+
+  allAppointments = appointments;
+  document.getElementById('appt-loading').style.display = 'none';
+  renderAppointments();
+}
+
+function filterAppt(filter) {
+  apptFilter = filter;
+  document.querySelectorAll('.appt-tab').forEach((t, i) => {
+    t.classList.toggle('active', (i === 0 && filter === 'proximos') || (i === 1 && filter === 'historico'));
+  });
+  renderAppointments();
+}
+
+function renderAppointments() {
+  const list = document.getElementById('appt-list');
+  list.style.display = 'flex';
+  list.innerHTML = '';
+
+  const now = new Date();
+  const filtered = allAppointments.filter(a => {
+    const start = new Date(a.start_time);
+    const isPast = start < now || ['completed', 'cancelled', 'no_show'].includes(a.status);
+    return apptFilter === 'proximos' ? !isPast : isPast;
+  });
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="appt-empty">
+      ${apptFilter === 'proximos'
+        ? `Nenhum agendamento próximo. <a href="booking.html">Agendar agora</a>`
+        : 'Nenhum agendamento no histórico ainda.'}
+    </div>`;
+    return;
+  }
+
+  filtered.forEach(a => {
+    const start = new Date(a.start_time);
+    const day = String(start.getDate()).padStart(2, '0');
+    const mon = start.toLocaleDateString('pt-BR', { month: 'short' }).replace('.', '');
+    const timeStr = start.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    const price = `R$ ${Number(a.service_price || 0).toFixed(2).replace('.', ',')}`;
+    const barber = a.professionals;
+    const canCancel = ['scheduled', 'confirmed'].includes(a.status) &&
+      new Date(a.start_time) > new Date(Date.now() + 60 * 60 * 1000);
+
+    const card = document.createElement('div');
+    card.className = 'appt-card';
+    card.innerHTML = `
+      <div class="appt-date-block">
+        <div class="appt-date-day">${day}</div>
+        <div class="appt-date-mon">${mon}</div>
+      </div>
+      <div class="appt-info">
+        <div class="appt-service">${a.service_name}</div>
+        <div class="appt-meta">${timeStr} · ${a.duration_minutes} min</div>
+        ${barber ? `<div class="appt-barber">
+          ${barber.avatar_url ? `<img src="${barber.avatar_url}" alt="${barber.name}" />` : ''}
+          <span class="appt-barber-name">${barber.name}</span>
+        </div>` : ''}
+      </div>
+      <div class="appt-right">
+        <div class="appt-price">${price}</div>
+        <span class="badge badge-${a.status}">${statusLabel(a.status)}</span>
+        ${canCancel ? `<button class="btn-cancel" onclick="openCancelModal('${a.id}')">Cancelar</button>` : ''}
+      </div>
+    `;
+    list.appendChild(card);
+  });
+}
+
+function statusLabel(s) {
+  const labels = { scheduled: 'Agendado', confirmed: 'Confirmado', completed: 'Concluído', cancelled: 'Cancelado', no_show: 'Não compareceu' };
+  return labels[s] || s;
+}
+
+// ============================================================
+// CANCELAMENTO
+// ============================================================
+function openCancelModal(apptId) {
+  cancelApptId = apptId;
+  document.getElementById('cancel-modal').classList.add('show');
+}
+function closeModal() {
+  document.getElementById('cancel-modal').classList.remove('show');
+  cancelApptId = null;
+}
+async function confirmCancel() {
+  if (!cancelApptId) return;
+  const btn = document.getElementById('btn-confirm-cancel');
+  btn.disabled = true; btn.textContent = 'Cancelando…';
+
+  const { error } = await sb.from('appointments')
+    .update({ status: 'cancelled' })
+    .eq('id', cancelApptId);
+
+  btn.disabled = false; btn.textContent = 'Cancelar agendamento';
+  closeModal();
+
+  if (!error) {
+    allAppointments = allAppointments.map(a =>
+      a.id === cancelApptId ? { ...a, status: 'cancelled' } : a
+    );
+    renderAppointments();
+  }
+}
+
+// ============================================================
+// PERFIL — helpers de formatação
+// ============================================================
+function formatCpf(v) {
+  return v.replace(/\D/g, '')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+}
+
+function formatCep(v) {
+  return v.replace(/\D/g, '').replace(/(\d{5})(\d{1,3})/, '$1-$2');
+}
+
+function maskDate(v) {
+  return v.replace(/\D/g, '')
+    .replace(/(\d{2})(\d)/, '$1/$2')
+    .replace(/(\d{2})(\d)/, '$1/$2')
+    .slice(0, 10);
+}
+
+function brToIso(br) {
+  const [d, m, y] = br.split('/');
+  if (!d || !m || !y || y.length < 4) return null;
+  return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+}
+
+function isoToBr(iso) {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const cpf = document.getElementById('p-cpf');
+  if (cpf) cpf.addEventListener('input', e => { e.target.value = formatCpf(e.target.value); });
+
+  const phone = document.getElementById('p-phone');
+  if (phone) phone.addEventListener('input', e => {
+    let v = e.target.value.replace(/\D/g, '');
+    if (v.length <= 10) v = v.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+    else v = v.replace(/(\d{2})(\d{5})(\d{0,4})/, '($1) $2-$3');
+    e.target.value = v.trim().replace(/-$/, '');
+  });
+
+  const dob = document.getElementById('p-dob');
+  if (dob) dob.addEventListener('input', e => { e.target.value = maskDate(e.target.value); });
+
+  const cep = document.getElementById('p-cep');
+  if (cep) cep.addEventListener('input', e => { e.target.value = formatCep(e.target.value); });
+});
+
+async function saveProfile() {
+  if (!currentUser) return;
+
+  const name = document.getElementById('p-name').value.trim();
+  const phone = document.getElementById('p-phone').value.trim();
+  const cpf = document.getElementById('p-cpf').value.replace(/\D/g, '');
+  const dobBr = document.getElementById('p-dob').value.trim();
+  const cep = document.getElementById('p-cep').value.replace(/\D/g, '');
+  const address = document.getElementById('p-address').value.trim();
+  const addressNumber = document.getElementById('p-address-number').value.trim();
+  const addressComplement = document.getElementById('p-address-complement').value.trim();
+  const msgEl = document.getElementById('profile-msg');
+  msgEl.className = 'profile-msg';
+
+  if (!name) { msgEl.textContent = 'O nome é obrigatório.'; msgEl.classList.add('err'); return; }
+
+  const dobIso = dobBr ? brToIso(dobBr) : null;
+
+  const btn = document.getElementById('btn-save-profile');
+  btn.disabled = true; btn.textContent = 'Salvando…';
+
+  const payload = {
+    name,
+    phone: phone || null,
+    whatsapp_number: phone || null,
+    email: currentUser.email,
+    user_id: currentUser.id,
+    company_id: COMPANY_ID,
+    cpf: cpf || null,
+    data_nascimento: dobIso || null,
+    cep: cep || null,
+    address: address || null,
+    address_number: addressNumber || null,
+    address_complement: addressComplement || null,
+  };
+
+  let error;
+  if (currentClient?.id) {
+    ({ error } = await sb.from('clients').update(payload).eq('id', currentClient.id));
+  } else {
+    const { data, error: e } = await sb.from('clients').insert(payload).select('id').single();
+    error = e;
+    if (data) currentClient = { ...payload, id: data.id };
+  }
+
+  btn.disabled = false; btn.textContent = 'Salvar alterações';
+
+  if (error) {
+    console.error('saveProfile error:', error);
+    if (error.code === '23505') {
+      msgEl.textContent = 'Este CPF já está cadastrado em outra conta.';
+    } else if (error.code === '42501' || error.message?.includes('policy')) {
+      msgEl.textContent = 'Permissão negada. Contate o suporte.';
+    } else {
+      msgEl.textContent = `Erro ao salvar: ${error.message || 'Tente novamente.'}`;
+    }
+    msgEl.classList.add('err');
+  } else {
+    msgEl.textContent = 'Dados salvos com sucesso!';
+    msgEl.classList.add('ok');
+    setTimeout(() => { msgEl.className = 'profile-msg'; }, 3000);
+  }
+}
+</script>
+</body>
+</html>
