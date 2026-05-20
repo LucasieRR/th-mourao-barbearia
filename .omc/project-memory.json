@@ -78,14 +78,20 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 92,
-      "lastAccessed": 1779312619857,
+      "accessCount": 105,
+      "lastAccessed": 1779313441703,
       "type": "file"
     },
     {
       "path": "store.html",
       "accessCount": 71,
       "lastAccessed": 1779293887947,
+      "type": "file"
+    },
+    {
+      "path": "admin.html",
+      "accessCount": 39,
+      "lastAccessed": 1779313461589,
       "type": "file"
     },
     {
@@ -104,12 +110,6 @@
       "path": "blog.html",
       "accessCount": 28,
       "lastAccessed": 1779293424180,
-      "type": "file"
-    },
-    {
-      "path": "admin.html",
-      "accessCount": 22,
-      "lastAccessed": 1779312583335,
       "type": "file"
     },
     {

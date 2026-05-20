@@ -663,32 +663,19 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 (function initTabSession() {
   const TAB_KEY = 'th_open_tabs';
   const TAB_ID  = 'th_tab_' + Math.random().toString(36).slice(2);
-  // Verifica se veio de navegação interna (minha-conta não decrementou o contador)
-  const navTs = parseInt(localStorage.getItem('th_nav_ts') || '0', 10);
-  const isInternalNav = (Date.now() - navTs) < 2000;
-  localStorage.removeItem('th_nav_ts');
+
+  // Registra esta aba
   sessionStorage.setItem(TAB_ID, '1');
   const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
-  if (isInternalNav) {
-    // Herda o slot da página anterior — contador já está correto, não incrementa
-    // Mas se por algum motivo for 0, força 1
-    if (count === 0) localStorage.setItem(TAB_KEY, '1');
-  } else {
-    // Nova aba ou acesso direto
-    if (count === 0) {
-      // Stale session — limpa
-      try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
-    }
-    localStorage.setItem(TAB_KEY, count + 1);
-  }
+  localStorage.setItem(TAB_KEY, count + 1);
+
+  // Ao fechar/navegar desta aba: decrementa contador.
+  // sb-* keys são limpas apenas pelo doLogout() explícito — nunca aqui.
   window.addEventListener('beforeunload', () => {
     sessionStorage.removeItem(TAB_ID);
     const remaining = Math.max(0, parseInt(localStorage.getItem(TAB_KEY) || '1', 10) - 1);
     localStorage.setItem(TAB_KEY, remaining);
-    if (remaining === 0) {
-      try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
-      localStorage.removeItem(TAB_KEY);
-    }
+    if (remaining === 0) localStorage.removeItem(TAB_KEY);
   });
 })();
 
@@ -781,7 +768,7 @@ async function withBtnLoading(btn, fn) {
 async function checkAuthAndAdmin() {
   const { data: { session } } = await sb.auth.getSession();
   if (!session || !session.user) {
-    window.location.href = 'minha-conta.html';
+    window.location.href = '/minha-conta';
     return false;
   }
   state.user = session.user;
@@ -795,7 +782,7 @@ async function checkAuthAndAdmin() {
 
   if (error || !roles || roles.length === 0) {
     toast('Acesso restrito a administradores.', 'error');
-    setTimeout(() => { window.location.href = 'minha-conta.html'; }, 1200);
+    setTimeout(() => { window.location.href = '/minha-conta'; }, 1200);
     return false;
   }
   return true;
@@ -803,9 +790,9 @@ async function checkAuthAndAdmin() {
 
 async function doLogout() {
   try { await sb.auth.signOut({ scope: 'local' }); } catch(e) {}
-  localStorage.clear();
-  sessionStorage.clear();
-  window.location.href = 'minha-conta.html';
+  try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-') || k === 'th_open_tabs') localStorage.removeItem(k); }); } catch(e) {}
+  try { Object.keys(sessionStorage).forEach(k => { if (k.startsWith('sb-')) sessionStorage.removeItem(k); }); } catch(e) {}
+  window.location.href = '/minha-conta';
 }
 
 // ============================================================

@@ -5,11 +5,22 @@
       "agent_type": "general-purpose",
       "started_at": "2026-05-20T21:27:06.343Z",
       "parent_mode": "none",
-      "status": "running"
+      "status": "completed",
+      "completed_at": "2026-05-20T21:32:58.088Z",
+      "duration_ms": 351745
+    },
+    {
+      "agent_id": "ab4cf251871e62869",
+      "agent_type": "oh-my-claudecode:debugger",
+      "started_at": "2026-05-20T21:34:43.790Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-05-20T21:37:47.377Z",
+      "duration_ms": 183587
     }
   ],
-  "total_spawned": 1,
-  "total_completed": 0,
+  "total_spawned": 2,
+  "total_completed": 2,
   "total_failed": 0,
-  "last_updated": "2026-05-20T21:27:06.450Z"
+  "last_updated": "2026-05-20T21:37:47.484Z"
 }

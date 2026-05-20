@@ -1,7 +1,7 @@
 {
   "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"python3 -c \\\"\\nimport re, json\\n\\nhtml = open('/tmp/ml1.html').read()\\nscripts = re.findall(r'<script[^>]*>(.*?)</script>', html, re.DOTALL)\\ns13 = scripts[13]\\n\\n# It's _n.ctx.r = {...} —...",
-  "error": "Exit code 1\nTraceback (most recent call last):\n  File \"<string>\", line 12, in <module>\n  File \"/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/__init__.py\", line 346, in loads\n    return _default_decoder.decode(s)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/json/decoder.py\", line 340, in decode\n    raise JSONDecodeError(\"Extra data\", s, end)\njson.decoder.JSONDecodeError: Extra data: line 1 column 67385 (ch...",
-  "timestamp": "2026-05-20T21:29:37.156Z",
+  "tool_input_preview": "{\"command\":\"export NVM_DIR=\\\"$HOME/.nvm\\\" && [ -s \\\"$NVM_DIR/nvm.sh\\\" ] && \\\\. \\\"$NVM_DIR/nvm.sh\\\" && cd /tmp/puppeteer-test && node test_admin.js 2>&1\",\"timeout\":90000,\"description\":\"Run Puppeteer ad...",
+  "error": "Exit code 1\n\n=== STEP 1: Abrindo minha-conta ===\n[NAV] http://localhost:3456/minha-conta\n[browser ERROR] supabase is not defined\n[browser] VERBOSE [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o\n[browser] VERBOSE [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o\nAuth screen visível: true\n\n=== STEP 2: Fazendo login ===\nsb-* antes do login: []\n[browser ERROR] Cannot access 'sb' before initialization\nLogin clicado, aguardan...",
+  "timestamp": "2026-05-20T21:42:18.543Z",
   "retry_count": 1
 }
