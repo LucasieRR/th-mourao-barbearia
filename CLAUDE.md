@@ -25,19 +25,21 @@ Página de assinaturas em `/assinaturas.html` com backend Node.js/Express em `/a
 /.env.example        ← template
 ```
 
-## URLs Limpas (Netlify)
+## URLs Limpas (Vercel)
 
-O arquivo `_redirects` na raiz configura rewrites silenciosos via Netlify:
+O deploy é feito via **Vercel**. As rotas limpas estão configuradas em `vercel.json` como rewrites:
 
 ```
-/minha-conta  →  /minha-conta.html  (200)
-/booking      →  /booking.html      (200)
-/store        →  /store.html        (200)
-/blog         →  /blog.html         (200)
-/admin        →  /admin.html        (200)
-/blog-post    →  /blog-post.html    (200)
-/assinaturas  →  /assinaturas.html  (200)
+/minha-conta  →  /minha-conta.html
+/booking      →  /booking.html
+/store        →  /store.html
+/blog         →  /blog.html
+/admin        →  /admin.html
+/blog-post    →  /blog-post.html
+/assinaturas  →  /assinaturas.html
 ```
+
+O arquivo `_redirects` na raiz é ignorado pelo Vercel (era para Netlify) — não remover para não quebrar histórico, mas a configuração ativa é o `vercel.json`.
 
 **Premissa obrigatória:** Todos os links internos entre páginas devem usar o caminho limpo (sem `.html`):
 - ✅ `href="/minha-conta"`, `href="/booking"`, `href="/store"`, `href="/blog"`

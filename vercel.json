@@ -6,6 +6,9 @@
     { "src": "/blog",         "dest": "/blog.html" },
     { "src": "/store",        "dest": "/store.html" },
     { "src": "/assinaturas",  "dest": "/assinaturas.html" },
+    { "src": "/minha-conta",  "dest": "/minha-conta.html" },
+    { "src": "/booking",      "dest": "/booking.html" },
+    { "src": "/admin",        "dest": "/admin.html" },
     { "src": "/(.*)",         "dest": "/$1" }
   ]
 }
