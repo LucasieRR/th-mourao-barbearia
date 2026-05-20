@@ -1,7 +1,7 @@
 {
-  "tool_name": "WebFetch",
-  "tool_input_preview": "{\"url\":\"https://docs.asaas.com/docs/criando-uma-assinatura-com-cartao-de-credito\",\"prompt\":\"List all fields inside creditCard and creditCardHolderInfo objects. For each field specify: exact field name...",
-  "error": "Request failed with status code 404",
-  "timestamp": "2026-05-19T21:46:55.464Z",
-  "retry_count": 3
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd \\\"/Users/lucasreis/Desktop/TH - LP\\\" && supabase login --token REDACTED 2>&1\",\"description\":\"Login to Supabase CLI with personal access token\"}",
+  "error": "Exit code 1\ncannot save provided token: Invalid access token format. Must be like `sbp_0102...1920`.\nTry rerunning the command with --debug to troubleshoot the error.",
+  "timestamp": "2026-05-20T12:50:35.920Z",
+  "retry_count": 1
 }
