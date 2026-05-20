@@ -790,6 +790,8 @@ async function checkAuthAndAdmin(session) {
     .eq('role', 'admin')
     .limit(1);
 
+  console.log('[ADMIN checkAuthAndAdmin] user=' + session.user.id + ' roles=' + JSON.stringify(roles) + ' error=' + JSON.stringify(error));
+
   if (error || !roles || roles.length === 0) {
     toast('Acesso restrito a administradores.', 'error');
     setTimeout(() => { window.location.href = '/minha-conta'; }, 1200);
