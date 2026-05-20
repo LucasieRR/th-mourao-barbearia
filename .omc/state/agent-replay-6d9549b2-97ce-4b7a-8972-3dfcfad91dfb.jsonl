@@ -3,3 +3,4 @@
 {"t":0,"agent":"a02163e","agent_type":"code-reviewer","event":"agent_stop","success":true,"duration_ms":198526}
 {"t":0,"agent":"a997b7b","agent_type":"code-reviewer","event":"agent_start","parent_mode":"none"}
 {"t":0,"agent":"a997b7b","agent_type":"code-reviewer","event":"agent_stop","success":true,"duration_ms":52491}
+{"t":0,"agent":"aa08abf","agent_type":"unknown","event":"agent_stop","success":true}

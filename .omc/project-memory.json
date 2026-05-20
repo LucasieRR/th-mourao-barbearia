@@ -78,8 +78,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 83,
-      "lastAccessed": 1779293448205,
+      "accessCount": 88,
+      "lastAccessed": 1779311599518,
       "type": "file"
     },
     {
@@ -113,15 +113,15 @@
       "type": "file"
     },
     {
-      "path": "blog-post.html",
-      "accessCount": 15,
-      "lastAccessed": 1779228663716,
+      "path": "admin.html",
+      "accessCount": 19,
+      "lastAccessed": 1779311613493,
       "type": "file"
     },
     {
-      "path": "admin.html",
-      "accessCount": 13,
-      "lastAccessed": 1779282250303,
+      "path": "blog-post.html",
+      "accessCount": 15,
+      "lastAccessed": 1779228663716,
       "type": "file"
     },
     {
@@ -143,6 +143,12 @@
       "type": "file"
     },
     {
+      "path": ".env",
+      "accessCount": 5,
+      "lastAccessed": 1779305456844,
+      "type": "file"
+    },
+    {
       "path": ".env.example",
       "accessCount": 3,
       "lastAccessed": 1779220205342,
@@ -152,12 +158,6 @@
       "path": "assinaturas.html",
       "accessCount": 3,
       "lastAccessed": 1779220209040,
-      "type": "file"
-    },
-    {
-      "path": ".env",
-      "accessCount": 3,
-      "lastAccessed": 1779294145788,
       "type": "file"
     },
     {

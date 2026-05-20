@@ -677,11 +677,14 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   localStorage.setItem(TAB_KEY, count + 1);
 
   // Ao fechar esta aba: decrementa contador; se chegou a 0, limpa sessão
+  // Exceção: navegação interna (th_nav_ts definido há menos de 2s) — não limpa sessão
   window.addEventListener('beforeunload', () => {
+    const navTs = parseInt(localStorage.getItem('th_nav_ts') || '0', 10);
+    const isInternalNav = (Date.now() - navTs) < 2000;
     sessionStorage.removeItem(TAB_ID);
     const remaining = Math.max(0, parseInt(localStorage.getItem(TAB_KEY) || '1', 10) - 1);
     localStorage.setItem(TAB_KEY, remaining);
-    if (remaining === 0) {
+    if (remaining === 0 && !isInternalNav) {
       // Última aba fechada — limpa sessão do Supabase
       try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
       localStorage.removeItem(TAB_KEY);
@@ -756,7 +759,7 @@ async function onLoggedIn(session) {
       adminBtn.className = 'portal-tab';
       adminBtn.id = 'tab-btn-admin';
       adminBtn.textContent = 'Painel Admin';
-      adminBtn.onclick = () => { window.location.href = '/admin'; };
+      adminBtn.onclick = () => { localStorage.setItem('th_nav_ts', Date.now()); window.location.href = '/admin'; };
       tabs.appendChild(adminBtn);
     }
   } catch (e) {
