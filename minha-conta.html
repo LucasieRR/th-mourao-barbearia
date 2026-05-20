@@ -622,6 +622,39 @@ const COMPANY_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+// ============================================================
+// SESSÃO POR ABA — expira quando todas as abas são fechadas
+// Usa localStorage para contar abas abertas + sessionStorage
+// para marcar que ESTA aba está ativa.
+// ============================================================
+(function initTabSession() {
+  const TAB_KEY = 'th_open_tabs';
+  const TAB_ID  = 'th_tab_' + Math.random().toString(36).slice(2);
+
+  // Registra esta aba
+  sessionStorage.setItem(TAB_ID, '1');
+  const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
+  localStorage.setItem(TAB_KEY, count + 1);
+
+  // Ao fechar esta aba: decrementa contador; se chegou a 0, limpa sessão
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.removeItem(TAB_ID);
+    const remaining = Math.max(0, parseInt(localStorage.getItem(TAB_KEY) || '1', 10) - 1);
+    localStorage.setItem(TAB_KEY, remaining);
+    if (remaining === 0) {
+      // Última aba fechada — limpa sessão do Supabase
+      try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
+      localStorage.removeItem(TAB_KEY);
+    }
+  });
+
+  // Ao carregar: se contador estava zerado mas há chaves sb- no storage (aba reaberta/restaurada),
+  // significa que o browser restaurou a aba após fechar — força logout
+  if (count === 0) {
+    try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
+  }
+})();
+
 let currentUser = null;
 let currentClient = null;
 let allAppointments = [];
@@ -807,14 +840,11 @@ async function doGoogleLogin() {
 
 async function doLogout() {
   try { await sb.auth.signOut({ scope: 'local' }); } catch (e) { console.warn('signOut error:', e); }
-  // Limpa todos os storages do Supabase (Safari pode usar sessionStorage também)
-  ['localStorage', 'sessionStorage'].forEach(store => {
-    try {
-      Object.keys(window[store]).forEach(k => { if (k.startsWith('sb-')) window[store].removeItem(k); });
-    } catch (e) {}
-  });
-  // Pequeno delay para garantir que o SDK processe o signOut antes do redirect
-  setTimeout(() => { window.location.href = '/minha-conta'; }, 200);
+  try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
+  try { Object.keys(sessionStorage).forEach(k => { if (k.startsWith('sb-')) sessionStorage.removeItem(k); }); } catch (e) {}
+  // Zera contador de abas para evitar bloqueio no próximo acesso
+  localStorage.setItem('th_open_tabs', '0');
+  setTimeout(() => { window.location.href = '/minha-conta'; }, 150);
 }
 
 // ============================================================
