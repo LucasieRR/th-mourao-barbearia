@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-05-20T23:34:48.023Z",
+  "updatedAt": "2026-05-20T23:47:52.793Z",
   "missions": [
     {
       "id": "session:6d9549b2-97ce-4b7a-8972-3dfcfad91dfb:none",
@@ -98,6 +98,64 @@
           "agent": "code-reviewer:a02163e",
           "detail": "completed",
           "sourceKey": "session-stop:a14e2f727c1abece7"
+        }
+      ]
+    },
+    {
+      "id": "session:0326455a-22ff-46dd-963a-0a10085088f2:none",
+      "source": "session",
+      "name": "none",
+      "objective": "Session mission",
+      "createdAt": "2026-05-20T23:47:48.492Z",
+      "updatedAt": "2026-05-20T23:47:52.793Z",
+      "status": "running",
+      "workerCount": 2,
+      "taskCounts": {
+        "total": 2,
+        "pending": 0,
+        "blocked": 0,
+        "inProgress": 2,
+        "completed": 0,
+        "failed": 0
+      },
+      "agents": [
+        {
+          "name": "Explore:a10e975",
+          "role": "Explore",
+          "ownership": "a10e9757921a86d59",
+          "status": "running",
+          "currentStep": null,
+          "latestUpdate": null,
+          "completedSummary": null,
+          "updatedAt": "2026-05-20T23:47:48.492Z"
+        },
+        {
+          "name": "document-specialist:a706cae",
+          "role": "document-specialist",
+          "ownership": "a706caed5a23eb691",
+          "status": "running",
+          "currentStep": null,
+          "latestUpdate": null,
+          "completedSummary": null,
+          "updatedAt": "2026-05-20T23:47:52.793Z"
+        }
+      ],
+      "timeline": [
+        {
+          "id": "session-start:a10e9757921a86d59:2026-05-20T23:47:48.492Z",
+          "at": "2026-05-20T23:47:48.492Z",
+          "kind": "update",
+          "agent": "Explore:a10e975",
+          "detail": "started Explore:a10e975",
+          "sourceKey": "session-start:a10e9757921a86d59"
+        },
+        {
+          "id": "session-start:a706caed5a23eb691:2026-05-20T23:47:52.793Z",
+          "at": "2026-05-20T23:47:52.793Z",
+          "kind": "update",
+          "agent": "document-specialist:a706cae",
+          "detail": "started document-specialist:a706cae",
+          "sourceKey": "session-start:a706caed5a23eb691"
         }
       ]
     }

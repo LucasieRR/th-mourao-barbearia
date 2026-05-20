@@ -768,10 +768,23 @@ async function onLoggedIn(session) {
 }
 
 async function loadClientProfile(user) {
-  const { data } = await sb.from('clients')
+  let { data } = await sb.from('clients')
     .select('*')
     .eq('user_id', user.id)
     .maybeSingle();
+
+  // Fallback: agendamento feito sem login — tenta vincular pelo email
+  if (!data && user.email) {
+    const res = await sb.from('clients')
+      .select('*')
+      .eq('email', user.email)
+      .is('user_id', null)
+      .maybeSingle();
+    if (res.data) {
+      data = res.data;
+      await sb.from('clients').update({ user_id: user.id }).eq('id', data.id);
+    }
+  }
 
   currentClient = data;
 
@@ -1048,19 +1061,20 @@ function closeModal() {
 }
 async function confirmCancel() {
   if (!cancelApptId) return;
+  const idToCancel = cancelApptId;
   const btn = document.getElementById('btn-confirm-cancel');
   btn.disabled = true; btn.textContent = 'Cancelando…';
 
   const { error } = await sb.from('appointments')
     .update({ status: 'cancelled' })
-    .eq('id', cancelApptId);
+    .eq('id', idToCancel);
 
   btn.disabled = false; btn.textContent = 'Cancelar agendamento';
   closeModal();
 
   if (!error) {
     allAppointments = allAppointments.map(a =>
-      a.id === cancelApptId ? { ...a, status: 'cancelled' } : a
+      a.id === idToCancel ? { ...a, status: 'cancelled' } : a
     );
     renderAppointments();
   }
