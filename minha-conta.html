@@ -207,7 +207,8 @@ img { max-width: 100%; display: block; }
 .portal-panel.active { display: block; }
 
 /* ========== AGENDAMENTOS ========== */
-.appt-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+.appt-tabs-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.appt-tabs { display: flex; gap: 8px; }
 .appt-tab {
   padding: 8px 18px; border-radius: 20px; font-size: 12px; font-weight: 500;
   letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer;
@@ -490,9 +491,12 @@ img { max-width: 100%; display: block; }
 
     <!-- Tab: Agendamentos -->
     <div class="portal-panel active" id="tab-agendamentos">
-      <div class="appt-tabs">
-        <button class="appt-tab active" onclick="filterAppt('proximos')">Próximos</button>
-        <button class="appt-tab" onclick="filterAppt('historico')">Histórico</button>
+      <div class="appt-tabs-bar">
+        <div class="appt-tabs">
+          <button class="appt-tab active" onclick="filterAppt('proximos')">Próximos</button>
+          <button class="appt-tab" onclick="filterAppt('historico')">Histórico</button>
+        </div>
+        <a class="btn btn-verde" href="/booking" style="white-space:nowrap">Agendar Agora →</a>
       </div>
       <div id="appt-loading"><div class="spinner"></div></div>
       <div class="appt-list" id="appt-list" style="display:none"></div>
@@ -691,11 +695,9 @@ async function onLoggedIn(session) {
     session.user.user_metadata?.name || '';
   document.getElementById('greeting-name').textContent = `Olá, ${metaName.split(' ')[0] || 'Você'}!`;
 
-  // Run profile load and appointments in parallel, admin check separately (RLS may block)
-  await Promise.all([
-    loadClientProfile(session.user),
-    loadAppointments(),
-  ]);
+  // Load profile first — loadAppointments depends on currentClient.id being set
+  await loadClientProfile(session.user);
+  await loadAppointments();
 
   // Atualiza saudação com nome real do perfil (clients table tem prioridade)
   const profileName = currentClient?.name || metaName || '';

@@ -77,33 +77,33 @@
   },
   "hotPaths": [
     {
-      "path": "store.html",
-      "accessCount": 59,
-      "lastAccessed": 1779291890238,
-      "type": "file"
-    },
-    {
       "path": "minha-conta.html",
-      "accessCount": 53,
-      "lastAccessed": 1779291966208,
+      "accessCount": 66,
+      "lastAccessed": 1779292949810,
       "type": "file"
     },
     {
-      "path": "index.html",
-      "accessCount": 29,
-      "lastAccessed": 1779284594196,
-      "type": "file"
-    },
-    {
-      "path": "blog.html",
-      "accessCount": 22,
-      "lastAccessed": 1779228662175,
+      "path": "store.html",
+      "accessCount": 60,
+      "lastAccessed": 1779292947104,
       "type": "file"
     },
     {
       "path": "booking.html",
-      "accessCount": 22,
-      "lastAccessed": 1779284728409,
+      "accessCount": 31,
+      "lastAccessed": 1779293074729,
+      "type": "file"
+    },
+    {
+      "path": "index.html",
+      "accessCount": 30,
+      "lastAccessed": 1779292940910,
+      "type": "file"
+    },
+    {
+      "path": "blog.html",
+      "accessCount": 23,
+      "lastAccessed": 1779292949956,
       "type": "file"
     },
     {
@@ -132,14 +132,14 @@
     },
     {
       "path": "CLAUDE.md",
-      "accessCount": 7,
-      "lastAccessed": 1779290507732,
+      "accessCount": 9,
+      "lastAccessed": 1779292719069,
       "type": "file"
     },
     {
       "path": "vercel.json",
-      "accessCount": 4,
-      "lastAccessed": 1779290494692,
+      "accessCount": 6,
+      "lastAccessed": 1779292941362,
       "type": "file"
     },
     {
@@ -167,9 +167,15 @@
       "type": "file"
     },
     {
+      "path": "_redirects",
+      "accessCount": 2,
+      "lastAccessed": 1779292534958,
+      "type": "file"
+    },
+    {
       "path": "assets/design-system.css",
-      "accessCount": 1,
-      "lastAccessed": 1779194782381,
+      "accessCount": 2,
+      "lastAccessed": 1779292941631,
       "type": "file"
     },
     {
@@ -182,12 +188,6 @@
       "path": "seed-professionals.sql",
       "accessCount": 1,
       "lastAccessed": 1779228975186,
-      "type": "file"
-    },
-    {
-      "path": "_redirects",
-      "accessCount": 1,
-      "lastAccessed": 1779285047291,
       "type": "file"
     }
   ],
