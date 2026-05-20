@@ -155,15 +155,15 @@
       "type": "file"
     },
     {
-      "path": "api/package.json",
-      "accessCount": 2,
-      "lastAccessed": 1779220205718,
+      "path": ".env",
+      "accessCount": 3,
+      "lastAccessed": 1779294145788,
       "type": "file"
     },
     {
-      "path": ".env",
+      "path": "api/package.json",
       "accessCount": 2,
-      "lastAccessed": 1779292025867,
+      "lastAccessed": 1779220205718,
       "type": "file"
     },
     {
