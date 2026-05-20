@@ -78,8 +78,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 88,
-      "lastAccessed": 1779311599518,
+      "accessCount": 92,
+      "lastAccessed": 1779312619857,
       "type": "file"
     },
     {
@@ -107,15 +107,15 @@
       "type": "file"
     },
     {
-      "path": "supabase-migration.sql",
-      "accessCount": 19,
-      "lastAccessed": 1779279555975,
+      "path": "admin.html",
+      "accessCount": 22,
+      "lastAccessed": 1779312583335,
       "type": "file"
     },
     {
-      "path": "admin.html",
+      "path": "supabase-migration.sql",
       "accessCount": 19,
-      "lastAccessed": 1779311613493,
+      "lastAccessed": 1779279555975,
       "type": "file"
     },
     {

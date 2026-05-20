@@ -663,11 +663,24 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 (function initTabSession() {
   const TAB_KEY = 'th_open_tabs';
   const TAB_ID  = 'th_tab_' + Math.random().toString(36).slice(2);
-  // Limpa flag de navegação interna (foi definida por minha-conta ao navegar aqui)
+  // Verifica se veio de navegação interna (minha-conta não decrementou o contador)
+  const navTs = parseInt(localStorage.getItem('th_nav_ts') || '0', 10);
+  const isInternalNav = (Date.now() - navTs) < 2000;
   localStorage.removeItem('th_nav_ts');
   sessionStorage.setItem(TAB_ID, '1');
   const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
-  localStorage.setItem(TAB_KEY, count + 1);
+  if (isInternalNav) {
+    // Herda o slot da página anterior — contador já está correto, não incrementa
+    // Mas se por algum motivo for 0, força 1
+    if (count === 0) localStorage.setItem(TAB_KEY, '1');
+  } else {
+    // Nova aba ou acesso direto
+    if (count === 0) {
+      // Stale session — limpa
+      try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
+    }
+    localStorage.setItem(TAB_KEY, count + 1);
+  }
   window.addEventListener('beforeunload', () => {
     sessionStorage.removeItem(TAB_ID);
     const remaining = Math.max(0, parseInt(localStorage.getItem(TAB_KEY) || '1', 10) - 1);
