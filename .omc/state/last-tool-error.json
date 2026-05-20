@@ -1,7 +1,0 @@
-{
-  "tool_name": "WebFetch",
-  "tool_input_preview": "{\"url\":\"https://docs.asaas.com/reference/criar-webhook\",\"prompt\":\"Extract ALL information about creating/registering webhooks in Asaas: the API endpoint, required fields, payload structure for the reg...",
-  "error": "Request failed with status code 404",
-  "timestamp": "2026-05-20T23:48:11.305Z",
-  "retry_count": 1
-}

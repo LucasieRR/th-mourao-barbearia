@@ -517,7 +517,7 @@ img { max-width: 100%; display: block; }
         <div class="portal-greeting-name" id="greeting-name">Olá!</div>
         <div class="portal-greeting-sub">Bem-vindo ao seu espaço na TH Mourão</div>
       </div>
-      <button class="btn-logout" onclick="doLogout()">Sair</button>
+      <button class="btn-logout" onclick="doLogout()">Logoff</button>
     </div>
 
     <div class="portal-tabs">
@@ -938,7 +938,7 @@ async function doLogout() {
   try { await sb.auth.signOut({ scope: 'local' }); } catch (e) { console.warn('signOut error:', e); }
   try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-') || k === 'th_open_tabs' || k === 'th_nav_ts') localStorage.removeItem(k); }); } catch (e) {}
   try { Object.keys(sessionStorage).forEach(k => { if (k.startsWith('sb-') || k.startsWith('th_tab_')) sessionStorage.removeItem(k); }); } catch (e) {}
-  window.location.href = '/minha-conta';
+  window.location.href = 'https://www.thmourao.com.br';
 }
 
 // ============================================================
