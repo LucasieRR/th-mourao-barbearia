@@ -807,9 +807,14 @@ async function doGoogleLogin() {
 
 async function doLogout() {
   try { await sb.auth.signOut({ scope: 'local' }); } catch (e) { console.warn('signOut error:', e); }
-  // Limpa storage do Supabase para garantir que a sessão seja removida
-  Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
-  window.location.href = '/minha-conta';
+  // Limpa todos os storages do Supabase (Safari pode usar sessionStorage também)
+  ['localStorage', 'sessionStorage'].forEach(store => {
+    try {
+      Object.keys(window[store]).forEach(k => { if (k.startsWith('sb-')) window[store].removeItem(k); });
+    } catch (e) {}
+  });
+  // Pequeno delay para garantir que o SDK processe o signOut antes do redirect
+  setTimeout(() => { window.location.href = '/minha-conta'; }, 200);
 }
 
 // ============================================================
