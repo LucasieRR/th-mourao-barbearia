@@ -78,8 +78,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 107,
-      "lastAccessed": 1779316506971,
+      "accessCount": 122,
+      "lastAccessed": 1779317967832,
       "type": "file"
     },
     {
@@ -90,8 +90,8 @@
     },
     {
       "path": "admin.html",
-      "accessCount": 44,
-      "lastAccessed": 1779316546154,
+      "accessCount": 49,
+      "lastAccessed": 1779317979441,
       "type": "file"
     },
     {
@@ -102,8 +102,8 @@
     },
     {
       "path": "booking.html",
-      "accessCount": 35,
-      "lastAccessed": 1779293385699,
+      "accessCount": 36,
+      "lastAccessed": 1779317517097,
       "type": "file"
     },
     {
@@ -125,21 +125,21 @@
       "type": "file"
     },
     {
-      "path": "api/server.js",
-      "accessCount": 9,
-      "lastAccessed": 1779220208088,
-      "type": "file"
-    },
-    {
       "path": "CLAUDE.md",
-      "accessCount": 9,
-      "lastAccessed": 1779292719069,
+      "accessCount": 15,
+      "lastAccessed": 1779318255586,
       "type": "file"
     },
     {
       "path": "vercel.json",
-      "accessCount": 9,
-      "lastAccessed": 1779293484231,
+      "accessCount": 11,
+      "lastAccessed": 1779318063317,
+      "type": "file"
+    },
+    {
+      "path": "api/server.js",
+      "accessCount": 10,
+      "lastAccessed": 1779317982085,
       "type": "file"
     },
     {
@@ -149,21 +149,27 @@
       "type": "file"
     },
     {
+      "path": "assinaturas.html",
+      "accessCount": 5,
+      "lastAccessed": 1779318084488,
+      "type": "file"
+    },
+    {
       "path": ".env.example",
       "accessCount": 3,
       "lastAccessed": 1779220205342,
       "type": "file"
     },
     {
-      "path": "assinaturas.html",
+      "path": "api/package.json",
       "accessCount": 3,
-      "lastAccessed": 1779220209040,
+      "lastAccessed": 1779318090728,
       "type": "file"
     },
     {
-      "path": "api/package.json",
-      "accessCount": 2,
-      "lastAccessed": 1779220205718,
+      "path": "package.json",
+      "accessCount": 3,
+      "lastAccessed": 1779318118865,
       "type": "file"
     },
     {
@@ -185,9 +191,9 @@
       "type": "file"
     },
     {
-      "path": "package.json",
-      "accessCount": 1,
-      "lastAccessed": 1779220205541,
+      "path": "api/subscribe.js",
+      "accessCount": 2,
+      "lastAccessed": 1779318125204,
       "type": "file"
     },
     {

@@ -1,7 +1,7 @@
 {
   "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"export NVM_DIR=\\\"$HOME/.nvm\\\" && [ -s \\\"$NVM_DIR/nvm.sh\\\" ] && \\\\. \\\"$NVM_DIR/nvm.sh\\\" && cd /tmp/puppeteer-test && node test_admin.js 2>&1\",\"timeout\":90000,\"description\":\"Run Puppeteer ad...",
-  "error": "Exit code 1\n\n=== STEP 1: Abrindo minha-conta ===\n[NAV] http://localhost:3456/minha-conta\n[browser ERROR] supabase is not defined\n[browser] VERBOSE [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o\n[browser] VERBOSE [DOM] Password field is not contained in a form: (More info: https://goo.gl/9p2vKq) %o\nAuth screen visível: true\n\n=== STEP 2: Fazendo login ===\nsb-* antes do login: []\n[browser ERROR] Cannot access 'sb' before initialization\nLogin clicado, aguardan...",
-  "timestamp": "2026-05-20T21:42:18.543Z",
-  "retry_count": 1
+  "tool_input_preview": "{\"command\":\"export NVM_DIR=\\\"$HOME/.nvm\\\" && [ -s \\\"$NVM_DIR/nvm.sh\\\" ] && \\\\. \\\"$NVM_DIR/nvm.sh\\\" && cd /tmp/puppeteer-test && cat > test_logic2.js << 'EOF'\\nconst puppeteer = require('puppeteer');\\n...",
+  "error": "Exit code 1\n\n=== CENÁRIO 1: count=0 sem nav interna → limpa sb-* ===\n[browser] initTabSession: count_before=0 isInternal=false tabs_after=1 sb-keys=0\n[browser] initTabSession: count_before=0 isInternal=false tabs_after=1 sb-keys=0\nsb-*: 0 | tabs: 1\n[PASSOU] Sessão limpa quando count=0 ✓\n\n=== CENÁRIO 2: count=0 com th_nav_ts recente → preserva sb-* ===\n[browser] initTabSession: count_before=0 isInternal=false tabs_after=1 sb-keys=0\n[browser] initTabSession: count_before=0 isInternal=true tabs_aft...",
+  "timestamp": "2026-05-20T23:03:36.248Z",
+  "retry_count": 2
 }
