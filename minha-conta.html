@@ -671,18 +671,28 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
   const TAB_KEY = 'th_open_tabs';
   const TAB_ID  = 'th_tab_' + Math.random().toString(36).slice(2);
 
+  // Se não há abas abertas registradas E não chegamos via navegação interna,
+  // limpa sessão stale (todas as abas foram fechadas anteriormente)
+  const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
+  const navTs = parseInt(localStorage.getItem('th_nav_ts') || '0', 10);
+  const isInternalNav = (Date.now() - navTs) < 2000;
+  if (count === 0 && !isInternalNav) {
+    Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
+  }
+  localStorage.removeItem('th_nav_ts');
+
   // Registra esta aba
   sessionStorage.setItem(TAB_ID, '1');
-  const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
   localStorage.setItem(TAB_KEY, count + 1);
 
-  // Ao fechar/navegar desta aba: decrementa contador.
-  // sb-* keys são limpas apenas pelo doLogout() explícito — nunca aqui.
   window.addEventListener('beforeunload', () => {
     sessionStorage.removeItem(TAB_ID);
     const remaining = Math.max(0, parseInt(localStorage.getItem(TAB_KEY) || '1', 10) - 1);
-    localStorage.setItem(TAB_KEY, remaining);
-    if (remaining === 0) localStorage.removeItem(TAB_KEY);
+    if (remaining === 0) {
+      localStorage.removeItem(TAB_KEY);
+    } else {
+      localStorage.setItem(TAB_KEY, remaining);
+    }
   });
 })();
 
@@ -747,7 +757,7 @@ async function onLoggedIn(session) {
       adminBtn.className = 'portal-tab';
       adminBtn.id = 'tab-btn-admin';
       adminBtn.textContent = 'Painel Admin';
-      adminBtn.onclick = () => { window.location.href = '/admin'; };
+      adminBtn.onclick = () => { localStorage.setItem('th_nav_ts', Date.now()); window.location.href = '/admin'; };
       tabs.appendChild(adminBtn);
     }
   } catch (e) {
@@ -915,11 +925,9 @@ async function doGoogleLogin() {
 
 async function doLogout() {
   try { await sb.auth.signOut({ scope: 'local' }); } catch (e) { console.warn('signOut error:', e); }
-  try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); } catch (e) {}
-  try { Object.keys(sessionStorage).forEach(k => { if (k.startsWith('sb-')) sessionStorage.removeItem(k); }); } catch (e) {}
-  // Zera contador de abas para evitar bloqueio no próximo acesso
-  localStorage.setItem('th_open_tabs', '0');
-  setTimeout(() => { window.location.href = '/minha-conta'; }, 150);
+  try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-') || k === 'th_open_tabs' || k === 'th_nav_ts') localStorage.removeItem(k); }); } catch (e) {}
+  try { Object.keys(sessionStorage).forEach(k => { if (k.startsWith('sb-') || k.startsWith('th_tab_')) sessionStorage.removeItem(k); }); } catch (e) {}
+  window.location.href = '/minha-conta';
 }
 
 // ============================================================

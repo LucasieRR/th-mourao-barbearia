@@ -130,25 +130,80 @@ Este erro **não** se refere ao cliente nem ao `creditCardHolderInfo`. Refere-se
 
 ### Sessão multi-aba com expiração ao fechar (Opção C)
 Padrão implementado: sessão persiste entre abas abertas, expira quando **todas** as abas são fechadas.
-```js
-// No init do script:
-const TAB_ID = 'th_tab_' + Math.random().toString(36).slice(2);
-sessionStorage.setItem(TAB_ID, '1');
-const count = parseInt(localStorage.getItem('th_open_tabs') || '0', 10);
-localStorage.setItem('th_open_tabs', count + 1);
-// Se contador estava zerado, limpa sessão stale
-if (count === 0) { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); }); }
 
-window.addEventListener('beforeunload', () => {
-  sessionStorage.removeItem(TAB_ID);
-  const remaining = Math.max(0, parseInt(localStorage.getItem('th_open_tabs') || '1', 10) - 1);
-  localStorage.setItem('th_open_tabs', remaining);
-  if (remaining === 0) {
+> **ATENÇÃO crítica — dois anti-padrões a evitar:**
+> 1. **NUNCA limpar `sb-*` no `beforeunload`** — `beforeunload` dispara tanto ao fechar a aba quanto ao navegar para outra página. Limpar ali destrói a sessão ao navegar entre páginas (ex: minha-conta → admin). Browsers modernos também podem não commitar operações de `localStorage` no `beforeunload` ao navegar para outra origem.
+> 2. **NUNCA limpar `sb-*` incondicionalmente no init (count=0)** — ao chegar via navegação interna, o contador pode estar zerado mas a sessão é válida. Usar o flag `th_nav_ts` para distinguir.
+
+**Padrão correto:** limpeza de `sb-*` acontece no **init**, não no `beforeunload`, protegida pelo flag `th_nav_ts`:
+
+```js
+// No init do script (minha-conta.html e admin.html):
+(function initTabSession() {
+  const TAB_KEY = 'th_open_tabs';
+  const TAB_ID  = 'th_tab_' + Math.random().toString(36).slice(2);
+
+  // Se não há abas abertas E não chegamos via navegação interna,
+  // limpa sessão stale (todas as abas foram fechadas anteriormente)
+  const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
+  const navTs = parseInt(localStorage.getItem('th_nav_ts') || '0', 10);
+  const isInternalNav = (Date.now() - navTs) < 2000;
+  if (count === 0 && !isInternalNav) {
     Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
-    localStorage.removeItem('th_open_tabs');
   }
+  localStorage.removeItem('th_nav_ts'); // limpa o flag sempre
+
+  sessionStorage.setItem(TAB_ID, '1');
+  localStorage.setItem(TAB_KEY, count + 1);
+
+  // beforeunload: apenas decrementa contador, NUNCA limpa sb-*
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.removeItem(TAB_ID);
+    const remaining = Math.max(0, parseInt(localStorage.getItem(TAB_KEY) || '1', 10) - 1);
+    if (remaining === 0) { localStorage.removeItem(TAB_KEY); } else { localStorage.setItem(TAB_KEY, remaining); }
+  });
+})();
+```
+
+**Navegação interna** (ex: botão "Painel Admin"):
+```js
+adminBtn.onclick = () => { localStorage.setItem('th_nav_ts', Date.now()); window.location.href = '/admin'; };
+```
+O `th_nav_ts` é lido no `initTabSession` da página de destino. Se tiver menos de 2 segundos, a sessão é preservada mesmo com `count=0`.
+
+### Logout robusto — limpeza seletiva (nunca `localStorage.clear()`)
+```js
+async function doLogout() {
+  try { await sb.auth.signOut({ scope: 'local' }); } catch(e) {}
+  try { Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-') || k === 'th_open_tabs') localStorage.removeItem(k); }); } catch(e) {}
+  try { Object.keys(sessionStorage).forEach(k => { if (k.startsWith('sb-') || k.startsWith('th_tab_')) sessionStorage.removeItem(k); }); } catch(e) {}
+  window.location.href = '/minha-conta';
+}
+```
+> **Nunca usar `localStorage.clear()`** — apaga tudo incluindo estado da aplicação. Usar remoção seletiva de `sb-*` e `th_open_tabs`.
+
+### Páginas protegidas (admin) — `onAuthStateChange`, nunca `getSession()`
+O Supabase restaura o token do `localStorage` de forma **assíncrona** após carregar a página. Chamar `getSession()` imediatamente após `DOMContentLoaded` pode retornar `null` antes da restauração completar — causando redirect para login mesmo com sessão válida.
+
+**Padrão correto para qualquer página protegida navegada via link:**
+```js
+let _booted = false;
+sb.auth.onAuthStateChange(async (event, session) => {
+  if (_booted) return;
+  if (event === 'SIGNED_OUT') { window.location.href = '/minha-conta'; return; }
+  if (!session) return; // aguarda INITIAL_SESSION
+  _booted = true;
+  const ok = await checkAuthAndAdmin(session); // recebe session como parâmetro
+  if (!ok) return;
+  document.getElementById('authGate').style.display = 'none';
+  document.getElementById('appRoot').style.display  = 'block';
+  await loadData();
 });
 ```
+- O evento `INITIAL_SESSION` dispara quando o Supabase termina de restaurar o token do localStorage
+- `_booted` previne dupla execução se outros eventos dispararem depois
+- `checkAuthAndAdmin(session)` recebe a sessão como parâmetro — não chama `getSession()` internamente
+- **Nunca usar** `getSession()` como entry point em páginas que são destino de navegação
 
 ---
 

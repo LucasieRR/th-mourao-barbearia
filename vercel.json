@@ -1,6 +1,9 @@
 {
   "version": 2,
-  "builds": [{ "src": "**/*", "use": "@vercel/static" }],
+  "builds": [
+    { "src": "api/subscribe.js", "use": "@vercel/node" },
+    { "src": "**/*", "use": "@vercel/static" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
@@ -16,6 +19,7 @@
     }
   ],
   "routes": [
+    { "src": "/api/subscribe", "dest": "/api/subscribe.js" },
     { "src": "/blog/([^/]+)", "dest": "/blog-post.html" },
     { "src": "/blog",         "dest": "/blog.html" },
     { "src": "/store",        "dest": "/store.html" },

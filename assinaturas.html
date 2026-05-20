@@ -1194,7 +1194,7 @@ async function submitForm(e) {
   };
 
   try {
-    var resp = await fetch('http://localhost:3001/api/subscribe', {
+    var resp = await fetch('/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
