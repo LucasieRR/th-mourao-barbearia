@@ -143,6 +143,12 @@
       "type": "file"
     },
     {
+      "path": "CLAUDE.md",
+      "accessCount": 3,
+      "lastAccessed": 1779285071328,
+      "type": "file"
+    },
+    {
       "path": "vercel.json",
       "accessCount": 2,
       "lastAccessed": 1779202917859,
@@ -167,12 +173,6 @@
       "type": "file"
     },
     {
-      "path": "CLAUDE.md",
-      "accessCount": 1,
-      "lastAccessed": 1779202428322,
-      "type": "file"
-    },
-    {
       "path": "package.json",
       "accessCount": 1,
       "lastAccessed": 1779220205541,
@@ -182,6 +182,12 @@
       "path": "seed-professionals.sql",
       "accessCount": 1,
       "lastAccessed": 1779228975186,
+      "type": "file"
+    },
+    {
+      "path": "_redirects",
+      "accessCount": 1,
+      "lastAccessed": 1779285047291,
       "type": "file"
     }
   ],
