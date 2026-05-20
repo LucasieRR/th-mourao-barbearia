@@ -690,6 +690,23 @@ img { max-width: 100%; display: block; }
     </div>
   </div>
 
+  <!-- Tela de boas-vindas (último agendamento) -->
+  <div class="panel" id="panel-0" style="display:none">
+    <div id="repeat-loading" class="loading-state">
+      <div class="spinner"></div>
+      <span>Carregando…</span>
+    </div>
+    <div id="repeat-content" style="display:none">
+      <h1 class="panel-title" id="repeat-title">Bem-vindo de volta!</h1>
+      <p class="panel-sub">Deseja repetir seu último agendamento ou escolher diferente?</p>
+      <div id="repeat-card-wrap" style="margin-bottom:24px"></div>
+      <div class="action-bar" style="justify-content:flex-start;gap:12px;flex-wrap:wrap">
+        <button class="btn-confirm" id="btn-repeat" onclick="repeatLastBooking()">Repetir último agendamento →</button>
+        <button class="btn-back" style="padding:16px 0" onclick="goToStep(1)">Escolher diferente</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Step 1: Barbeiro -->
   <div class="panel active" id="panel-1">
     <h1 class="panel-title">Escolha seu barbeiro</h1>
@@ -700,7 +717,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="cards-grid" id="barbers-grid" style="display:none"></div>
     <div class="action-bar">
-      <span></span>
+      <a href="index.html" class="btn-back">← Voltar ao site</a>
       <button class="btn-next" id="btn-1" disabled onclick="goToStep(2)">Próximo →</button>
     </div>
   </div>
@@ -771,10 +788,6 @@ img { max-width: 100%; display: block; }
             <label class="form-label">E-mail <span style="color:var(--cinza-light)">(opcional)</span></label>
             <input class="form-input" type="email" id="f-email" placeholder="seu@email.com" autocomplete="email" />
           </div>
-          <div class="form-group full">
-            <label class="form-label">Observações <span style="color:var(--cinza-light)">(opcional)</span></label>
-            <input class="form-input" type="text" id="f-notes" placeholder="Ex: alergia a algum produto, preferência de estilo…" />
-          </div>
         </div>
         <div class="action-bar">
           <button class="btn-back" onclick="goToStep(3)">← Voltar</button>
@@ -822,7 +835,7 @@ img { max-width: 100%; display: block; }
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"/></svg>
         Adicionar ao Google Agenda
       </a>
-      <a href="minha-conta.html" class="btn-account">Criar conta para acompanhar agendamentos</a>
+      <a href="minha-conta.html" class="btn-account" id="btn-account-link" style="display:none">Criar conta para acompanhar agendamentos</a>
     </div>
   </div>
 
@@ -846,6 +859,13 @@ const state = {
   calMonth: null,
 };
 
+// Cache de dados pré-carregados
+const cache = {
+  barbers: null,       // Promise<array>
+  services: {},        // { [professionalId]: Promise<array> }
+  profData: {},        // { [professionalId]: Promise<object> }
+};
+
 // ============================================================
 // NAVEGAÇÃO ENTRE STEPS
 // ============================================================
@@ -856,8 +876,12 @@ function goToStep(n) {
     if (n === 4 && (!state.date || !state.slot)) return;
   }
 
-  document.getElementById(`panel-${state.step}`).classList.remove('active');
-  document.getElementById(`panel-${n}`).classList.add('active');
+  const currentPanelId = state.step === 0 ? 'panel-0' : `panel-${state.step}`;
+  const currentPanel = document.getElementById(currentPanelId);
+  if (currentPanel) { currentPanel.classList.remove('active'); currentPanel.style.display = 'none'; }
+
+  const nextPanel = document.getElementById(`panel-${n}`);
+  if (nextPanel) { nextPanel.classList.add('active'); nextPanel.style.display = ''; }
 
   // Atualiza stepper
   for (let i = 1; i <= 4; i++) {
@@ -872,6 +896,140 @@ function goToStep(n) {
   if (n === 2 && state.barber) loadServices(state.barber.id);
   if (n === 3) renderCalendar();
   if (n === 4) updateSummary();
+
+  // Pré-carrega serviços do primeiro barbeiro ao entrar no step 1
+  if (n === 1) preFetchServices();
+}
+
+// ============================================================
+// PRÉ-FETCH — carrega barbeiros e serviços em paralelo
+// ============================================================
+function prefetchBarbers() {
+  if (!cache.barbers) {
+    cache.barbers = sb
+      .from('professionals')
+      .select('id, name, profession, avatar_url, working_hours, break_between_appointments')
+      .eq('active', true)
+      .order('name')
+      .then(({ data, error }) => {
+        if (error) throw error;
+        return data || [];
+      });
+  }
+  return cache.barbers;
+}
+
+function prefetchServices(professionalId) {
+  if (!cache.services[professionalId]) {
+    cache.services[professionalId] = sb
+      .from('services')
+      .select('id, name, description, duration_minutes, price')
+      .eq('professional_id', professionalId)
+      .eq('active', true)
+      .order('price')
+      .then(({ data, error }) => {
+        if (error) throw error;
+        return data || [];
+      });
+  }
+  return cache.services[professionalId];
+}
+
+function preFetchServices() {
+  // Quando barbeiros já estão em cache, pré-carrega serviços de todos
+  if (cache.barbers) {
+    cache.barbers.then(barbers => {
+      barbers.forEach(b => prefetchServices(b.id));
+    }).catch(() => {});
+  }
+}
+
+// ============================================================
+// TELA 0 — ÚLTIMO AGENDAMENTO (usuário logado)
+// ============================================================
+async function checkLastBooking() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session?.user) return; // Sem login, vai direto ao step 1
+
+  // Busca cliente vinculado
+  const { data: client } = await sb.from('clients')
+    .select('id, name')
+    .eq('user_id', session.user.id)
+    .maybeSingle();
+
+  if (!client) return;
+
+  // Busca último agendamento completo ou agendado
+  const { data: lastAppt } = await sb
+    .from('appointments')
+    .select('id, service_name, service_price, duration_minutes, start_time, professionals(id, name, avatar_url), services(id, name, description, duration_minutes, price)')
+    .eq('client_id', client.id)
+    .in('status', ['completed', 'scheduled', 'confirmed'])
+    .order('start_time', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (!lastAppt) return;
+
+  // Mostra tela de boas-vindas
+  const panel0 = document.getElementById('panel-0');
+  const panel1 = document.getElementById('panel-1');
+  panel1.classList.remove('active');
+  panel0.style.display = 'block';
+  panel0.classList.add('active');
+  state.step = 0;
+
+  document.getElementById('stepper').style.opacity = '0.5';
+
+  const firstName = (client.name || 'você').split(' ')[0];
+  document.getElementById('repeat-title').textContent = `Olá, ${firstName}!`;
+
+  const barber = lastAppt.professionals;
+  const service = lastAppt.services || {
+    id: null,
+    name: lastAppt.service_name,
+    description: '',
+    duration_minutes: lastAppt.duration_minutes,
+    price: lastAppt.service_price,
+  };
+
+  // Salva referência para uso no repeat
+  state._lastBarber = barber;
+  state._lastService = service;
+
+  const avatarHtml = barber?.avatar_url
+    ? `<img src="${barber.avatar_url}" alt="${barber.name}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;flex-shrink:0" />`
+    : `<div style="width:64px;height:64px;border-radius:50%;background:var(--creme3);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0">✂</div>`;
+
+  document.getElementById('repeat-card-wrap').innerHTML = `
+    <div style="background:var(--branco);border:2px solid var(--verde);border-radius:4px;padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+      ${avatarHtml}
+      <div style="flex:1;min-width:140px">
+        <div style="font-family:var(--font-serif);font-weight:700;font-size:17px;margin-bottom:4px">${barber?.name || '—'}</div>
+        <div style="font-size:14px;color:var(--cinza);margin-bottom:2px">${service.name}</div>
+        <div style="font-size:13px;color:var(--cinza-light)">${service.duration_minutes} min · R$ ${Number(service.price).toFixed(2).replace('.', ',')}</div>
+      </div>
+    </div>
+  `;
+
+  document.getElementById('repeat-loading').style.display = 'none';
+  document.getElementById('repeat-content').style.display = 'block';
+}
+
+function repeatLastBooking() {
+  const barber = state._lastBarber;
+  const service = state._lastService;
+  if (!barber || !service) { goToStep(1); return; }
+
+  state.barber = barber;
+  state.service = service;
+  document.getElementById('step-sub-1').textContent = barber.name;
+  document.getElementById('step-sub-2').textContent = service.name;
+  document.getElementById('stepper').style.opacity = '1';
+
+  // Pré-carrega profData para o calendário
+  prefetchServices(barber.id);
+  goToStep(3);
 }
 
 // ============================================================
@@ -879,13 +1037,7 @@ function goToStep(n) {
 // ============================================================
 async function loadBarbers() {
   try {
-    const { data, error } = await sb
-      .from('professionals')
-      .select('id, name, profession, avatar_url')
-      .eq('active', true)
-      .order('name');
-
-    if (error) throw error;
+    const data = await prefetchBarbers();
 
     document.getElementById('barbers-loading').style.display = 'none';
     const grid = document.getElementById('barbers-grid');
@@ -927,6 +1079,8 @@ function selectBarber(barber, card) {
   state.slot = null;
   document.getElementById('btn-1').disabled = false;
   document.getElementById('step-sub-1').textContent = barber.name;
+  // Pré-carrega serviços deste barbeiro imediatamente ao selecionar
+  prefetchServices(barber.id);
 }
 
 // ============================================================
@@ -942,14 +1096,7 @@ async function loadServices(professionalId) {
     `Serviços de ${state.barber.name}`;
 
   try {
-    const { data, error } = await sb
-      .from('services')
-      .select('id, name, description, duration_minutes, price')
-      .eq('professional_id', professionalId)
-      .eq('active', true)
-      .order('name');
-
-    if (error) throw error;
+    const data = await prefetchServices(professionalId);
     loading.style.display = 'none';
 
     if (!data || data.length === 0) {
@@ -1084,14 +1231,21 @@ async function loadSlots(date) {
     const professional = state.barber;
     const duration = state.service.duration_minutes;
 
-    // Busca dados do profissional (working_hours, break)
-    const { data: profData, error: profErr } = await sb
-      .from('professionals')
-      .select('working_hours, break_between_appointments')
-      .eq('id', professional.id)
-      .single();
-
-    if (profErr) throw profErr;
+    // Usa cache de barbeiros se disponível (já inclui working_hours e break)
+    let profData = null;
+    if (cache.barbers) {
+      const barbers = await cache.barbers;
+      profData = barbers.find(b => b.id === professional.id) || null;
+    }
+    if (!profData) {
+      const { data, error: profErr } = await sb
+        .from('professionals')
+        .select('working_hours, break_between_appointments')
+        .eq('id', professional.id)
+        .single();
+      if (profErr) throw profErr;
+      profData = data;
+    }
 
     const dayNames = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
     const dayName = dayNames[date.getDay()];
@@ -1257,7 +1411,6 @@ async function confirmBooking() {
   const phone = document.getElementById('f-phone').value.trim();
   const cpf = document.getElementById('f-cpf').value.replace(/\D/g, '');
   const email = document.getElementById('f-email').value.trim();
-  const notes = document.getElementById('f-notes').value.trim();
 
   const errEl = document.getElementById('confirm-error');
   errEl.classList.remove('show');
@@ -1335,7 +1488,6 @@ async function confirmBooking() {
       end_time: endTime.toISOString(),
       status: 'scheduled',
       source: 'website',
-      notes: notes || null,
     });
 
     if (apptErr) throw apptErr;
@@ -1349,7 +1501,15 @@ async function confirmBooking() {
       });
     }
 
-    showSuccessScreen(name, startTime, endTime);
+    // Verifica se CPF já tem conta (user_id preenchido) para decidir mostrar "Criar conta"
+    const { data: clientRow } = await sb.from('clients')
+      .select('user_id')
+      .eq('company_id', COMPANY_ID)
+      .eq('cpf', cpf)
+      .maybeSingle();
+    const hasAccount = !!clientRow?.user_id;
+
+    showSuccessScreen(name, startTime, endTime, hasAccount);
 
   } catch (e) {
     btn.disabled = false;
@@ -1369,7 +1529,7 @@ function showError(msg) {
   el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
-function showSuccessScreen(clientName, startTime, endTime) {
+function showSuccessScreen(clientName, startTime, endTime, hasAccount = false) {
   // Esconde wizard, mostra sucesso
   document.getElementById('stepper').style.display = 'none';
   for (let i = 1; i <= 4; i++) document.getElementById(`panel-${i}`).style.display = 'none';
@@ -1413,12 +1573,24 @@ function showSuccessScreen(clientName, startTime, endTime) {
   const endGcal = endTime.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
   document.getElementById('gcal-link').href =
     `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startGcal}/${endGcal}&details=${details}&location=${location}`;
+
+  // Mostra "Criar conta" só se CPF ainda não tem conta vinculada
+  if (!hasAccount) {
+    document.getElementById('btn-account-link').style.display = '';
+  }
 }
 
 // ============================================================
 // INIT
 // ============================================================
-loadBarbers();
+// Inicia prefetch de barbeiros imediatamente (em paralelo com tudo)
+prefetchBarbers();
+
+// Verifica login e último agendamento; renderiza barbeiros em paralelo
+Promise.all([
+  checkLastBooking(),
+  loadBarbers(),
+]).catch(() => {});
 </script>
 </body>
 </html>
