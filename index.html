@@ -9,13 +9,13 @@
   gtag('js', new Date());
   gtag('config', 'G-QMT52J8BXW');
 </script>
-<!-- Microsoft Clarity -->
+<!-- Microsoft Clarity (deferred to idle) -->
 <script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
+  (function(c,l,a,r,i){
     c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "ws3twk4nu5");
+    var load=function(){var t=l.createElement('script');t.async=1;t.src='https://www.clarity.ms/tag/'+i;l.head.appendChild(t);};
+    if('requestIdleCallback' in window){requestIdleCallback(load);}else{setTimeout(load,2000);}
+  })(window,document,'clarity','script','ws3twk4nu5');
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,7 +24,8 @@
 <link rel="icon" type="image/png" href="assets/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="assets/foto-vista.jpg" fetchpriority="high" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
 <style>
 :root {
   --verde: #4A5A3A;
@@ -953,11 +954,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <h2 class="galeria-h2">UM AMBIENTE FEITO PARA VOCÊ</h2>
     </div>
     <div class="galeria-grid fade-up">
-      <div class="gi gi-1"><img src="assets/foto-vista.jpg" alt="Vista privilegiada de Blumenau" loading="eager" /><div class="gi-cap"><span>Vista Privilegiada</span></div></div>
-      <div class="gi gi-2"><img src="assets/foto-lounge.jpg" alt="Lounge premium" loading="eager" /><div class="gi-cap"><span>Lounge Premium</span></div></div>
-      <div class="gi gi-3"><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="eager" /><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
-      <div class="gi gi-4"><img src="assets/espaco-1.jpg" alt="Espaço TH Mourão" loading="eager" /><div class="gi-cap"><span>O Espaço</span></div></div>
-      <div class="gi gi-5"><img src="assets/espaco-3.jpg" alt="Estrutura TH Mourão" loading="eager" /><div class="gi-cap"><span>A Estrutura</span></div></div>
+      <div class="gi gi-1"><img src="assets/foto-vista.jpg" alt="Vista privilegiada de Blumenau" loading="eager" fetchpriority="high" width="800" height="600" /><div class="gi-cap"><span>Vista Privilegiada</span></div></div>
+      <div class="gi gi-2"><img src="assets/foto-lounge.jpg" alt="Lounge premium" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>Lounge Premium</span></div></div>
+      <div class="gi gi-3"><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
+      <div class="gi gi-4"><img src="assets/espaco-1.jpg" alt="Espaço TH Mourão" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>O Espaço</span></div></div>
+      <div class="gi gi-5"><img src="assets/espaco-3.jpg" alt="Estrutura TH Mourão" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>A Estrutura</span></div></div>
     </div>
   </div>
 </section>
@@ -1027,7 +1028,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
 
       <div class="barber-card">
-        <img src="assets/foto-carioca.jpg" alt="Carioca" class="barber-photo" />
+        <picture>
+          <source srcset="assets/foto-carioca.webp" type="image/webp" />
+          <img src="assets/foto-carioca.jpg" alt="Carioca" class="barber-photo" loading="lazy" width="400" height="533" />
+        </picture>
         <div class="barber-caption">
           <div class="barber-name">Carioca</div>
           <a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">
@@ -1037,7 +1041,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
 
       <div class="barber-card">
-        <img src="assets/foto-miranda.jpg" alt="Mauricio Miranda" class="barber-photo" />
+        <picture>
+          <source srcset="assets/foto-miranda.webp" type="image/webp" />
+          <img src="assets/foto-miranda.jpg" alt="Mauricio Miranda" class="barber-photo" loading="lazy" width="400" height="591" />
+        </picture>
         <div class="barber-caption">
           <div class="barber-name">Mauricio Miranda</div>
           <a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener" aria-label="Instagram">

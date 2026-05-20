@@ -78,32 +78,32 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 66,
-      "lastAccessed": 1779292949810,
+      "accessCount": 83,
+      "lastAccessed": 1779293448205,
       "type": "file"
     },
     {
       "path": "store.html",
-      "accessCount": 60,
-      "lastAccessed": 1779292947104,
-      "type": "file"
-    },
-    {
-      "path": "booking.html",
-      "accessCount": 31,
-      "lastAccessed": 1779293074729,
+      "accessCount": 66,
+      "lastAccessed": 1779293420936,
       "type": "file"
     },
     {
       "path": "index.html",
-      "accessCount": 30,
-      "lastAccessed": 1779292940910,
+      "accessCount": 38,
+      "lastAccessed": 1779293536953,
+      "type": "file"
+    },
+    {
+      "path": "booking.html",
+      "accessCount": 35,
+      "lastAccessed": 1779293385699,
       "type": "file"
     },
     {
       "path": "blog.html",
-      "accessCount": 23,
-      "lastAccessed": 1779292949956,
+      "accessCount": 28,
+      "lastAccessed": 1779293424180,
       "type": "file"
     },
     {
@@ -138,8 +138,8 @@
     },
     {
       "path": "vercel.json",
-      "accessCount": 6,
-      "lastAccessed": 1779292941362,
+      "accessCount": 9,
+      "lastAccessed": 1779293484231,
       "type": "file"
     },
     {
@@ -176,6 +176,12 @@
       "path": "assets/design-system.css",
       "accessCount": 2,
       "lastAccessed": 1779292941631,
+      "type": "file"
+    },
+    {
+      "path": ".vercelignore",
+      "accessCount": 2,
+      "lastAccessed": 1779293484500,
       "type": "file"
     },
     {

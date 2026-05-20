@@ -9,13 +9,13 @@
   gtag('js', new Date());
   gtag('config', 'G-QMT52J8BXW');
 </script>
-<!-- Microsoft Clarity -->
+<!-- Microsoft Clarity (deferred to idle) -->
 <script type="text/javascript">
-  (function(c,l,a,r,i,t,y){
+  (function(c,l,a,r,i){
     c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-  })(window, document, "clarity", "script", "ws3twk4nu5");
+    var load=function(){var t=l.createElement('script');t.async=1;t.src='https://www.clarity.ms/tag/'+i;l.head.appendChild(t);};
+    if('requestIdleCallback' in window){requestIdleCallback(load);}else{setTimeout(load,2000);}
+  })(window,document,'clarity','script','ws3twk4nu5');
 </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -24,8 +24,9 @@
 <link rel="icon" type="image/png" href="assets/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
 :root {
   --verde: #4A5A3A;
@@ -908,11 +909,18 @@ function updateCategoryBarTop() {
   const navH = document.getElementById('navbar').getBoundingClientRect().height;
   document.getElementById('categoryBar').style.top = navH + 'px';
 }
+let _scrollTicking = false;
 window.addEventListener('scroll', function() {
-  const scrolled = window.scrollY > 60;
-  document.getElementById('navbar').classList.toggle('scrolled', scrolled);
-  updateCategoryBarTop();
-});
+  if (!_scrollTicking) {
+    requestAnimationFrame(function() {
+      const scrolled = window.scrollY > 60;
+      document.getElementById('navbar').classList.toggle('scrolled', scrolled);
+      updateCategoryBarTop();
+      _scrollTicking = false;
+    });
+    _scrollTicking = true;
+  }
+}, { passive: true });
 window.addEventListener('resize', updateCategoryBarTop);
 updateCategoryBarTop();
 

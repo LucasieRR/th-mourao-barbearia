@@ -1,6 +1,20 @@
 {
   "version": 2,
   "builds": [{ "src": "**/*", "use": "@vercel/static" }],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/(.*)\\.(?:jpg|jpeg|png|webp|avif|svg|ico|woff2|woff|ttf|css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    }
+  ],
   "routes": [
     { "src": "/blog/([^/]+)", "dest": "/blog-post.html" },
     { "src": "/blog",         "dest": "/blog.html" },
