@@ -340,6 +340,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .product-placeholder {
   width: 100%; height: 100%;
   background: linear-gradient(135deg, var(--creme2) 0%, var(--creme3) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 3rem;
+  user-select: none;
 }
 .product-badge {
   position: absolute; top: 10px; left: 10px;
@@ -804,14 +807,28 @@ function catLabel(cat) {
   return map[cat] || cat;
 }
 
+const CATEGORIA_ICON = {
+  'Barba':      '🪒',
+  'Cabelo':     '✂️',
+  'Skincare':   '🧴',
+  'Aparadores': '🔌',
+  'Higiene':    '🧼',
+  'Perfumaria': '💧',
+};
+
 // ========== CARD BUILDER ==========
 function buildCard(produto) {
   const discount = getDiscount(produto.preco, produto.precoOriginal);
   const installment = Math.ceil(produto.preco / 12);
+  const icon = CATEGORIA_ICON[produto.categoria] || '🛍️';
+  const imgHtml = produto.imagem
+    ? `<img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+       <div class="product-placeholder" style="display:none;">${icon}</div>`
+    : `<div class="product-placeholder">${icon}</div>`;
   return `
     <a class="product-card fade-up" href="${produto.link}" target="_blank" rel="noopener noreferrer">
       <div class="product-img-wrap">
-        ${produto.imagem ? `<img src="${produto.imagem}" alt="${produto.nome}" loading="lazy" />` : ''}
+        ${imgHtml}
         ${produto.badge ? `<span class="product-badge ${produto.badgeClass}">${getBadgeLabel(produto.badge)}</span>` : ''}
       </div>
       <div class="product-body">
