@@ -737,10 +737,8 @@ async function onLoggedIn(session) {
   await loadAppointments();
 
   // Atualiza saudação com nome real do perfil (clients table tem prioridade)
-  const profileName = currentClient?.name || metaName || '';
-  if (profileName) {
-    document.getElementById('greeting-name').textContent = `Olá, ${profileName.split(' ')[0]}!`;
-  }
+  const profileName = currentClient?.name || metaName || session.user.email?.split('@')[0] || '';
+  document.getElementById('greeting-name').textContent = `Olá, ${profileName.split(' ')[0] || 'Você'}!`;
 
   // Admin check
   try {
