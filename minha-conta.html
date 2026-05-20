@@ -387,12 +387,12 @@ img { max-width: 100%; display: block; }
     <div class="nav-links" id="navLinks">
       <a href="index.html#servicos">Serviços</a>
       <a href="index.html#equipe">Equipe</a>
-      <a href="store.html">Store</a>
-      <a href="blog.html">Blog</a>
-      <a href="minha-conta.html" class="active">Minha Conta</a>
+      <a href="/store">Store</a>
+      <a href="/blog">Blog</a>
+      <a href="/minha-conta" class="active">Minha Conta</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-verde" href="booking.html">Agendar →</a>
+      <a class="btn btn-verde" href="/booking">Agendar →</a>
       <button class="hamburger" id="hamburger" aria-label="Menu" onclick="this.closest('.navbar').classList.toggle('nav-mobile-open')">
         <span></span><span></span><span></span>
       </button>
@@ -581,9 +581,9 @@ img { max-width: 100%; display: block; }
       <div class="footer-col">
         <div class="footer-col-title">Quick Links</div>
         <ul>
-          <li><a href="booking.html">Agendamento</a></li>
+          <li><a href="/booking">Agendamento</a></li>
           <li><a href="https://www.instagram.com/thmouraobarbearia?igsh=MWZwcGQ5YnB6dXc1dg%3D%3D&utm_source=qr" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="blog.html">Blog</a></li>
+          <li><a href="/blog">Blog</a></li>
           <li><a href="mailto:contato@thmouraobarbearia.com.br">Oportunidades</a></li>
           <li><a href="index.html#contato">Localização & Contato</a></li>
         </ul>
@@ -593,7 +593,7 @@ img { max-width: 100%; display: block; }
         <div class="footer-hours-row"><span>Segunda a Sexta</span> · 9h00–20h00</div>
         <div class="footer-hours-row"><span>Sábado</span> · 9h00–18h00</div>
         <div class="footer-hours-row" style="margin-bottom:22px;"><span>Domingo</span> · Fechado</div>
-        <a class="btn btn-verde" href="booking.html">Reserve Agora →</a>
+        <a class="btn btn-verde" href="/booking">Reserve Agora →</a>
       </div>
     </div>
     <div class="footer-bottom">
@@ -865,7 +865,7 @@ function renderAppointments() {
   if (filtered.length === 0) {
     list.innerHTML = `<div class="appt-empty">
       ${apptFilter === 'proximos'
-        ? `Nenhum agendamento próximo. <a href="booking.html">Agendar agora</a>`
+        ? `Nenhum agendamento próximo. <a href="/booking">Agendar agora</a>`
         : 'Nenhum agendamento no histórico ainda.'}
     </div>`;
     return;

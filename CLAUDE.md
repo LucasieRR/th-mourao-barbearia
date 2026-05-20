@@ -13,6 +13,10 @@ Página de assinaturas em `/assinaturas.html` com backend Node.js/Express em `/a
 /blog.html
 /blog-post.html
 /store.html
+/booking.html
+/minha-conta.html
+/admin.html
+/_redirects          ← Netlify clean URLs (rewrite 200)
 /assets/             ← imagens, logo, design-system.css
 /api/
   server.js          ← Express API (porta 3001)
@@ -20,6 +24,26 @@ Página de assinaturas em `/assinaturas.html` com backend Node.js/Express em `/a
 /.env                ← credenciais reais (nunca commitar)
 /.env.example        ← template
 ```
+
+## URLs Limpas (Netlify)
+
+O arquivo `_redirects` na raiz configura rewrites silenciosos via Netlify:
+
+```
+/minha-conta  →  /minha-conta.html  (200)
+/booking      →  /booking.html      (200)
+/store        →  /store.html        (200)
+/blog         →  /blog.html         (200)
+/admin        →  /admin.html        (200)
+/blog-post    →  /blog-post.html    (200)
+/assinaturas  →  /assinaturas.html  (200)
+```
+
+**Premissa obrigatória:** Todos os links internos entre páginas devem usar o caminho limpo (sem `.html`):
+- ✅ `href="/minha-conta"`, `href="/booking"`, `href="/store"`, `href="/blog"`
+- ❌ `href="minha-conta.html"`, `href="booking.html"`
+
+Exceção: `index.html` pode ser referenciado como `index.html` quando usado com âncoras (`index.html#secao`) ou como `href="/"` para a homepage.
 
 ## Rodar localmente
 
