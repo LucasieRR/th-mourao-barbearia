@@ -652,7 +652,6 @@ img { max-width: 100%; display: block; }
       <img src="assets/logo.png" alt="TH Mourão" />
       <span class="nav-brand-name">TH Mourão</span>
     </a>
-    <a href="index.html" class="nav-back">← Voltar ao site</a>
   </div>
 </nav>
 
@@ -703,6 +702,7 @@ img { max-width: 100%; display: block; }
       <div class="action-bar" style="justify-content:flex-start;gap:12px;flex-wrap:wrap">
         <button class="btn-confirm" id="btn-repeat" onclick="repeatLastBooking()">Repetir último agendamento →</button>
         <button class="btn-back" style="padding:16px 0" onclick="goToStep(1)">Escolher diferente</button>
+        <a class="btn-back" style="padding:16px 0" href="/minha-conta">← Voltar</a>
       </div>
     </div>
   </div>
@@ -717,7 +717,6 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="cards-grid" id="barbers-grid" style="display:none"></div>
     <div class="action-bar">
-      <a href="index.html" class="btn-back">← Voltar ao site</a>
       <button class="btn-next" id="btn-1" disabled onclick="goToStep(2)">Próximo →</button>
     </div>
   </div>
@@ -1366,18 +1365,25 @@ function updateSummary() {
     : '—';
 
   // Pré-preenche se usuário logado
-  sb.auth.getUser().then(({ data }) => {
-    if (data?.user) {
-      sb.from('clients').select('name, phone, email, cpf')
-        .eq('user_id', data.user.id).single()
-        .then(({ data: client }) => {
-          if (!client) return;
-          if (client.name) document.getElementById('f-name').value = client.name;
-          if (client.phone) document.getElementById('f-phone').value = client.phone;
-          if (client.email) document.getElementById('f-email').value = client.email;
-          if (client.cpf) document.getElementById('f-cpf').value = formatCpf(client.cpf);
-        });
+  sb.auth.getUser().then(async ({ data }) => {
+    if (!data?.user) return;
+    const user = data.user;
+
+    // Tenta por user_id primeiro, depois por email como fallback
+    let { data: client } = await sb.from('clients').select('name, phone, email, cpf')
+      .eq('user_id', user.id).maybeSingle();
+
+    if (!client && user.email) {
+      const res = await sb.from('clients').select('name, phone, email, cpf')
+        .eq('email', user.email).maybeSingle();
+      client = res.data;
     }
+
+    if (!client) return;
+    if (client.name)  document.getElementById('f-name').value  = client.name;
+    if (client.phone) document.getElementById('f-phone').value = client.phone;
+    if (client.email) document.getElementById('f-email').value = client.email;
+    if (client.cpf)   document.getElementById('f-cpf').value   = formatCpf(client.cpf);
   });
 }
 
@@ -1517,7 +1523,7 @@ async function confirmBooking() {
     if (e.code === '23505') {
       showError('Já existe um agendamento com este CPF neste horário. Por favor, escolha outro horário.');
     } else {
-      showError('Ocorreu um erro ao confirmar o agendamento. Tente novamente.');
+      showError(`Erro: ${e.message || e.details || JSON.stringify(e)}`);
     }
   }
 }
