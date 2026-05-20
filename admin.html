@@ -75,7 +75,7 @@ img { max-width: 100%; display: block; }
 /* ========== TABS ========== */
 .tabs {
   display: flex; gap: 4px; border-bottom: 1px solid var(--creme3);
-  margin-bottom: 24px; overflow-x: auto;
+  margin-bottom: 24px;
 }
 .tab {
   padding: 12px 20px; font-size: 13px; font-weight: 500;
@@ -86,7 +86,7 @@ img { max-width: 100%; display: block; }
 .tab:hover { color: var(--preto); }
 .tab.active { color: var(--verde-dark); border-bottom-color: var(--verde); font-weight: 600; }
 .tab-panel { display: none; }
-.tab-panel.active { display: block; }
+.tab-panel.active { display: block; overflow: visible; }
 
 /* ========== CARDS / PANELS ========== */
 .panel {
@@ -310,7 +310,10 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
         <img src="assets/logo.png" alt="TH Mourão" onerror="this.style.display='none'" />
         <span class="nav-brand-name">TH Mourão · Admin</span>
       </a>
-      <button class="nav-logout" id="btnLogout">Sair</button>
+      <div style="display:flex;align-items:center;gap:10px">
+        <a href="minha-conta.html" class="nav-logout">Minha Conta</a>
+        <button class="nav-logout" id="btnLogout">Sair</button>
+      </div>
     </div>
   </header>
 
@@ -1231,7 +1234,7 @@ function renderStore() {
   $('#emptyStore').style.display = 'none';
   tbody.innerHTML = state.products.map((p, idx) => `
     <tr>
-      <td>${p.imagem_url ? `<img class="thumb" src="${escapeHtml(p.imagem_url)}" alt="" onerror="this.style.visibility='hidden'" />` : '<div class="thumb"></div>'}</td>
+      <td>${p.imagem ? `<img class="thumb" src="${escapeHtml(p.imagem)}" alt="" onerror="this.style.visibility='hidden'" />` : '<div class="thumb"></div>'}</td>
       <td><strong>${escapeHtml(p.nome || '—')}</strong>${p.badge ? `<div><span class="badge badge-star" style="margin-top:4px">${escapeHtml(p.badge)}</span></div>` : ''}</td>
       <td>${escapeHtml(p.categoria || '—')}</td>
       <td>${fmtPrice(p.preco)}</td>
@@ -1271,10 +1274,10 @@ function openProductModal(id) {
   $('#pPrice').value = p?.preco ?? '';
   $('#pOriginalPrice').value = p?.preco_original ?? '';
   $('#pRating').value = p?.avaliacao ?? 0;
-  $('#pReviews').value = p?.num_avaliacoes ?? 0;
+  $('#pReviews').value = p?.avaliacoes ?? 0;
   $('#pBadge').value = p?.badge || '';
-  $('#pLink').value = p?.link_afiliado || '';
-  $('#pImage').value = p?.imagem_url || '';
+  $('#pLink').value = p?.link || '';
+  $('#pImage').value = p?.imagem || '';
   $('#pFeatured').checked = !!p?.destaque;
   $('#pActive').checked = p ? !!p.ativo : true;
   openModal('#modalProduct');
@@ -1301,10 +1304,10 @@ $('#btnSaveProduct').addEventListener('click', async (e) => {
     preco,
     preco_original: precoOrig === '' ? null : parseFloat(precoOrig),
     avaliacao: isNaN(rating) ? 0 : rating,
-    num_avaliacoes: isNaN(reviews) ? 0 : reviews,
+    avaliacoes: isNaN(reviews) ? 0 : reviews,
     badge: $('#pBadge').value.trim() || null,
-    link_afiliado: $('#pLink').value.trim() || null,
-    imagem_url: $('#pImage').value.trim() || null,
+    link: $('#pLink').value.trim() || null,
+    imagem: $('#pImage').value.trim() || null,
     destaque: $('#pFeatured').checked,
     ativo: $('#pActive').checked,
   };

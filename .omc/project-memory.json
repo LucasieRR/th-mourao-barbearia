@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1779194636557,
+  "lastScanned": 1779282357179,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
     "languages": [
@@ -43,11 +43,22 @@
   },
   "customNotes": [],
   "directoryMap": {
+    "api": {
+      "path": "api",
+      "purpose": "API routes",
+      "fileCount": 3,
+      "lastAccessed": 1779282357147,
+      "keyFiles": [
+        "package-lock.json",
+        "package.json",
+        "server.js"
+      ]
+    },
     "assets": {
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 16,
-      "lastAccessed": 1779194636513,
+      "lastAccessed": 1779282357148,
       "keyFiles": [
         "design-system.css",
         "espaco-1.jpg",
@@ -55,6 +66,13 @@
         "espaco-3.jpg",
         "foto-area.jpg"
       ]
+    },
+    "api/node_modules": {
+      "path": "api/node_modules",
+      "purpose": "Dependencies",
+      "fileCount": 1,
+      "lastAccessed": 1779282357156,
+      "keyFiles": []
     }
   },
   "hotPaths": [
@@ -95,15 +113,15 @@
       "type": "file"
     },
     {
-      "path": "api/server.js",
-      "accessCount": 9,
-      "lastAccessed": 1779220208088,
+      "path": "admin.html",
+      "accessCount": 13,
+      "lastAccessed": 1779282250303,
       "type": "file"
     },
     {
-      "path": "admin.html",
-      "accessCount": 6,
-      "lastAccessed": 1779277111011,
+      "path": "api/server.js",
+      "accessCount": 9,
+      "lastAccessed": 1779220208088,
       "type": "file"
     },
     {
