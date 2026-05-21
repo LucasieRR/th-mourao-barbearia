@@ -721,6 +721,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="cards-grid" id="barbers-grid" style="display:none"></div>
     <div class="action-bar">
+      <button class="btn-back" onclick="navTo('/minha-conta')">← Anterior</button>
       <button class="btn-next" id="btn-1" disabled onclick="goToStep(2)">Próximo →</button>
     </div>
   </div>
@@ -853,6 +854,25 @@ const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFz
 const COMPANY_ID = 'a1b2c3d4-e5f6-7890-abcd-ef1234567890';
 
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+(function initTabSession() {
+  const TAB_KEY = 'th_open_tabs';
+  const TAB_ID  = 'th_tab_' + Math.random().toString(36).slice(2);
+  const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
+  const navTs = parseInt(localStorage.getItem('th_nav_ts') || '0', 10);
+  const isInternalNav = (Date.now() - navTs) < 2000;
+  if (count === 0 && !isInternalNav) {
+    Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
+  }
+  localStorage.removeItem('th_nav_ts');
+  sessionStorage.setItem(TAB_ID, '1');
+  localStorage.setItem(TAB_KEY, count + 1);
+  window.addEventListener('beforeunload', () => {
+    sessionStorage.removeItem(TAB_ID);
+    const remaining = Math.max(0, parseInt(localStorage.getItem(TAB_KEY) || '1', 10) - 1);
+    if (remaining === 0) { localStorage.removeItem(TAB_KEY); } else { localStorage.setItem(TAB_KEY, remaining); }
+  });
+})();
 
 // Estado global do wizard
 const state = {
