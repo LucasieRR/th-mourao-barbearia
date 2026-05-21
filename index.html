@@ -863,7 +863,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <a href="/blog">Blog</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-outline" href="/minha-conta" style="display:none">Minha Conta</a>
+      <a class="btn btn-outline" onclick="localStorage.setItem('th_nav_ts', Date.now()); window.location.href='/minha-conta';" style="display:none;cursor:pointer">Minha Conta</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>

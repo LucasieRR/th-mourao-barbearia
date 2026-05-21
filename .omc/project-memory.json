@@ -80,14 +80,14 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 216,
-      "lastAccessed": 1779403780531,
+      "accessCount": 218,
+      "lastAccessed": 1779404452649,
       "type": "file"
     },
     {
       "path": "admin.html",
-      "accessCount": 78,
-      "lastAccessed": 1779382532936,
+      "accessCount": 84,
+      "lastAccessed": 1779404495680,
       "type": "file"
     },
     {
@@ -98,8 +98,14 @@
     },
     {
       "path": "booking.html",
-      "accessCount": 67,
-      "lastAccessed": 1779403718544,
+      "accessCount": 69,
+      "lastAccessed": 1779404526595,
+      "type": "file"
+    },
+    {
+      "path": "index.html",
+      "accessCount": 41,
+      "lastAccessed": 1779404507198,
       "type": "file"
     },
     {
@@ -109,15 +115,9 @@
       "type": "file"
     },
     {
-      "path": "index.html",
-      "accessCount": 38,
-      "lastAccessed": 1779293536953,
-      "type": "file"
-    },
-    {
       "path": "blog.html",
-      "accessCount": 28,
-      "lastAccessed": 1779293424180,
+      "accessCount": 31,
+      "lastAccessed": 1779404508715,
       "type": "file"
     },
     {
@@ -134,8 +134,8 @@
     },
     {
       "path": "blog-post.html",
-      "accessCount": 15,
-      "lastAccessed": 1779228663716,
+      "accessCount": 17,
+      "lastAccessed": 1779404524847,
       "type": "file"
     },
     {
