@@ -344,6 +344,142 @@ img { max-width: 100%; display: block; }
   .portal-tab { padding: 10px 14px; font-size: 11px; }
 }
 
+/* ========== ADMIN PANEL ========== */
+.adm-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--creme3); margin-bottom: 24px; flex-wrap: wrap; }
+.adm-tab {
+  padding: 10px 20px; font-size: 12px; font-weight: 500;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--cinza);
+  cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px;
+  transition: all 0.2s; background: none; border-left: none; border-right: none; border-top: none;
+}
+.adm-tab.active { color: var(--verde-dark); border-bottom-color: var(--verde); }
+.adm-panel { display: none; }
+.adm-panel.active { display: block; }
+
+.adm-card {
+  background: var(--branco); border: 1px solid var(--creme3); border-radius: 4px;
+  margin-bottom: 24px; overflow: hidden;
+}
+.adm-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 20px; border-bottom: 1px solid var(--creme3); gap: 12px; flex-wrap: wrap;
+}
+.adm-card-title { font-weight: 600; font-size: 14px; }
+.adm-toolbar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.adm-tbl-wrap { overflow-x: auto; }
+.adm-tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
+.adm-tbl th { padding: 10px 16px; text-align: left; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--cinza); border-bottom: 1px solid var(--creme3); white-space: nowrap; }
+.adm-tbl td { padding: 12px 16px; border-bottom: 1px solid var(--creme2); vertical-align: middle; }
+.adm-tbl tr:last-child td { border-bottom: none; }
+.adm-tbl tr:hover td { background: var(--creme2); }
+.adm-empty { padding: 40px; text-align: center; color: var(--cinza); font-size: 13px; }
+.adm-actions { display: flex; gap: 6px; align-items: center; }
+.adm-btn-icon {
+  width: 30px; height: 30px; display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid var(--creme3); border-radius: 3px; background: var(--branco);
+  color: var(--cinza); cursor: pointer; font-size: 14px; transition: all 0.15s;
+}
+.adm-btn-icon:hover { border-color: var(--bege); color: var(--preto); }
+.adm-btn-icon:disabled { opacity: 0.35; cursor: not-allowed; }
+.adm-btn {
+  padding: 8px 16px; font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase;
+  border-radius: 2px; cursor: pointer; transition: all 0.2s; border: none;
+}
+.adm-btn-primary { background: var(--verde); color: #fff; }
+.adm-btn-primary:hover { background: var(--verde-dark); }
+.adm-btn-primary:disabled { background: var(--creme3); color: var(--cinza-light); cursor: not-allowed; }
+.adm-btn-ghost { background: var(--branco); color: var(--cinza); border: 1px solid var(--creme3); }
+.adm-btn-ghost:hover { border-color: var(--bege); color: var(--preto); }
+.adm-select {
+  padding: 8px 12px; border: 1px solid var(--creme3); border-radius: 3px;
+  font-family: var(--font-sans); font-size: 13px; color: var(--preto);
+  background: var(--branco); outline: none; min-width: 200px;
+}
+.adm-select:focus { border-color: var(--verde); }
+.adm-search {
+  padding: 8px 12px; border: 1px solid var(--creme3); border-radius: 3px;
+  font-family: var(--font-sans); font-size: 13px; color: var(--preto);
+  background: var(--branco); outline: none; min-width: 220px;
+}
+.adm-search:focus { border-color: var(--verde); }
+.adm-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.adm-badge-ok { background: #dcfce7; color: #15803d; }
+.adm-badge-off { background: #f3f4f6; color: #6b7280; }
+.adm-badge-warn { background: #fef9c3; color: #854d0e; }
+.adm-badge-star { background: #fef3c7; color: #92400e; }
+.adm-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; background: var(--creme3); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--cinza); overflow: hidden; }
+.adm-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.adm-thumb { width: 40px; height: 40px; border-radius: 3px; object-fit: cover; background: var(--creme3); }
+.adm-pagination { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-top: 1px solid var(--creme2); font-size: 12px; color: var(--cinza); flex-wrap: wrap; gap: 8px; }
+.adm-pages { display: flex; gap: 4px; }
+.adm-pg-btn { padding: 5px 10px; border: 1px solid var(--creme3); border-radius: 3px; background: var(--branco); font-size: 12px; cursor: pointer; transition: all 0.15s; }
+.adm-pg-btn.active { background: var(--verde); color: #fff; border-color: var(--verde); }
+.adm-pg-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.adm-top-clients { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 20px; }
+.adm-top-card { background: var(--branco); border: 1px solid var(--creme3); border-radius: 4px; padding: 16px; text-align: center; }
+.adm-rank { font-family: var(--font-display); font-size: 22px; color: var(--bege); }
+.adm-nm { font-weight: 600; font-size: 13px; margin: 4px 0 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.adm-cnt { font-size: 11px; color: var(--cinza); }
+.adm-hours-row { display: grid; grid-template-columns: 48px 48px 1fr 1fr; gap: 8px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--creme2); }
+.adm-hours-row.disabled .adm-h-inputs { opacity: 0.35; pointer-events: none; }
+.adm-hours-day { font-size: 13px; font-weight: 600; }
+.adm-switch { position: relative; display: inline-block; width: 36px; height: 20px; }
+.adm-switch input { opacity: 0; width: 0; height: 0; }
+.adm-slider { position: absolute; cursor: pointer; inset: 0; background: var(--creme3); border-radius: 20px; transition: 0.2s; }
+.adm-slider::before { content: ''; position: absolute; height: 14px; width: 14px; left: 3px; bottom: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+.adm-switch input:checked + .adm-slider { background: var(--verde); }
+.adm-switch input:checked + .adm-slider::before { transform: translateX(16px); }
+.adm-time-input { padding: 7px 10px; border: 1px solid var(--creme3); border-radius: 3px; font-family: var(--font-sans); font-size: 13px; width: 100%; outline: none; }
+.adm-time-input:focus { border-color: var(--verde); }
+
+/* Admin modals — scoped with .adm-modal-overlay */
+.adm-modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.55); z-index: 300;
+  align-items: center; justify-content: center;
+}
+.adm-modal-overlay.open { display: flex; }
+.adm-modal {
+  background: var(--branco); border-radius: 4px;
+  max-width: 540px; width: 92%; max-height: 90vh; overflow-y: auto;
+}
+.adm-modal-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 24px; border-bottom: 1px solid var(--creme3);
+}
+.adm-modal-head h3 { font-family: var(--font-serif); font-size: 18px; font-weight: 700; }
+.adm-modal-close { font-size: 22px; color: var(--cinza); cursor: pointer; background: none; border: none; line-height: 1; }
+.adm-modal-body { padding: 24px; }
+.adm-modal-foot { display: flex; justify-content: flex-end; gap: 10px; padding: 16px 24px; border-top: 1px solid var(--creme3); }
+.adm-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.adm-form-group { display: flex; flex-direction: column; gap: 5px; }
+.adm-form-group.full { grid-column: 1 / -1; }
+.adm-form-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--cinza); }
+.adm-form-control {
+  padding: 10px 12px; border: 1px solid var(--creme3); border-radius: 3px;
+  font-family: var(--font-sans); font-size: 13px; color: var(--preto);
+  background: var(--branco); outline: none; width: 100%;
+}
+.adm-form-control:focus { border-color: var(--verde); }
+.adm-form-check { display: flex; align-items: center; gap: 8px; font-size: 13px; cursor: pointer; }
+.adm-form-check input { accent-color: var(--verde); width: 15px; height: 15px; }
+
+@media (max-width: 768px) {
+  .adm-top-clients { grid-template-columns: repeat(2,1fr); }
+  .adm-form-grid { grid-template-columns: 1fr; }
+  .adm-hours-row { grid-template-columns: 44px 40px 1fr 1fr; gap: 5px; }
+}
+@media (max-width: 480px) {
+  .adm-top-clients { grid-template-columns: 1fr 1fr; }
+  .adm-tab { padding: 8px 12px; font-size: 11px; }
+}
+
+/* Admin toast notifications */
+#adm-toastWrap { position: fixed; bottom: 24px; right: 24px; z-index: 400; display: flex; flex-direction: column; gap: 8px; pointer-events: none; }
+.adm-toast { background: var(--escuro); color: #fff; padding: 12px 18px; border-radius: 4px; font-size: 13px; box-shadow: 0 4px 16px rgba(0,0,0,0.18); pointer-events: auto; transition: opacity .3s; }
+.adm-toast.success { background: var(--verde); }
+.adm-toast.error { background: #c0392b; }
+
 /* ========== FOOTER ========== */
 .footer {
   background: var(--escuro);
@@ -674,8 +810,237 @@ img { max-width: 100%; display: block; }
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- Tab: Painel Admin -->
+    <div class="portal-panel" id="tab-admin">
+      <div class="adm-tabs">
+        <button class="adm-tab active" data-adm-tab="barbeiros">Barbeiros</button>
+        <button class="adm-tab" data-adm-tab="servicos">Serviços</button>
+        <button class="adm-tab" data-adm-tab="horarios">Horários</button>
+        <button class="adm-tab" data-adm-tab="clientes">Clientes</button>
+        <button class="adm-tab" data-adm-tab="store">Store</button>
+      </div>
+
+      <!-- Barbeiros -->
+      <div class="adm-panel active" data-adm-panel="barbeiros">
+        <div class="adm-card">
+          <div class="adm-card-head">
+            <div class="adm-card-title">Barbeiros cadastrados</div>
+            <button class="adm-btn adm-btn-primary" id="adm-btnNewBarber">+ Novo barbeiro</button>
+          </div>
+          <div class="adm-tbl-wrap">
+            <table class="adm-tbl" id="adm-tblBarbers">
+              <thead><tr>
+                <th style="width:52px"></th>
+                <th>Nome</th>
+                <th>Profissão</th>
+                <th>Ativo</th>
+                <th style="width:80px"></th>
+              </tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="adm-empty" id="adm-emptyBarbers" style="display:none">Nenhum barbeiro cadastrado.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Serviços -->
+      <div class="adm-panel" data-adm-panel="servicos">
+        <div class="adm-card">
+          <div class="adm-card-head">
+            <div class="adm-card-title">Serviços por barbeiro</div>
+            <div class="adm-toolbar">
+              <select class="adm-select" id="adm-svcBarberSelect"></select>
+              <button class="adm-btn adm-btn-primary" id="adm-btnNewService" disabled>+ Novo serviço</button>
+            </div>
+          </div>
+          <div class="adm-tbl-wrap">
+            <table class="adm-tbl" id="adm-tblServices">
+              <thead><tr>
+                <th>Nome</th>
+                <th style="width:120px">Duração (min)</th>
+                <th style="width:120px">Preço</th>
+                <th style="width:80px">Ativo</th>
+                <th style="width:100px"></th>
+              </tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="adm-empty" id="adm-emptyServices">Selecione um barbeiro para ver os serviços.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horários -->
+      <div class="adm-panel" data-adm-panel="horarios">
+        <div class="adm-card">
+          <div class="adm-card-head">
+            <div class="adm-card-title">Grade semanal de atendimento</div>
+            <select class="adm-select" id="adm-hrsBarberSelect"></select>
+          </div>
+          <div id="adm-hoursContent" style="display:none; padding: 20px;">
+            <div id="adm-hoursGrid"></div>
+            <div style="display:flex;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap;">
+              <div class="adm-form-group" style="flex:1;min-width:200px;">
+                <label class="adm-form-label">Intervalo entre agendamentos (min)</label>
+                <input type="number" class="adm-form-control" id="adm-hrsBreak" min="0" step="5" value="0" style="max-width:120px;" />
+              </div>
+              <button class="adm-btn adm-btn-primary" id="adm-btnSaveHours">Salvar horários</button>
+            </div>
+          </div>
+          <div class="adm-empty" id="adm-hoursEmpty">Selecione um barbeiro para configurar os horários.</div>
+        </div>
+      </div>
+
+      <!-- Clientes -->
+      <div class="adm-panel" data-adm-panel="clientes">
+        <div id="adm-topClientsWrap" class="adm-top-clients"></div>
+        <div class="adm-card">
+          <div class="adm-card-head">
+            <div class="adm-card-title">Todos os clientes</div>
+            <input type="text" class="adm-search" id="adm-clientSearch" placeholder="Buscar por nome ou telefone…" />
+          </div>
+          <div class="adm-tbl-wrap">
+            <table class="adm-tbl" id="adm-tblClients">
+              <thead><tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Email</th>
+                <th style="width:70px">Total</th>
+                <th style="width:120px">Último agend.</th>
+                <th style="width:120px">Criado em</th>
+                <th style="width:130px">Status</th>
+              </tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="adm-empty" id="adm-emptyClients" style="display:none">Nenhum cliente encontrado.</div>
+          </div>
+          <div class="adm-pagination">
+            <div id="adm-clientsCount"></div>
+            <div class="adm-pages" id="adm-clientsPages"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Store -->
+      <div class="adm-panel" data-adm-panel="store">
+        <div class="adm-card">
+          <div class="adm-card-head">
+            <div class="adm-card-title">Produtos da Store</div>
+            <button class="adm-btn adm-btn-primary" id="adm-btnNewProduct">+ Novo produto</button>
+          </div>
+          <div class="adm-tbl-wrap">
+            <table class="adm-tbl" id="adm-tblStore">
+              <thead><tr>
+                <th style="width:52px">Img</th>
+                <th>Nome</th>
+                <th style="width:120px">Categoria</th>
+                <th style="width:80px">Preço</th>
+                <th style="width:72px">Destaque</th>
+                <th style="width:68px">Ativo</th>
+                <th style="width:160px"></th>
+              </tr></thead>
+              <tbody></tbody>
+            </table>
+            <div class="adm-empty" id="adm-emptyStore" style="display:none">Nenhum produto cadastrado.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="adm-toastWrap"></div>
+
+<!-- ADMIN MODALS -->
+<div class="adm-modal-overlay" id="adm-modalBarber">
+  <div class="adm-modal">
+    <div class="adm-modal-head">
+      <h3 id="adm-barberModalTitle">Novo barbeiro</h3>
+      <button class="adm-modal-close" data-adm-close>&times;</button>
+    </div>
+    <div class="adm-modal-body">
+      <form id="adm-formBarber" autocomplete="off">
+        <input type="hidden" id="adm-bId" />
+        <div class="adm-form-grid">
+          <div class="adm-form-group full"><label class="adm-form-label">Nome *</label><input type="text" class="adm-form-control" id="adm-bName" required /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Profissão</label><input type="text" class="adm-form-control" id="adm-bProfession" placeholder="Barbeiro" /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Cidade</label><input type="text" class="adm-form-control" id="adm-bCity" /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Telefone</label><input type="text" class="adm-form-control" id="adm-bPhone" /></div>
+          <div class="adm-form-group"><label class="adm-form-label">WhatsApp</label><input type="text" class="adm-form-control" id="adm-bWhats" /></div>
+          <div class="adm-form-group full"><label class="adm-form-label">Avatar URL</label><input type="text" class="adm-form-control" id="adm-bAvatar" placeholder="https://…" /></div>
+          <div class="adm-form-group full"><label class="adm-form-label">Bio</label><textarea class="adm-form-control" id="adm-bBio" rows="3"></textarea></div>
+          <div class="adm-form-group full"><label class="adm-form-check"><input type="checkbox" id="adm-bActive" checked /> Ativo</label></div>
+        </div>
+      </form>
+    </div>
+    <div class="adm-modal-foot">
+      <button class="adm-btn adm-btn-ghost" data-adm-close>Cancelar</button>
+      <button class="adm-btn adm-btn-primary" id="adm-btnSaveBarber">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="adm-modal-overlay" id="adm-modalService">
+  <div class="adm-modal">
+    <div class="adm-modal-head">
+      <h3 id="adm-serviceModalTitle">Novo serviço</h3>
+      <button class="adm-modal-close" data-adm-close>&times;</button>
+    </div>
+    <div class="adm-modal-body">
+      <form id="adm-formService" autocomplete="off">
+        <input type="hidden" id="adm-sId" />
+        <div class="adm-form-grid">
+          <div class="adm-form-group full"><label class="adm-form-label">Nome *</label><input type="text" class="adm-form-control" id="adm-sName" required /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Duração (min) *</label><input type="number" class="adm-form-control" id="adm-sDuration" min="1" step="5" value="30" required /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Preço (R$) *</label><input type="number" class="adm-form-control" id="adm-sPrice" min="0" step="0.01" value="0.00" required /></div>
+          <div class="adm-form-group full"><label class="adm-form-label">Descrição</label><textarea class="adm-form-control" id="adm-sDesc" rows="3"></textarea></div>
+          <div class="adm-form-group full"><label class="adm-form-check"><input type="checkbox" id="adm-sActive" checked /> Ativo</label></div>
+        </div>
+      </form>
+    </div>
+    <div class="adm-modal-foot">
+      <button class="adm-btn adm-btn-ghost" data-adm-close>Cancelar</button>
+      <button class="adm-btn adm-btn-primary" id="adm-btnSaveService">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<div class="adm-modal-overlay" id="adm-modalProduct">
+  <div class="adm-modal">
+    <div class="adm-modal-head">
+      <h3 id="adm-productModalTitle">Novo produto</h3>
+      <button class="adm-modal-close" data-adm-close>&times;</button>
+    </div>
+    <div class="adm-modal-body">
+      <form id="adm-formProduct" autocomplete="off">
+        <input type="hidden" id="adm-pId" />
+        <div class="adm-form-grid">
+          <div class="adm-form-group full"><label class="adm-form-label">Nome *</label><input type="text" class="adm-form-control" id="adm-pName" required /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Categoria *</label>
+            <select class="adm-form-control" id="adm-pCategory" required>
+              <option value="barba">Barba</option><option value="cabelo">Cabelo</option>
+              <option value="skincare">Skincare</option><option value="aparadores">Aparadores</option>
+              <option value="higiene">Higiene</option><option value="perfumaria">Perfumaria</option>
+            </select>
+          </div>
+          <div class="adm-form-group"><label class="adm-form-label">Preço (R$) *</label><input type="number" class="adm-form-control" id="adm-pPrice" min="0" step="0.01" required /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Preço original (R$)</label><input type="number" class="adm-form-control" id="adm-pOriginalPrice" min="0" step="0.01" /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Avaliação (0-5)</label><input type="number" class="adm-form-control" id="adm-pRating" min="0" max="5" step="0.1" value="0" /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Nº avaliações</label><input type="number" class="adm-form-control" id="adm-pReviews" min="0" step="1" value="0" /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Badge</label><input type="text" class="adm-form-control" id="adm-pBadge" placeholder="Ex: Mais vendido" /></div>
+          <div class="adm-form-group"><label class="adm-form-label">Link afiliado</label><input type="text" class="adm-form-control" id="adm-pLink" placeholder="https://…" /></div>
+          <div class="adm-form-group full"><label class="adm-form-label">Imagem URL</label><input type="text" class="adm-form-control" id="adm-pImage" placeholder="https://…" /></div>
+          <div class="adm-form-group"><label class="adm-form-check"><input type="checkbox" id="adm-pFeatured" /> Destaque</label></div>
+          <div class="adm-form-group"><label class="adm-form-check"><input type="checkbox" id="adm-pActive" checked /> Ativo</label></div>
+        </div>
+      </form>
+    </div>
+    <div class="adm-modal-foot">
+      <button class="adm-btn adm-btn-ghost" data-adm-close>Cancelar</button>
+      <button class="adm-btn adm-btn-primary" id="adm-btnSaveProduct">Salvar</button>
+    </div>
+  </div>
 </div>
 
 <!-- FOOTER -->
@@ -846,7 +1211,7 @@ async function onLoggedIn(session) {
       adminBtn.className = 'portal-tab';
       adminBtn.id = 'tab-btn-admin';
       adminBtn.textContent = 'Painel Admin';
-      adminBtn.onclick = () => { localStorage.setItem('th_nav_ts', Date.now()); window.location.href = '/admin'; };
+      adminBtn.onclick = () => switchPortalTab('admin');
       tabs.appendChild(adminBtn);
     }
   } catch (e) {
@@ -1068,6 +1433,7 @@ function switchPortalTab(tab) {
   document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
   event.target.classList.add('active');
   document.getElementById(`tab-${tab}`).classList.add('active');
+  if (tab === 'admin' && typeof window.admBootPanel === 'function') window.admBootPanel();
 }
 
 // ============================================================
@@ -1258,6 +1624,643 @@ document.addEventListener('DOMContentLoaded', () => {
   const cep = document.getElementById('p-cep');
   if (cep) cep.addEventListener('input', e => { e.target.value = formatCep(e.target.value); });
 });
+
+// ============================================================
+// ADMIN PANEL — inline, scoped with adm- prefix
+// ============================================================
+(function () {
+  const admState = {
+    barbers: [],
+    services: [],
+    selectedBarberForServices: null,
+    selectedBarberForHours: null,
+    clients: [],
+    clientsFiltered: [],
+    clientsPage: 1,
+    clientsPerPage: 20,
+    products: [],
+  };
+
+  let _admBooted = false;
+
+  // --- utils ---
+  function admQ(sel, root) { return (root || document).querySelector(sel); }
+  function admQQ(sel, root) { return Array.from((root || document).querySelectorAll(sel)); }
+
+  function admFmtPrice(n) {
+    if (n == null || isNaN(n)) return 'R$ 0,00';
+    return 'R$ ' + Number(n).toFixed(2).replace('.', ',');
+  }
+  function admFmtDate(s) {
+    if (!s) return '—';
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? '—' : d.toLocaleDateString('pt-BR');
+  }
+  function admInitials(name) {
+    if (!name) return '?';
+    return name.trim().split(/\s+/).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+  }
+  function admEscape(s) {
+    if (s == null) return '';
+    return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+  function admDaysSince(dateStr) {
+    if (!dateStr) return Infinity;
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? Infinity : (Date.now() - d.getTime()) / (1000 * 60 * 60 * 24);
+  }
+
+  function admToast(msg, type) {
+    let wrap = admQ('#adm-toastWrap');
+    if (!wrap) return;
+    const t = document.createElement('div');
+    t.className = 'adm-toast' + (type === 'success' ? ' success' : type === 'error' ? ' error' : '');
+    t.textContent = msg;
+    wrap.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; }, 2600);
+    setTimeout(() => t.remove(), 3000);
+  }
+
+  function admOpenModal(id) { const el = admQ(id); if (el) el.classList.add('open'); }
+  function admCloseModal(id) { const el = admQ(id); if (el) el.classList.remove('open'); }
+
+  async function admWithBtn(btn, fn) {
+    const orig = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Salvando…';
+    try { return await fn(); } finally { btn.disabled = false; btn.textContent = orig; }
+  }
+
+  // --- sub-tab switching ---
+  function admInitTabs() {
+    admQQ('.adm-tab').forEach(t => t.addEventListener('click', () => {
+      admQQ('.adm-tab').forEach(x => x.classList.remove('active'));
+      admQQ('.adm-panel').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      const panel = admQ(`[data-adm-panel="${t.dataset.admTab}"]`);
+      if (panel) panel.classList.add('active');
+      admOnTabChange(t.dataset.admTab);
+    }));
+  }
+
+  function admOnTabChange(tab) {
+    if (tab === 'barbeiros') admLoadBarbers();
+    else if (tab === 'servicos') admLoadServicesTab();
+    else if (tab === 'horarios') admLoadHoursTab();
+    else if (tab === 'clientes') admLoadClients();
+    else if (tab === 'store') admLoadStore();
+  }
+
+  // modal close via data-adm-close
+  document.addEventListener('click', (e) => {
+    if (e.target.matches('[data-adm-close]')) {
+      const overlay = e.target.closest('.adm-modal-overlay');
+      if (overlay) overlay.classList.remove('open');
+    }
+    if (e.target.matches('.adm-modal-overlay')) {
+      e.target.classList.remove('open');
+    }
+  });
+
+  // --- BARBEIROS ---
+  async function admLoadBarbers() {
+    const { data, error } = await sb.from('professionals')
+      .select('*').eq('company_id', COMPANY_ID).order('name', { ascending: true });
+    if (error) { admToast('Erro ao carregar barbeiros: ' + error.message, 'error'); return; }
+    admState.barbers = data || [];
+    admRenderBarbers();
+    admRefreshBarberDropdowns();
+  }
+
+  function admRenderBarbers() {
+    const tbody = admQ('#adm-tblBarbers tbody');
+    if (!admState.barbers.length) {
+      tbody.innerHTML = '';
+      const empty = admQ('#adm-emptyBarbers');
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+    const empty = admQ('#adm-emptyBarbers');
+    if (empty) empty.style.display = 'none';
+    tbody.innerHTML = admState.barbers.map(b => `
+      <tr>
+        <td><div class="adm-avatar">${b.avatar_url
+          ? `<img src="${admEscape(b.avatar_url)}" alt="" onerror="this.style.display='none';this.parentElement.textContent='${admEscape(admInitials(b.name))}'" />`
+          : admEscape(admInitials(b.name))}</div></td>
+        <td><strong>${admEscape(b.name || '—')}</strong></td>
+        <td>${admEscape(b.profession || '—')}</td>
+        <td><span class="adm-badge ${b.active ? 'adm-badge-ok' : 'adm-badge-off'}">${b.active ? 'Ativo' : 'Inativo'}</span></td>
+        <td><div class="adm-tbl-actions"><button class="adm-btn-icon" data-adm-edit-barber="${b.id}" title="Editar">&#9998;</button></div></td>
+      </tr>
+    `).join('');
+    tbody.querySelectorAll('[data-adm-edit-barber]').forEach(btn =>
+      btn.addEventListener('click', () => admOpenBarberModal(btn.dataset.admEditBarber))
+    );
+  }
+
+  function admRefreshBarberDropdowns() {
+    const opts = ['<option value="">— Selecione um barbeiro —</option>']
+      .concat(admState.barbers.map(b => `<option value="${b.id}">${admEscape(b.name)}</option>`))
+      .join('');
+    const sSel = admQ('#adm-svcBarberSelect');
+    const hSel = admQ('#adm-hrsBarberSelect');
+    if (sSel) { const prev = sSel.value; sSel.innerHTML = opts; if (prev) sSel.value = prev; }
+    if (hSel) { const prev = hSel.value; hSel.innerHTML = opts; if (prev) hSel.value = prev; }
+  }
+
+  function admOpenBarberModal(id) {
+    const b = id ? admState.barbers.find(x => x.id === id) : null;
+    admQ('#adm-barberModalTitle').textContent = b ? 'Editar barbeiro' : 'Novo barbeiro';
+    admQ('#adm-bId').value = b?.id || '';
+    admQ('#adm-bName').value = b?.name || '';
+    admQ('#adm-bProfession').value = b?.profession || '';
+    admQ('#adm-bCity').value = b?.city || '';
+    admQ('#adm-bPhone').value = b?.phone || '';
+    admQ('#adm-bWhats').value = b?.whatsapp || '';
+    admQ('#adm-bBio').value = b?.bio || '';
+    admQ('#adm-bAvatar').value = b?.avatar_url || '';
+    admQ('#adm-bActive').checked = b ? !!b.active : true;
+    admOpenModal('#adm-modalBarber');
+  }
+
+  function admInitBarbers() {
+    const btnNew = admQ('#adm-btnNewBarber');
+    if (btnNew) btnNew.addEventListener('click', () => admOpenBarberModal(null));
+
+    const btnSave = admQ('#adm-btnSaveBarber');
+    if (btnSave) btnSave.addEventListener('click', async (e) => {
+      const name = admQ('#adm-bName').value.trim();
+      if (!name) { admToast('Nome é obrigatório.', 'error'); return; }
+      const payload = {
+        company_id: COMPANY_ID,
+        name,
+        profession: admQ('#adm-bProfession').value.trim() || null,
+        city: admQ('#adm-bCity').value.trim() || null,
+        phone: admQ('#adm-bPhone').value.trim() || null,
+        whatsapp: admQ('#adm-bWhats').value.trim() || null,
+        bio: admQ('#adm-bBio').value.trim() || null,
+        avatar_url: admQ('#adm-bAvatar').value.trim() || null,
+        active: admQ('#adm-bActive').checked,
+      };
+      const id = admQ('#adm-bId').value;
+      await admWithBtn(e.target, async () => {
+        const { error } = id
+          ? await sb.from('professionals').update(payload).eq('id', id)
+          : await sb.from('professionals').insert(payload);
+        if (error) { admToast('Erro ao salvar: ' + error.message, 'error'); return; }
+        admToast(id ? 'Barbeiro atualizado.' : 'Barbeiro criado.', 'success');
+        admCloseModal('#adm-modalBarber');
+        admLoadBarbers();
+      });
+    });
+  }
+
+  // --- SERVIÇOS ---
+  async function admLoadServicesTab() {
+    if (!admState.barbers.length) await admLoadBarbers();
+    admRenderServicesTable();
+  }
+
+  function admInitServices() {
+    const sel = admQ('#adm-svcBarberSelect');
+    if (sel) sel.addEventListener('change', async (e) => {
+      admState.selectedBarberForServices = e.target.value || null;
+      const btnNew = admQ('#adm-btnNewService');
+      if (btnNew) btnNew.disabled = !admState.selectedBarberForServices;
+      if (admState.selectedBarberForServices) {
+        await admLoadServicesFor(admState.selectedBarberForServices);
+      } else {
+        admState.services = [];
+        admRenderServicesTable();
+      }
+    });
+
+    const btnNew = admQ('#adm-btnNewService');
+    if (btnNew) btnNew.addEventListener('click', () => admOpenServiceModal(null));
+
+    const btnSave = admQ('#adm-btnSaveService');
+    if (btnSave) btnSave.addEventListener('click', async (e) => {
+      const name = admQ('#adm-sName').value.trim();
+      const duration = parseInt(admQ('#adm-sDuration').value, 10);
+      const price = parseFloat(admQ('#adm-sPrice').value);
+      if (!name) { admToast('Nome é obrigatório.', 'error'); return; }
+      if (!duration || duration < 1) { admToast('Duração inválida.', 'error'); return; }
+      if (isNaN(price) || price < 0) { admToast('Preço inválido.', 'error'); return; }
+      const payload = {
+        company_id: COMPANY_ID,
+        professional_id: admState.selectedBarberForServices,
+        name,
+        description: admQ('#adm-sDesc').value.trim() || null,
+        duration_minutes: duration,
+        price,
+        active: admQ('#adm-sActive').checked,
+      };
+      const id = admQ('#adm-sId').value;
+      await admWithBtn(e.target, async () => {
+        const { error } = id
+          ? await sb.from('services').update(payload).eq('id', id)
+          : await sb.from('services').insert(payload);
+        if (error) { admToast('Erro ao salvar: ' + error.message, 'error'); return; }
+        admToast(id ? 'Serviço atualizado.' : 'Serviço criado.', 'success');
+        admCloseModal('#adm-modalService');
+        admLoadServicesFor(admState.selectedBarberForServices);
+      });
+    });
+  }
+
+  async function admLoadServicesFor(barberId) {
+    const { data, error } = await sb.from('services')
+      .select('*').eq('company_id', COMPANY_ID).eq('professional_id', barberId)
+      .order('name', { ascending: true });
+    if (error) { admToast('Erro ao carregar serviços: ' + error.message, 'error'); return; }
+    admState.services = data || [];
+    admRenderServicesTable();
+  }
+
+  function admRenderServicesTable() {
+    const tbody = admQ('#adm-tblServices tbody');
+    if (!admState.selectedBarberForServices) {
+      tbody.innerHTML = '';
+      const empty = admQ('#adm-emptyServices');
+      if (empty) { empty.style.display = 'block'; empty.textContent = 'Selecione um barbeiro para ver os serviços.'; }
+      return;
+    }
+    if (!admState.services.length) {
+      tbody.innerHTML = '';
+      const empty = admQ('#adm-emptyServices');
+      if (empty) { empty.style.display = 'block'; empty.textContent = 'Nenhum serviço cadastrado para este barbeiro.'; }
+      return;
+    }
+    const empty = admQ('#adm-emptyServices');
+    if (empty) empty.style.display = 'none';
+    tbody.innerHTML = admState.services.map(s => `
+      <tr>
+        <td><strong>${admEscape(s.name)}</strong>${s.description ? `<div style="font-size:11px;margin-top:2px;opacity:.7">${admEscape(s.description)}</div>` : ''}</td>
+        <td>${s.duration_minutes ?? '—'} min</td>
+        <td>${admFmtPrice(s.price)}</td>
+        <td><span class="adm-badge ${s.active ? 'adm-badge-ok' : 'adm-badge-off'}">${s.active ? 'Ativo' : 'Inativo'}</span></td>
+        <td><div class="adm-tbl-actions">
+          <button class="adm-btn-icon" data-adm-edit-svc="${s.id}" title="Editar">&#9998;</button>
+          ${s.active ? `<button class="adm-btn-icon" data-adm-del-svc="${s.id}" title="Desativar">&#128465;</button>` : ''}
+        </div></td>
+      </tr>
+    `).join('');
+    tbody.querySelectorAll('[data-adm-edit-svc]').forEach(btn =>
+      btn.addEventListener('click', () => admOpenServiceModal(btn.dataset.admEditSvc))
+    );
+    tbody.querySelectorAll('[data-adm-del-svc]').forEach(btn =>
+      btn.addEventListener('click', () => admSoftDeleteService(btn.dataset.admDelSvc))
+    );
+  }
+
+  function admOpenServiceModal(id) {
+    if (!admState.selectedBarberForServices) { admToast('Selecione um barbeiro primeiro.', 'error'); return; }
+    const s = id ? admState.services.find(x => x.id === id) : null;
+    admQ('#adm-serviceModalTitle').textContent = s ? 'Editar serviço' : 'Novo serviço';
+    admQ('#adm-sId').value = s?.id || '';
+    admQ('#adm-sName').value = s?.name || '';
+    admQ('#adm-sDuration').value = s?.duration_minutes ?? 30;
+    admQ('#adm-sPrice').value = s?.price ?? 0;
+    admQ('#adm-sDesc').value = s?.description || '';
+    admQ('#adm-sActive').checked = s ? !!s.active : true;
+    admOpenModal('#adm-modalService');
+  }
+
+  async function admSoftDeleteService(id) {
+    if (!confirm('Desativar este serviço?')) return;
+    const { error } = await sb.from('services').update({ active: false }).eq('id', id);
+    if (error) { admToast('Erro: ' + error.message, 'error'); return; }
+    admToast('Serviço desativado.', 'success');
+    admLoadServicesFor(admState.selectedBarberForServices);
+  }
+
+  // --- HORÁRIOS ---
+  const ADM_DAYS = [
+    { key: 'monday', label: 'Seg' }, { key: 'tuesday', label: 'Ter' },
+    { key: 'wednesday', label: 'Qua' }, { key: 'thursday', label: 'Qui' },
+    { key: 'friday', label: 'Sex' }, { key: 'saturday', label: 'Sáb' },
+    { key: 'sunday', label: 'Dom' },
+  ];
+  const ADM_DEFAULT_HOURS = {
+    monday:    { enabled: true,  start: '09:00', end: '19:00' },
+    tuesday:   { enabled: true,  start: '09:00', end: '19:00' },
+    wednesday: { enabled: true,  start: '09:00', end: '19:00' },
+    thursday:  { enabled: true,  start: '09:00', end: '19:00' },
+    friday:    { enabled: true,  start: '09:00', end: '19:00' },
+    saturday:  { enabled: true,  start: '09:00', end: '17:00' },
+    sunday:    { enabled: false, start: '09:00', end: '13:00' },
+  };
+
+  async function admLoadHoursTab() {
+    if (!admState.barbers.length) await admLoadBarbers();
+  }
+
+  function admRenderHoursGrid(b) {
+    const wh = (b?.working_hours && typeof b.working_hours === 'object') ? b.working_hours : ADM_DEFAULT_HOURS;
+    const grid = admQ('#adm-hoursGrid');
+    if (!grid) return;
+    grid.innerHTML = ADM_DAYS.map(d => {
+      const day = wh[d.key] || ADM_DEFAULT_HOURS[d.key];
+      return `
+        <div class="adm-hours-row ${day.enabled ? '' : 'disabled'}" data-day="${d.key}">
+          <div class="adm-hours-day">${d.label}</div>
+          <label class="adm-switch"><input type="checkbox" data-adm-h-enabled ${day.enabled ? 'checked' : ''} /><span class="adm-slider"></span></label>
+          <div><input type="time" class="adm-form-control" data-adm-h-start value="${day.start || '09:00'}" /></div>
+          <div><input type="time" class="adm-form-control" data-adm-h-end value="${day.end || '19:00'}" /></div>
+        </div>
+      `;
+    }).join('');
+    const brk = admQ('#adm-hrsBreak');
+    if (brk) brk.value = b?.break_between_appointments ?? 0;
+    admQQ('.adm-hours-row').forEach(row => {
+      const cb = row.querySelector('[data-adm-h-enabled]');
+      cb.addEventListener('change', () => row.classList.toggle('disabled', !cb.checked));
+    });
+  }
+
+  function admInitHours() {
+    const sel = admQ('#adm-hrsBarberSelect');
+    if (sel) sel.addEventListener('change', (e) => {
+      admState.selectedBarberForHours = e.target.value || null;
+      const content = admQ('#adm-hoursContent');
+      const empty = admQ('#adm-hoursEmpty');
+      if (admState.selectedBarberForHours) {
+        const b = admState.barbers.find(x => x.id === admState.selectedBarberForHours);
+        admRenderHoursGrid(b);
+        if (content) content.style.display = 'block';
+        if (empty) empty.style.display = 'none';
+      } else {
+        if (content) content.style.display = 'none';
+        if (empty) empty.style.display = 'block';
+      }
+    });
+
+    const btnSave = admQ('#adm-btnSaveHours');
+    if (btnSave) btnSave.addEventListener('click', async (e) => {
+      if (!admState.selectedBarberForHours) { admToast('Selecione um barbeiro.', 'error'); return; }
+      const working_hours = {};
+      admQQ('.adm-hours-row').forEach(row => {
+        working_hours[row.dataset.day] = {
+          enabled: row.querySelector('[data-adm-h-enabled]').checked,
+          start: row.querySelector('[data-adm-h-start]').value || '09:00',
+          end: row.querySelector('[data-adm-h-end]').value || '19:00',
+        };
+      });
+      const breakMin = parseInt(admQ('#adm-hrsBreak').value, 10) || 0;
+      await admWithBtn(e.target, async () => {
+        const { error } = await sb.from('professionals')
+          .update({ working_hours, break_between_appointments: breakMin })
+          .eq('id', admState.selectedBarberForHours);
+        if (error) { admToast('Erro: ' + error.message, 'error'); return; }
+        admToast('Horários salvos.', 'success');
+        const b = admState.barbers.find(x => x.id === admState.selectedBarberForHours);
+        if (b) { b.working_hours = working_hours; b.break_between_appointments = breakMin; }
+      });
+    });
+  }
+
+  // --- CLIENTES ---
+  async function admLoadClients() {
+    const { data, error } = await sb.from('clients')
+      .select('*').eq('company_id', COMPANY_ID).order('created_at', { ascending: false });
+    if (error) { admToast('Erro ao carregar clientes: ' + error.message, 'error'); return; }
+    admState.clients = data || [];
+    admState.clientsPage = 1;
+    admApplyClientFilter();
+    admRenderTopClients();
+  }
+
+  function admApplyClientFilter() {
+    const q = (admQ('#adm-clientSearch')?.value || '').trim().toLowerCase();
+    admState.clientsFiltered = !q ? admState.clients.slice()
+      : admState.clients.filter(c => (c.name || '').toLowerCase().includes(q) || (c.phone || '').toLowerCase().includes(q));
+    admRenderClientsTable();
+  }
+
+  function admRenderTopClients() {
+    const wrap = admQ('#adm-topClientsWrap');
+    if (!wrap) return;
+    const top = admState.clients.slice()
+      .sort((a, b) => (b.total_appointments || 0) - (a.total_appointments || 0))
+      .slice(0, 5);
+    wrap.innerHTML = top.map((c, i) => `
+      <div class="adm-top-card">
+        <div class="adm-rank">#${i + 1}</div>
+        <div class="adm-nm">${admEscape(c.name || '—')}</div>
+        <div class="adm-cnt">${c.total_appointments || 0} agendamento${(c.total_appointments || 0) === 1 ? '' : 's'}</div>
+      </div>
+    `).join('');
+  }
+
+  function admRenderClientsTable() {
+    const tbody = admQ('#adm-tblClients tbody');
+    const rows = admState.clientsFiltered;
+    const total = rows.length;
+    const totalPages = Math.max(1, Math.ceil(total / admState.clientsPerPage));
+    if (admState.clientsPage > totalPages) admState.clientsPage = totalPages;
+    const start = (admState.clientsPage - 1) * admState.clientsPerPage;
+    const slice = rows.slice(start, start + admState.clientsPerPage);
+
+    const empty = admQ('#adm-emptyClients');
+    if (!total) {
+      tbody.innerHTML = '';
+      if (empty) empty.style.display = 'block';
+    } else {
+      if (empty) empty.style.display = 'none';
+      tbody.innerHTML = slice.map(c => {
+        const last = c.last_appointment;
+        const stale = !last || admDaysSince(last) > 30;
+        return `
+          <tr>
+            <td><strong>${admEscape(c.name || '—')}</strong></td>
+            <td>${admEscape(c.phone || '—')}</td>
+            <td>${admEscape(c.email || '—')}</td>
+            <td>${c.total_appointments || 0}</td>
+            <td>${admFmtDate(last)}</td>
+            <td>${admFmtDate(c.created_at)}</td>
+            <td>${stale ? '<span class="adm-badge adm-badge-warn">Sem agendamento</span>' : '<span class="adm-badge adm-badge-ok">Ativo</span>'}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    const countEl = admQ('#adm-clientsCount');
+    if (countEl) countEl.textContent = total ? `Mostrando ${start + 1}–${Math.min(start + admState.clientsPerPage, total)} de ${total}` : '';
+
+    const pages = admQ('#adm-clientsPages');
+    if (!pages) return;
+    if (totalPages <= 1) { pages.innerHTML = ''; return; }
+    let html = `<button class="adm-pg-btn" ${admState.clientsPage === 1 ? 'disabled' : ''} data-adm-pg="prev">‹</button>`;
+    const maxBtns = 5;
+    let from = Math.max(1, admState.clientsPage - 2);
+    let to = Math.min(totalPages, from + maxBtns - 1);
+    from = Math.max(1, to - maxBtns + 1);
+    for (let i = from; i <= to; i++) {
+      html += `<button class="adm-pg-btn ${i === admState.clientsPage ? 'active' : ''}" data-adm-pg="${i}">${i}</button>`;
+    }
+    html += `<button class="adm-pg-btn" ${admState.clientsPage === totalPages ? 'disabled' : ''} data-adm-pg="next">›</button>`;
+    pages.innerHTML = html;
+    pages.querySelectorAll('[data-adm-pg]').forEach(btn => btn.addEventListener('click', () => {
+      const v = btn.dataset.admPg;
+      if (v === 'prev') admState.clientsPage = Math.max(1, admState.clientsPage - 1);
+      else if (v === 'next') admState.clientsPage = Math.min(totalPages, admState.clientsPage + 1);
+      else admState.clientsPage = parseInt(v, 10);
+      admRenderClientsTable();
+    }));
+  }
+
+  function admInitClients() {
+    const search = admQ('#adm-clientSearch');
+    if (search) search.addEventListener('input', () => { admState.clientsPage = 1; admApplyClientFilter(); });
+  }
+
+  // --- STORE ---
+  async function admLoadStore() {
+    const { data, error } = await sb.from('store_products')
+      .select('*').eq('company_id', COMPANY_ID).order('ordem', { ascending: true });
+    if (error) { admToast('Erro ao carregar produtos: ' + error.message, 'error'); return; }
+    admState.products = data || [];
+    admRenderStore();
+  }
+
+  function admRenderStore() {
+    const tbody = admQ('#adm-tblStore tbody');
+    const empty = admQ('#adm-emptyStore');
+    if (!admState.products.length) {
+      tbody.innerHTML = '';
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+    if (empty) empty.style.display = 'none';
+    tbody.innerHTML = admState.products.map((p, idx) => `
+      <tr>
+        <td>${p.imagem ? `<img class="adm-thumb" src="${admEscape(p.imagem)}" alt="" onerror="this.style.visibility='hidden'" />` : '<div class="adm-thumb"></div>'}</td>
+        <td><strong>${admEscape(p.nome || '—')}</strong>${p.badge ? `<div><span class="adm-badge adm-badge-star" style="margin-top:4px">${admEscape(p.badge)}</span></div>` : ''}</td>
+        <td>${admEscape(p.categoria || '—')}</td>
+        <td>${admFmtPrice(p.preco)}</td>
+        <td>${p.destaque ? '<span class="adm-badge adm-badge-star">Sim</span>' : '<span class="adm-badge adm-badge-off">Não</span>'}</td>
+        <td><span class="adm-badge ${p.ativo ? 'adm-badge-ok' : 'adm-badge-off'}">${p.ativo ? 'Ativo' : 'Inativo'}</span></td>
+        <td><div class="adm-tbl-actions">
+          <button class="adm-btn-icon" data-adm-up="${p.id}" ${idx === 0 ? 'disabled' : ''} title="Subir">&#9650;</button>
+          <button class="adm-btn-icon" data-adm-down="${p.id}" ${idx === admState.products.length - 1 ? 'disabled' : ''} title="Descer">&#9660;</button>
+          <button class="adm-btn-icon" data-adm-edit-prod="${p.id}" title="Editar">&#9998;</button>
+          <button class="adm-btn-icon" data-adm-del-prod="${p.id}" title="Excluir" style="color:#c0392b">&#10005;</button>
+        </div></td>
+      </tr>
+    `).join('');
+    tbody.querySelectorAll('[data-adm-edit-prod]').forEach(btn =>
+      btn.addEventListener('click', () => admOpenProductModal(btn.dataset.admEditProd))
+    );
+    tbody.querySelectorAll('[data-adm-del-prod]').forEach(btn =>
+      btn.addEventListener('click', () => admDeleteProduct(btn.dataset.admDelProd))
+    );
+    tbody.querySelectorAll('[data-adm-up]').forEach(btn =>
+      btn.addEventListener('click', () => admSwapProduct(btn.dataset.admUp, -1))
+    );
+    tbody.querySelectorAll('[data-adm-down]').forEach(btn =>
+      btn.addEventListener('click', () => admSwapProduct(btn.dataset.admDown, +1))
+    );
+  }
+
+  function admOpenProductModal(id) {
+    const p = id ? admState.products.find(x => x.id === id) : null;
+    admQ('#adm-productModalTitle').textContent = p ? 'Editar produto' : 'Novo produto';
+    admQ('#adm-pId').value = p?.id || '';
+    admQ('#adm-pName').value = p?.nome || '';
+    admQ('#adm-pCategory').value = p?.categoria || 'barba';
+    admQ('#adm-pPrice').value = p?.preco ?? '';
+    admQ('#adm-pOriginalPrice').value = p?.preco_original ?? '';
+    admQ('#adm-pRating').value = p?.avaliacao ?? 0;
+    admQ('#adm-pReviews').value = p?.avaliacoes ?? 0;
+    admQ('#adm-pBadge').value = p?.badge || '';
+    admQ('#adm-pLink').value = p?.link || '';
+    admQ('#adm-pImage').value = p?.imagem || '';
+    admQ('#adm-pFeatured').checked = !!p?.destaque;
+    admQ('#adm-pActive').checked = p ? !!p.ativo : true;
+    admOpenModal('#adm-modalProduct');
+  }
+
+  async function admDeleteProduct(id) {
+    const p = admState.products.find(x => x.id === id);
+    if (!confirm(`Excluir definitivamente o produto "${p?.nome || ''}"?`)) return;
+    const { error } = await sb.from('store_products').delete().eq('id', id);
+    if (error) { admToast('Erro: ' + error.message, 'error'); return; }
+    admToast('Produto excluído.', 'success');
+    admLoadStore();
+  }
+
+  async function admSwapProduct(id, direction) {
+    const idx = admState.products.findIndex(p => p.id === id);
+    if (idx < 0) return;
+    const targetIdx = idx + direction;
+    if (targetIdx < 0 || targetIdx >= admState.products.length) return;
+    const a = admState.products[idx];
+    const b = admState.products[targetIdx];
+    const [{ error: e1 }, { error: e2 }] = await Promise.all([
+      sb.from('store_products').update({ ordem: b.ordem || 0 }).eq('id', a.id),
+      sb.from('store_products').update({ ordem: a.ordem || 0 }).eq('id', b.id),
+    ]);
+    if (e1 || e2) { admToast('Erro ao reordenar.', 'error'); return; }
+    admLoadStore();
+  }
+
+  function admInitStore() {
+    const btnNew = admQ('#adm-btnNewProduct');
+    if (btnNew) btnNew.addEventListener('click', () => admOpenProductModal(null));
+
+    const btnSave = admQ('#adm-btnSaveProduct');
+    if (btnSave) btnSave.addEventListener('click', async (e) => {
+      const nome = admQ('#adm-pName').value.trim();
+      const categoria = admQ('#adm-pCategory').value;
+      const preco = parseFloat(admQ('#adm-pPrice').value);
+      if (!nome) { admToast('Nome é obrigatório.', 'error'); return; }
+      if (!categoria) { admToast('Categoria é obrigatória.', 'error'); return; }
+      if (isNaN(preco) || preco < 0) { admToast('Preço inválido.', 'error'); return; }
+      const precoOrig = admQ('#adm-pOriginalPrice').value.trim();
+      const rating = parseFloat(admQ('#adm-pRating').value);
+      const reviews = parseInt(admQ('#adm-pReviews').value, 10);
+      const payload = {
+        company_id: COMPANY_ID,
+        nome, categoria, preco,
+        preco_original: precoOrig === '' ? null : parseFloat(precoOrig),
+        avaliacao: isNaN(rating) ? 0 : rating,
+        avaliacoes: isNaN(reviews) ? 0 : reviews,
+        badge: admQ('#adm-pBadge').value.trim() || null,
+        link: admQ('#adm-pLink').value.trim() || null,
+        imagem: admQ('#adm-pImage').value.trim() || null,
+        destaque: admQ('#adm-pFeatured').checked,
+        ativo: admQ('#adm-pActive').checked,
+      };
+      const id = admQ('#adm-pId').value;
+      if (!id) {
+        const maxOrd = admState.products.reduce((m, p) => Math.max(m, p.ordem || 0), 0);
+        payload.ordem = maxOrd + 1;
+      }
+      await admWithBtn(e.target, async () => {
+        const { error } = id
+          ? await sb.from('store_products').update(payload).eq('id', id)
+          : await sb.from('store_products').insert(payload);
+        if (error) { admToast('Erro: ' + error.message, 'error'); return; }
+        admToast(id ? 'Produto atualizado.' : 'Produto criado.', 'success');
+        admCloseModal('#adm-modalProduct');
+        admLoadStore();
+      });
+    });
+  }
+
+  // --- BOOT ---
+  // Called by switchPortalTab('admin') — only initialises once
+  window.admBootPanel = function () {
+    if (_admBooted) return;
+    _admBooted = true;
+    admInitTabs();
+    admInitBarbers();
+    admInitServices();
+    admInitHours();
+    admInitClients();
+    admInitStore();
+    admLoadBarbers();
+  };
+})();
 
 async function saveProfile() {
   if (!currentUser) return;

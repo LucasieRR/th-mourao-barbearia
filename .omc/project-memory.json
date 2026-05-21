@@ -80,20 +80,20 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 156,
-      "lastAccessed": 1779369457453,
+      "accessCount": 174,
+      "lastAccessed": 1779371177914,
+      "type": "file"
+    },
+    {
+      "path": "admin.html",
+      "accessCount": 77,
+      "lastAccessed": 1779371012401,
       "type": "file"
     },
     {
       "path": "store.html",
       "accessCount": 71,
       "lastAccessed": 1779293887947,
-      "type": "file"
-    },
-    {
-      "path": "admin.html",
-      "accessCount": 70,
-      "lastAccessed": 1779369456349,
       "type": "file"
     },
     {
