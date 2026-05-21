@@ -78,8 +78,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 139,
-      "lastAccessed": 1779321108213,
+      "accessCount": 154,
+      "lastAccessed": 1779361699276,
       "type": "file"
     },
     {
@@ -90,8 +90,8 @@
     },
     {
       "path": "admin.html",
-      "accessCount": 56,
-      "lastAccessed": 1779321024184,
+      "accessCount": 58,
+      "lastAccessed": 1779321342256,
       "type": "file"
     },
     {
@@ -125,33 +125,39 @@
       "type": "file"
     },
     {
+      "path": "vercel.json",
+      "accessCount": 17,
+      "lastAccessed": 1779321370109,
+      "type": "file"
+    },
+    {
       "path": "blog-post.html",
       "accessCount": 15,
       "lastAccessed": 1779228663716,
       "type": "file"
     },
     {
-      "path": "vercel.json",
-      "accessCount": 15,
-      "lastAccessed": 1779321040237,
-      "type": "file"
-    },
-    {
       "path": "api/server.js",
-      "accessCount": 10,
-      "lastAccessed": 1779317982085,
+      "accessCount": 12,
+      "lastAccessed": 1779365586955,
       "type": "file"
     },
     {
       "path": ".env",
-      "accessCount": 5,
-      "lastAccessed": 1779305456844,
+      "accessCount": 7,
+      "lastAccessed": 1779365617677,
       "type": "file"
     },
     {
       "path": "assinaturas.html",
-      "accessCount": 5,
-      "lastAccessed": 1779318084488,
+      "accessCount": 6,
+      "lastAccessed": 1779361502207,
+      "type": "file"
+    },
+    {
+      "path": "api/subscribe.js",
+      "accessCount": 6,
+      "lastAccessed": 1779361516898,
       "type": "file"
     },
     {
@@ -191,15 +197,15 @@
       "type": "file"
     },
     {
-      "path": "api/subscribe.js",
-      "accessCount": 2,
-      "lastAccessed": 1779318125204,
-      "type": "file"
-    },
-    {
       "path": "seed-professionals.sql",
       "accessCount": 1,
       "lastAccessed": 1779228975186,
+      "type": "file"
+    },
+    {
+      "path": "api/webhook-asaas.js",
+      "accessCount": 1,
+      "lastAccessed": 1779321339578,
       "type": "file"
     }
   ],

@@ -388,6 +388,52 @@ img { max-width: 100%; display: block; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; margin-bottom: 40px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 }
+
+/* ── Minha Assinatura tab ─────────────────────────────────── */
+.sub-card {
+  background: var(--escuro);
+  border: 2px solid var(--verde);
+  border-radius: 4px;
+  padding: 28px 32px;
+  max-width: 480px;
+}
+.sub-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(74,90,58,0.2); color: #7aa05a;
+  font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px; margin-bottom: 16px;
+}
+.sub-badge.overdue { background: rgba(180,90,0,0.2); color: #d4803a; }
+.sub-plan-name { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--creme); margin-bottom: 16px; }
+.sub-details { display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: rgba(245,240,232,0.7); margin-bottom: 24px; }
+.sub-details strong { color: var(--creme); }
+.sub-empty-state { text-align: center; padding: 24px 0; }
+.sub-empty-state > p { color: rgba(245,240,232,0.6); margin-bottom: 28px; font-size: 15px; }
+.sub-plans-cta {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  max-width: 560px; margin: 0 auto 28px;
+}
+.sub-plan-card {
+  background: var(--escuro); border: 1px solid rgba(245,240,232,0.12);
+  border-radius: 4px; padding: 24px 20px; text-align: left; position: relative;
+}
+.sub-plan-card.featured { border-color: var(--verde); }
+.sub-plan-badge {
+  position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
+  background: var(--verde); color: var(--creme);
+  font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px; white-space: nowrap;
+}
+.sub-plan-title { font-family: 'Playfair Display', serif; font-size: 17px; color: var(--creme); margin-bottom: 10px; }
+.sub-plan-price { font-size: 28px; font-weight: 700; color: var(--verde); margin-bottom: 12px; }
+.sub-plan-price span { font-size: 14px; font-weight: 400; color: rgba(245,240,232,0.5); }
+.sub-plan-card ul { list-style: none; padding: 0; margin: 0; }
+.sub-plan-card ul li { font-size: 13px; color: rgba(245,240,232,0.6); padding: 4px 0; padding-left: 16px; position: relative; }
+.sub-plan-card ul li::before { content: '✓'; position: absolute; left: 0; color: var(--verde); }
+@media (max-width: 560px) {
+  .sub-plans-cta { grid-template-columns: 1fr; }
+  .sub-card { padding: 20px 18px; }
+}
 </style>
 </head>
 <body>
@@ -523,6 +569,7 @@ img { max-width: 100%; display: block; }
     <div class="portal-tabs">
       <button class="portal-tab active" onclick="switchPortalTab('agendamentos')">Meus Agendamentos</button>
       <button class="portal-tab" onclick="switchPortalTab('perfil')">Meu Perfil</button>
+      <button class="portal-tab" onclick="switchPortalTab('assinatura')">Minha Assinatura</button>
     </div>
 
     <!-- Tab: Agendamentos -->
@@ -582,6 +629,49 @@ img { max-width: 100%; display: block; }
         </div>
         <button class="btn-save" id="btn-save-profile" onclick="saveProfile()">Salvar alterações</button>
         <p class="profile-msg" id="profile-msg"></p>
+      </div>
+    </div>
+
+    <!-- Tab: Minha Assinatura -->
+    <div class="portal-panel" id="tab-assinatura">
+      <div id="sub-loading"><div class="spinner"></div></div>
+
+      <div id="sub-active" style="display:none">
+        <div class="sub-card">
+          <div class="sub-badge" id="sub-badge">● Ativa</div>
+          <div class="sub-plan-name" id="sub-plan-name"></div>
+          <div class="sub-details">
+            <span>Valor: <strong id="sub-value"></strong>/mês</span>
+            <span>Próximo vencimento: <strong id="sub-next-due"></strong></span>
+          </div>
+          <a class="btn btn-verde" href="/assinaturas">Gerenciar plano →</a>
+        </div>
+      </div>
+
+      <div id="sub-empty" style="display:none">
+        <div class="sub-empty-state">
+          <p>Você ainda não possui uma assinatura ativa.</p>
+          <div class="sub-plans-cta">
+            <div class="sub-plan-card">
+              <div class="sub-plan-title">Corte Mensal</div>
+              <div class="sub-plan-price">R$89<span>/mês</span></div>
+              <ul>
+                <li>1 corte por mês</li>
+                <li>Agendamento prioritário</li>
+              </ul>
+            </div>
+            <div class="sub-plan-card featured">
+              <div class="sub-plan-badge">Mais Popular</div>
+              <div class="sub-plan-title">Corte + Barba</div>
+              <div class="sub-plan-price">R$139<span>/mês</span></div>
+              <ul>
+                <li>1 corte + 1 barba por mês</li>
+                <li>Agendamento prioritário</li>
+              </ul>
+            </div>
+          </div>
+          <a href="/assinaturas" class="btn btn-verde">Assinar agora →</a>
+        </div>
       </div>
     </div>
   </div>
@@ -735,6 +825,7 @@ async function onLoggedIn(session) {
   // Load profile first — loadAppointments depends on currentClient.id being set
   await loadClientProfile(session.user);
   await loadAppointments();
+  loadSubscription(session.user.id);
 
   // Atualiza saudação com nome real do perfil (clients table tem prioridade)
   const profileName = currentClient?.name || metaName || session.user.email?.split('@')[0] || '';
@@ -764,6 +855,34 @@ async function onLoggedIn(session) {
 
   if (session.provider_token && session.user.app_metadata?.provider === 'google') {
     linkGoogleTokenToClient(session);
+  }
+}
+
+async function loadSubscription(userId) {
+  const { data } = await sb
+    .from('subscriptions')
+    .select('*')
+    .eq('user_id', userId)
+    .in('status', ['ACTIVE', 'OVERDUE'])
+    .order('updated_at', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  document.getElementById('sub-loading').style.display = 'none';
+
+  if (data) {
+    const badge = document.getElementById('sub-badge');
+    badge.textContent = data.status === 'OVERDUE' ? '● Vencida' : '● Ativa';
+    if (data.status === 'OVERDUE') badge.classList.add('overdue');
+    document.getElementById('sub-plan-name').textContent = data.plan_name;
+    document.getElementById('sub-value').textContent =
+      'R$' + Number(data.value).toFixed(2).replace('.', ',');
+    document.getElementById('sub-next-due').textContent = data.next_due_date
+      ? new Date(data.next_due_date + 'T12:00:00').toLocaleDateString('pt-BR')
+      : '—';
+    document.getElementById('sub-active').style.display = 'block';
+  } else {
+    document.getElementById('sub-empty').style.display = 'block';
   }
 }
 

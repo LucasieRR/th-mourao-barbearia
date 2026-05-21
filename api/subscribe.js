@@ -1,8 +1,11 @@
 const axios = require('axios');
+const { createClient } = require('@supabase/supabase-js');
 
-const ASAAS_API_KEY  = process.env.ASAAS_API_KEY;
-const ASAAS_BASE_URL = process.env.ASAAS_BASE_URL || 'https://sandbox.asaas.com/api/v3';
+const ASAAS_API_KEY   = process.env.ASAAS_API_KEY;
+const ASAAS_BASE_URL  = process.env.ASAAS_BASE_URL || 'https://sandbox.asaas.com/api/v3';
 const ASAAS_WALLET_ID = process.env.ASAAS_WALLET_ID;
+const SUPABASE_URL    = process.env.SUPABASE_URL;
+const SUPABASE_SVCKEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const PLANOS = {
   'corte':       { valor: 89.00,  descricao: 'Plano Corte Mensal — TH Mourão Barbearia & Spa' },
@@ -136,15 +139,47 @@ module.exports = async function handler(req, res) {
     ...(ASAAS_WALLET_ID && { walletId: ASAAS_WALLET_ID })
   };
 
+  let subscriptionId;
   try {
     const subscResp = await asaas.post('/subscriptions', subscPayload);
-    return res.status(201).json({
-      success: true,
-      subscriptionId: subscResp.data.id,
-      message: 'Assinatura criada com sucesso.'
-    });
+    subscriptionId = subscResp.data.id;
   } catch (err) {
     const msg = extrairMensagemAsaas(err);
     return res.status(422).json({ success: false, message: msg });
   }
+
+  // Persist subscription in Supabase — resolve user_id via clients table by email
+  if (SUPABASE_URL && SUPABASE_SVCKEY) {
+    try {
+      const sb = createClient(SUPABASE_URL, SUPABASE_SVCKEY);
+      const planName = plano === 'corte' ? 'Corte Mensal' : 'Corte + Barba';
+
+      const { data: clientRow } = await sb
+        .from('clients')
+        .select('user_id')
+        .eq('email', email.trim().toLowerCase())
+        .not('user_id', 'is', null)
+        .maybeSingle();
+
+      await sb.from('subscriptions').upsert({
+        user_id:        clientRow?.user_id || null,
+        asaas_id:       subscriptionId,
+        asaas_customer: customerId,
+        plan_name:      planName,
+        status:         'ACTIVE',
+        value:          planoInfo.valor,
+        cycle:          'MONTHLY',
+        next_due_date:  nextDueDate,
+        updated_at:     new Date().toISOString(),
+      }, { onConflict: 'asaas_id' });
+    } catch (_) {
+      // Non-fatal: webhook will sync on next payment event
+    }
+  }
+
+  return res.status(201).json({
+    success: true,
+    subscriptionId,
+    message: 'Assinatura criada com sucesso.'
+  });
 }

@@ -195,6 +195,10 @@ app.post('/api/subscribe', limiter, async (req, res) => {
   }
 });
 
+/* POST /api/webhook-asaas (local test only) */
+const webhookHandler = require('./webhook-asaas');
+app.post('/api/webhook-asaas', (req, res) => webhookHandler(req, res));
+
 app.use((req, res) => res.status(404).json({ success: false, message: 'Endpoint não encontrado.' }));
 
 app.use((err, req, res, next) => {
