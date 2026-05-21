@@ -1,5 +1,11 @@
 # TH Mourão Barbearia & Spa — CLAUDE.md
 
+## Credenciais de Teste (E2E / Puppeteer)
+
+- **Email:** lucas.bnu@icloud.com
+- **Senha:** Admin123@
+- Usar sempre para testes de ponta a ponta antes de fechar qualquer tarefa de auth/UI
+
 ## Supabase — Autorização e Acesso
 
 - **Claude tem autorização explícita para fazer alterações no Supabase** (criar policies, editar tabelas, inserir dados, etc.)

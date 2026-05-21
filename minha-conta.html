@@ -1231,6 +1231,7 @@ function togglePassword(inputId, btn) {
 // ============================================================
 let _booted = false;
 sb.auth.onAuthStateChange(async (event, session) => {
+  console.log('[auth] event:', event, '| session:', session?.user?.email || 'null', '| _booted:', _booted);
   if (event === 'SIGNED_OUT') { _booted = false; currentUser = null; showAuthScreen(); return; }
   if (_booted) return;
   if (!session) return; // aguarda INITIAL_SESSION com sessão válida
@@ -1240,6 +1241,7 @@ sb.auth.onAuthStateChange(async (event, session) => {
 });
 
 async function onLoggedIn(session) {
+  console.log('[onLoggedIn] start, user:', session.user.email);
   document.getElementById('auth-screen').style.display = 'none';
   document.getElementById('portal').classList.add('show');
 
@@ -1248,14 +1250,31 @@ async function onLoggedIn(session) {
     session.user.user_metadata?.name || '';
   document.getElementById('greeting-name').textContent = `Olá, ${metaName.split(' ')[0] || 'Você'}!`;
 
-  // Load profile first — loadAppointments depends on currentClient.id being set
-  await loadClientProfile(session.user);
-  await loadAppointments();
+  try {
+    console.log('[onLoggedIn] loadClientProfile...');
+    await loadClientProfile(session.user);
+    console.log('[onLoggedIn] loadClientProfile done, currentClient:', currentClient?.name);
+  } catch(e) {
+    console.error('[onLoggedIn] loadClientProfile error:', e.message);
+  }
+
+  try {
+    console.log('[onLoggedIn] loadAppointments...');
+    await loadAppointments();
+    console.log('[onLoggedIn] loadAppointments done');
+  } catch(e) {
+    console.error('[onLoggedIn] loadAppointments error:', e.message);
+    // garante que spinner nunca trava
+    document.getElementById('appt-loading').style.display = 'none';
+    document.getElementById('appt-list').style.display = 'flex';
+  }
+
   loadSubscription(session.user.id);
 
   // Atualiza saudação com nome real do perfil (clients table tem prioridade)
   const profileName = currentClient?.name || metaName || session.user.email?.split('@')[0] || '';
   document.getElementById('greeting-name').textContent = `Olá, ${profileName.split(' ')[0] || 'Você'}!`;
+  console.log('[onLoggedIn] greeting set to:', profileName);
 
   // Admin check
   try {
