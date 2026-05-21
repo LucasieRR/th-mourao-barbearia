@@ -552,6 +552,9 @@ img { max-width: 100%; display: block; }
 .adm-cal-slot-time { font-weight:600; font-size:11px; }
 .adm-cal-slot-client { font-size:11px; margin-top:2px; }
 .adm-cal-off { font-size:12px; color:var(--cinza); font-style:italic; padding:8px 0; }
+.adm-cal-legend { display:flex; gap:16px; flex-wrap:wrap; padding:0 16px 12px; border-bottom:1px solid var(--creme3); margin-bottom:4px; }
+.adm-cal-legend-item { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--cinza); }
+.adm-cal-legend-item .adm-cal-day-dot { margin-top:0; flex-shrink:0; }
 
 /* ── Minha Assinatura tab ─────────────────────────────────── */
 .sub-card {
@@ -982,6 +985,11 @@ img { max-width: 100%; display: block; }
             <button class="adm-btn adm-btn-ghost" id="adm-cal-prev">&#8592;</button>
             <div class="adm-card-title" id="adm-cal-year-label">2025</div>
             <button class="adm-btn adm-btn-ghost" id="adm-cal-next">&#8594;</button>
+          </div>
+          <div class="adm-cal-legend">
+            <span class="adm-cal-legend-item"><span class="adm-cal-day-dot ok"></span> Agendamentos confirmados</span>
+            <span class="adm-cal-legend-item"><span class="adm-cal-day-dot warn"></span> Possui cancelamentos ou no-show</span>
+            <span class="adm-cal-legend-item"><span class="adm-cal-day-dot past"></span> Dia passado com agendamentos</span>
           </div>
           <div id="adm-cal-grid"></div>
         </div>
