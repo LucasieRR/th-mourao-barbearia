@@ -673,10 +673,7 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
   const count = parseInt(localStorage.getItem(TAB_KEY) || '0', 10);
   const navTs = parseInt(localStorage.getItem('th_nav_ts') || '0', 10);
   const isInternalNav = (Date.now() - navTs) < 2000;
-  const sbKeys = Object.keys(localStorage).filter(k => k.startsWith('sb-'));
-  console.log('[ADMIN initTabSession] count=' + count + ' navTs=' + navTs + ' isInternalNav=' + isInternalNav + ' sbKeys=' + sbKeys.length + ' age=' + (Date.now() - navTs) + 'ms');
   if (count === 0 && !isInternalNav) {
-    console.log('[ADMIN initTabSession] limpando sb-* (count=0 e não é nav interna)');
     Object.keys(localStorage).forEach(k => { if (k.startsWith('sb-')) localStorage.removeItem(k); });
   }
   localStorage.removeItem('th_nav_ts');
@@ -788,17 +785,12 @@ async function checkAuthAndAdmin(session) {
   }
   state.user = session.user;
 
-  console.log('[ADMIN checkAuthAndAdmin] iniciando query user_roles para user=' + session.user.id);
-  const rolesPromise = sb
+  const { data: roles, error } = await sb
     .from('user_roles')
     .select('role')
     .eq('user_id', session.user.id)
     .eq('role', 'admin')
     .limit(1);
-  const timeoutPromise = new Promise(resolve => setTimeout(() => resolve({ data: null, error: { message: 'TIMEOUT' } }), 5000));
-  const { data: roles, error } = await Promise.race([rolesPromise, timeoutPromise]);
-
-  console.log('[ADMIN checkAuthAndAdmin] user=' + session.user.id + ' roles=' + JSON.stringify(roles) + ' error=' + JSON.stringify(error));
 
   if (error || !roles || roles.length === 0) {
     toast('Acesso restrito a administradores.', 'error');
@@ -1407,20 +1399,11 @@ $('#btnLogout').addEventListener('click', doLogout);
 // getSession() pode retornar null se o token ainda está sendo restaurado
 let _booted = false;
 sb.auth.onAuthStateChange(async (event, session) => {
-  console.log('[ADMIN onAuthStateChange] event=' + event + ' session=' + (session ? session.user?.email : 'null') + ' _booted=' + _booted);
-  if (_booted) return; // só executa na primeira vez
+  if (_booted) return;
   if (event === 'SIGNED_OUT') { window.location.href = '/minha-conta'; return; }
-  if (!session) return; // aguarda INITIAL_SESSION ou SIGNED_IN
+  if (!session) return;
   _booted = true;
-  console.log('[ADMIN] chamando checkAuthAndAdmin...');
-  let ok;
-  try {
-    ok = await checkAuthAndAdmin(session);
-  } catch(e) {
-    console.error('[ADMIN] ERRO em checkAuthAndAdmin:', e.message, e.stack);
-    return;
-  }
-  console.log('[ADMIN] checkAuthAndAdmin retornou:', ok);
+  const ok = await checkAuthAndAdmin(session);
   if (!ok) return;
   $('#authGate').style.display = 'none';
   $('#appRoot').style.display = 'block';

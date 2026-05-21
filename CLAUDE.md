@@ -264,3 +264,31 @@ sb.auth.onAuthStateChange(async (event, session) => {
 
 5. **Sempre testar o endpoint em produção via `curl` antes de fechar a tarefa**
    - Um `NOT_FOUND` indica rota não registrada ou deploy desatualizado. Um erro do Asaas (ex: celular inválido) confirma que a função está rodando.
+
+---
+
+## Lições aprendidas (debug de auth/sessão — minha-conta + admin)
+
+### O que custou tempo e como evitar da próxima vez
+
+1. **"Preserve log" no DevTools é obrigatório para debug de navegação entre páginas**
+   - O console é limpo a cada navegação por padrão. Sem "Preserve log" ativo, logs de `onAuthStateChange` e `initTabSession` desaparecem ao navegar minha-conta → admin.
+   - **Como ativar:** Chrome: DevTools → Console → ⚙ → Preserve log. Safari: Web Inspector → Console → Preserve Log.
+   - **Próxima vez:** pedir ao Lucas para ativar "Preserve log" **antes** de qualquer debug que envolva navegação entre páginas — isso teria economizado 3-4 ciclos de deploy/teste.
+
+2. **`defer` no CDN do Supabase quebra `createClient` em scripts inline no `<body>`**
+   - Scripts inline no `<body>` executam imediatamente ao serem parseados, antes dos scripts `defer` do `<head>` terminarem. O `supabase.createClient()` falha silenciosamente com `TypeError: Cannot read properties of undefined`.
+   - **Regra:** CDN do Supabase (e qualquer biblioteca usada por scripts inline) deve ser carregado **sem** `defer` e **sem** `async`.
+
+3. **Diagnosticar problemas de auth via Node.js direto é mais rápido que Puppeteer**
+   - Puppeteer headless não carrega CDNs externos e tem limitações com `sessionStorage`/`localStorage` cross-origin.
+   - **Padrão correto:** usar `@supabase/supabase-js` direto no Node (`npm install` em `/tmp/sb-test`) para testar login, queries RLS e `user_roles` em segundos — sem precisar de browser ou servidor local.
+   - Isso teria confirmado em 30s que o banco estava correto e eliminado horas de debug de RLS.
+
+4. **Quando `onAuthStateChange` não dispara log nenhum, o script quebrou antes — não é RLS**
+   - Se os primeiros logs do `onAuthStateChange` não aparecem, o problema é carga do script (CDN falhou, `defer`, erro síncrono no topo). RLS só entra em jogo depois que o Supabase já inicializou.
+   - **Ordem de diagnóstico:** (1) CDN carregou? (2) `createClient` sem erro? (3) `onAuthStateChange` disparou? (4) query retornou? — não pular etapas.
+
+5. **`clients.name` não popula a saudação se a query retorna `null` e `user_metadata` é vazio**
+   - Usuários cadastrados via email/senha têm `user_metadata = {email_verified: true}` — sem `full_name`. Se `clients` row existir, o nome vem de lá. Se não existir, usar `email.split('@')[0]` como fallback último.
+   - **Padrão correto:** `currentClient?.name || metaName || session.user.email?.split('@')[0] || 'Você'`
