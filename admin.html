@@ -1407,7 +1407,15 @@ sb.auth.onAuthStateChange(async (event, session) => {
   if (event === 'SIGNED_OUT') { window.location.href = '/minha-conta'; return; }
   if (!session) return; // aguarda INITIAL_SESSION ou SIGNED_IN
   _booted = true;
-  const ok = await checkAuthAndAdmin(session);
+  console.log('[ADMIN] chamando checkAuthAndAdmin...');
+  let ok;
+  try {
+    ok = await checkAuthAndAdmin(session);
+  } catch(e) {
+    console.error('[ADMIN] ERRO em checkAuthAndAdmin:', e.message, e.stack);
+    return;
+  }
+  console.log('[ADMIN] checkAuthAndAdmin retornou:', ok);
   if (!ok) return;
   $('#authGate').style.display = 'none';
   $('#appRoot').style.display = 'block';
