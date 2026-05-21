@@ -98,20 +98,20 @@
     },
     {
       "path": "booking.html",
-      "accessCount": 49,
-      "lastAccessed": 1779384728111,
+      "accessCount": 56,
+      "lastAccessed": 1779385747574,
+      "type": "file"
+    },
+    {
+      "path": "CLAUDE.md",
+      "accessCount": 40,
+      "lastAccessed": 1779385647438,
       "type": "file"
     },
     {
       "path": "index.html",
       "accessCount": 38,
       "lastAccessed": 1779293536953,
-      "type": "file"
-    },
-    {
-      "path": "CLAUDE.md",
-      "accessCount": 38,
-      "lastAccessed": 1779384360835,
       "type": "file"
     },
     {

@@ -138,6 +138,29 @@ Este erro **não** se refere ao cliente nem ao `creditCardHolderInfo`. Refere-se
 - **Fix de RLS:** `CREATE POLICY "user reads own role" ON user_roles FOR SELECT USING (auth.uid() = user_id);`
 - Isolar a query de `user_roles` em `try/catch` separado do `Promise.all` principal — se falhar não quebra o restante
 
+### RLS silenciosa em UPDATE — botão trava em "Processando…"
+- UPDATE sem policy retorna `[] null` (sem erro, 0 linhas afetadas) — código que depende de `!error` para fechar modal/resetar botão fica travado indefinidamente
+- **Diagnóstico rápido:** testar com anon key via Node — se retornar `[] null`, RLS está bloqueando silenciosamente
+- **Padrão para tabelas com relação indireta** (`appointments.client_id` → `clients.user_id`):
+  ```sql
+  CREATE POLICY "client can cancel own appointments"
+  ON appointments FOR UPDATE
+  USING (client_id IN (SELECT id FROM clients WHERE user_id = auth.uid()))
+  WITH CHECK (client_id IN (SELECT id FROM clients WHERE user_id = auth.uid()));
+  ```
+- **Padrão defensivo no JS:** sempre usar `try/finally` em operações de escrita — o `finally` garante reset do botão independente de sucesso/erro/exceção:
+  ```js
+  try {
+    const { error } = await sb.from('appointments').update(...).eq('id', id);
+    if (!error) { closeModal(); renderList(); }
+    else alert('Erro. Tente novamente.');
+  } catch(e) {
+    alert('Erro. Tente novamente.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Texto original';
+  }
+  ```
+
 ### Logout robusto (multi-browser, Safari)
 - `signOut()` sozinho não garante limpeza no Safari — storage pode persistir
 - Padrão completo:

@@ -653,7 +653,7 @@ img { max-width: 100%; display: block; }
       <img src="assets/logo.png" alt="TH Mourão" />
       <span class="nav-brand-name">TH Mourão</span>
     </a>
-    <a href="/minha-conta" class="nav-back">
+    <a class="nav-back" onclick="navTo('/minha-conta')" style="cursor:pointer">
       ← Minha Conta
     </a>
   </div>
@@ -706,7 +706,7 @@ img { max-width: 100%; display: block; }
       <div class="action-bar" style="justify-content:flex-start;gap:12px;flex-wrap:wrap">
         <button class="btn-confirm" id="btn-repeat" onclick="repeatLastBooking()">Repetir último agendamento →</button>
         <button class="btn-back" style="padding:16px 0" onclick="goToStep(1)">Escolher diferente</button>
-        <a class="btn-back" style="padding:16px 0" href="/minha-conta">← Voltar</a>
+        <a class="btn-back" style="padding:16px 0;cursor:pointer" onclick="navTo('/minha-conta')">← Voltar</a>
       </div>
     </div>
   </div>
@@ -875,6 +875,11 @@ const cache = {
 // ============================================================
 // NAVEGAÇÃO ENTRE STEPS
 // ============================================================
+function navTo(url) {
+  localStorage.setItem('th_nav_ts', Date.now());
+  window.location.href = url;
+}
+
 function goToStep(n) {
   if (n > state.step) {
     if (n === 2 && !state.barber) return;
