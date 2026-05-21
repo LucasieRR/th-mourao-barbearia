@@ -1229,14 +1229,14 @@ function togglePassword(inputId, btn) {
 // ============================================================
 // AUTH STATE
 // ============================================================
+let _booted = false;
 sb.auth.onAuthStateChange(async (event, session) => {
-  if (session?.user) {
-    currentUser = session.user;
-    await onLoggedIn(session);
-  } else {
-    currentUser = null;
-    showAuthScreen();
-  }
+  if (event === 'SIGNED_OUT') { _booted = false; currentUser = null; showAuthScreen(); return; }
+  if (_booted) return;
+  if (!session) return; // aguarda INITIAL_SESSION com sessão válida
+  _booted = true;
+  currentUser = session.user;
+  await onLoggedIn(session);
 });
 
 async function onLoggedIn(session) {
