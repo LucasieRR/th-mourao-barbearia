@@ -525,6 +525,34 @@ img { max-width: 100%; display: block; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
 }
 
+/* ── Calendário Admin ────────────────────────────────────── */
+#adm-cal-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; padding:16px; }
+@media(max-width:900px){ #adm-cal-grid{ grid-template-columns:repeat(3,1fr); } }
+@media(max-width:600px){ #adm-cal-grid{ grid-template-columns:repeat(2,1fr); } }
+.adm-cal-month { border:1px solid var(--creme3); border-radius:4px; padding:10px; }
+.adm-cal-month-name { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.08em; color:var(--cinza); margin-bottom:8px; text-align:center; }
+.adm-cal-week-header { display:grid; grid-template-columns:repeat(7,1fr); font-size:9px; color:var(--cinza); text-align:center; margin-bottom:4px; }
+.adm-cal-days { display:grid; grid-template-columns:repeat(7,1fr); gap:1px; }
+.adm-cal-day { position:relative; aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:3px; font-size:11px; cursor:pointer; transition:background .15s; }
+.adm-cal-day:hover { background:var(--creme2); }
+.adm-cal-day.today { font-weight:700; background:var(--creme2); }
+.adm-cal-day.selected { background:var(--verde); color:#fff; }
+.adm-cal-day.other-month { opacity:.3; cursor:default; pointer-events:none; }
+.adm-cal-day-dot { width:4px; height:4px; border-radius:50%; margin-top:2px; }
+.adm-cal-day-dot.ok   { background:#22c55e; }
+.adm-cal-day-dot.warn { background:#f97316; }
+.adm-cal-day-dot.past { background:#d1d5db; }
+#adm-cal-day-cols { display:flex; gap:12px; overflow-x:auto; padding:16px; }
+.adm-cal-barber-col { min-width:180px; flex:1; }
+.adm-cal-barber-name { font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.06em; color:var(--verde-dark); margin-bottom:8px; padding-bottom:4px; border-bottom:2px solid var(--verde); }
+.adm-cal-slot { padding:6px 8px; border-radius:3px; font-size:12px; margin-bottom:4px; }
+.adm-cal-slot.booked { background:#dcfce7; border-left:3px solid #22c55e; }
+.adm-cal-slot.booked.overdue { background:#fff7ed; border-left-color:#f97316; }
+.adm-cal-slot.available { background:var(--creme2); border-left:3px solid var(--creme3); color:var(--cinza); font-style:italic; }
+.adm-cal-slot-time { font-weight:600; font-size:11px; }
+.adm-cal-slot-client { font-size:11px; margin-top:2px; }
+.adm-cal-off { font-size:12px; color:var(--cinza); font-style:italic; padding:8px 0; }
+
 /* ── Minha Assinatura tab ─────────────────────────────────── */
 .sub-card {
   background: var(--escuro);
@@ -819,6 +847,7 @@ img { max-width: 100%; display: block; }
         <button class="adm-tab" data-adm-tab="horarios">Horários</button>
         <button class="adm-tab" data-adm-tab="clientes">Clientes</button>
         <button class="adm-tab" data-adm-tab="store">Store</button>
+        <button class="adm-tab" data-adm-tab="calendario">Calendário</button>
       </div>
 
       <!-- Barbeiros -->
@@ -943,6 +972,25 @@ img { max-width: 100%; display: block; }
             </table>
             <div class="adm-empty" id="adm-emptyStore" style="display:none">Nenhum produto cadastrado.</div>
           </div>
+        </div>
+      </div>
+
+      <!-- Calendário -->
+      <div class="adm-panel" data-adm-panel="calendario">
+        <div class="adm-card">
+          <div class="adm-card-head">
+            <button class="adm-btn adm-btn-ghost" id="adm-cal-prev">&#8592;</button>
+            <div class="adm-card-title" id="adm-cal-year-label">2025</div>
+            <button class="adm-btn adm-btn-ghost" id="adm-cal-next">&#8594;</button>
+          </div>
+          <div id="adm-cal-grid"></div>
+        </div>
+        <div class="adm-card" id="adm-cal-day-detail" style="display:none">
+          <div class="adm-card-head">
+            <div class="adm-card-title" id="adm-cal-day-title"></div>
+            <button class="adm-btn adm-btn-ghost" id="adm-cal-day-close">✕ Fechar</button>
+          </div>
+          <div id="adm-cal-day-cols"></div>
         </div>
       </div>
     </div>
@@ -1550,18 +1598,24 @@ async function confirmCancel() {
   const btn = document.getElementById('btn-confirm-cancel');
   btn.disabled = true; btn.textContent = 'Cancelando…';
 
-  const { error } = await sb.from('appointments')
-    .update({ status: 'cancelled' })
-    .eq('id', idToCancel);
+  try {
+    const { error } = await sb.from('appointments')
+      .update({ status: 'cancelled' })
+      .eq('id', idToCancel);
 
-  btn.disabled = false; btn.textContent = 'Cancelar agendamento';
-  closeModal();
-
-  if (!error) {
-    allAppointments = allAppointments.map(a =>
-      a.id === idToCancel ? { ...a, status: 'cancelled' } : a
-    );
-    renderAppointments();
+    if (!error) {
+      allAppointments = allAppointments.map(a =>
+        a.id === idToCancel ? { ...a, status: 'cancelled' } : a
+      );
+      closeModal();
+      renderAppointments();
+    } else {
+      alert('Erro ao cancelar agendamento. Tente novamente.');
+    }
+  } catch (e) {
+    alert('Erro ao cancelar agendamento. Tente novamente.');
+  } finally {
+    btn.disabled = false; btn.textContent = 'Cancelar agendamento';
   }
 }
 
@@ -1708,6 +1762,7 @@ document.addEventListener('DOMContentLoaded', () => {
     else if (tab === 'horarios') admLoadHoursTab();
     else if (tab === 'clientes') admLoadClients();
     else if (tab === 'store') admLoadStore();
+    else if (tab === 'calendario') admLoadCalendario();
   }
 
   // modal close via data-adm-close
@@ -2247,6 +2302,212 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── CALENDÁRIO ──
+  let _admCalYear = new Date().getFullYear();
+  let _admCalAppts = [];
+  let _admCalProfs = [];
+
+  function admInitCalendario() {
+    document.getElementById('adm-cal-prev').onclick = () => { _admCalYear--; admRenderYearCalendar(); };
+    document.getElementById('adm-cal-next').onclick = () => { _admCalYear++; admRenderYearCalendar(); };
+    document.getElementById('adm-cal-day-close').onclick = () => {
+      document.getElementById('adm-cal-day-detail').style.display = 'none';
+      admQQ('.adm-cal-day.selected').forEach(d => d.classList.remove('selected'));
+    };
+  }
+
+  async function admLoadCalendario() {
+    if (!_admCalProfs.length) {
+      const { data } = await sb.from('professionals')
+        .select('id, name, working_hours, break_between_appointments')
+        .eq('company_id', COMPANY_ID).order('name');
+      _admCalProfs = data || [];
+    }
+    const start = `${_admCalYear}-01-01T00:00:00`;
+    const end   = `${_admCalYear}-12-31T23:59:59`;
+    const { data } = await sb.from('appointments')
+      .select('id, start_time, end_time, status, professional_id, service_name, client_name, duration_minutes')
+      .eq('company_id', COMPANY_ID)
+      .gte('start_time', start).lte('start_time', end);
+    _admCalAppts = data || [];
+    admRenderYearCalendar();
+  }
+
+  function admRenderYearCalendar() {
+    document.getElementById('adm-cal-year-label').textContent = _admCalYear;
+    document.getElementById('adm-cal-day-detail').style.display = 'none';
+    const grid = document.getElementById('adm-cal-grid');
+    grid.innerHTML = '';
+    for (let m = 0; m < 12; m++) grid.appendChild(admRenderMonthMini(_admCalYear, m));
+  }
+
+  function admRenderMonthMini(year, month) {
+    const MONTH_NAMES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                         'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    const DAY_NAMES   = ['D','S','T','Q','Q','S','S'];
+    const today = new Date(); today.setHours(0,0,0,0);
+
+    const apptByDay = {};
+    _admCalAppts.forEach(a => {
+      const d = a.start_time.slice(0, 10);
+      if (!apptByDay[d]) apptByDay[d] = [];
+      apptByDay[d].push(a);
+    });
+
+    const wrap = document.createElement('div');
+    wrap.className = 'adm-cal-month';
+    wrap.innerHTML = `<div class="adm-cal-month-name">${MONTH_NAMES[month]}</div>
+      <div class="adm-cal-week-header">${DAY_NAMES.map(d => `<span>${d}</span>`).join('')}</div>
+      <div class="adm-cal-days"></div>`;
+
+    const daysEl = wrap.querySelector('.adm-cal-days');
+    const firstDay = new Date(year, month, 1).getDay();
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    for (let i = 0; i < firstDay; i++) {
+      const blank = document.createElement('div');
+      blank.className = 'adm-cal-day other-month';
+      daysEl.appendChild(blank);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const cellDate = new Date(year, month, d);
+      const dayAppts = apptByDay[dateStr] || [];
+      const isPast   = cellDate < today;
+      const isToday  = cellDate.getTime() === today.getTime();
+
+      const cell = document.createElement('div');
+      cell.className = 'adm-cal-day' + (isToday ? ' today' : '');
+      cell.dataset.date = dateStr;
+      cell.innerHTML = `<span>${d}</span>`;
+
+      if (dayAppts.length) {
+        const hasWarn = dayAppts.some(a => a.status === 'cancelled' || a.status === 'no_show');
+        const dot = document.createElement('div');
+        dot.className = 'adm-cal-day-dot ' + (hasWarn ? 'warn' : isPast ? 'past' : 'ok');
+        cell.appendChild(dot);
+        cell.onclick = () => admOpenDayDetail(dateStr, cell);
+      }
+
+      daysEl.appendChild(cell);
+    }
+    return wrap;
+  }
+
+  async function admOpenDayDetail(dateStr, cellEl) {
+    admQQ('.adm-cal-day.selected').forEach(d => d.classList.remove('selected'));
+    cellEl.classList.add('selected');
+
+    const detail = document.getElementById('adm-cal-day-detail');
+    const title  = document.getElementById('adm-cal-day-title');
+    const cols   = document.getElementById('adm-cal-day-cols');
+
+    const [y, m, d] = dateStr.split('-').map(Number);
+    const dateObj = new Date(y, m - 1, d);
+    title.textContent = dateObj.toLocaleDateString('pt-BR', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    cols.innerHTML = '<div style="padding:16px;color:var(--cinza);font-size:13px">Carregando...</div>';
+    detail.style.display = 'block';
+    detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    const { data: dayAppts } = await sb.from('appointments')
+      .select('id, start_time, end_time, status, professional_id, service_name, client_name, duration_minutes')
+      .eq('company_id', COMPANY_ID)
+      .gte('start_time', `${dateStr}T00:00:00`)
+      .lte('start_time', `${dateStr}T23:59:59`)
+      .not('status', 'in', '("cancelled","no_show")');
+
+    const { data: blocked } = await sb.from('blocked_slots')
+      .select('start_time, end_time, professional_id')
+      .gte('start_time', `${dateStr}T00:00:00`)
+      .lte('start_time', `${dateStr}T23:59:59`);
+
+    admRenderDayDetail(dateObj, dayAppts || [], blocked || [], cols);
+  }
+
+  function admRenderDayDetail(dateObj, appts, blocked, container) {
+    const DAY_KEYS = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    const dayKey = DAY_KEYS[dateObj.getDay()];
+    container.innerHTML = '';
+
+    if (!_admCalProfs.length) {
+      container.innerHTML = '<div class="adm-cal-off">Nenhum barbeiro cadastrado.</div>';
+      return;
+    }
+
+    _admCalProfs.forEach(prof => {
+      const hours = (prof.working_hours || {})[dayKey];
+      const col = document.createElement('div');
+      col.className = 'adm-cal-barber-col';
+
+      const nameEl = document.createElement('div');
+      nameEl.className = 'adm-cal-barber-name';
+      nameEl.textContent = prof.name;
+      col.appendChild(nameEl);
+
+      if (!hours || !hours.enabled) {
+        const off = document.createElement('div');
+        off.className = 'adm-cal-off';
+        off.textContent = 'Folga';
+        col.appendChild(off);
+        container.appendChild(col);
+        return;
+      }
+
+      const breakMin = prof.break_between_appointments || 0;
+      const slots = admCalGenerateSlots(
+        dateObj, hours.start, hours.end, 30, breakMin,
+        appts.filter(a => a.professional_id === prof.id),
+        blocked.filter(b => b.professional_id === prof.id)
+      );
+
+      if (!slots.length) {
+        const off = document.createElement('div');
+        off.className = 'adm-cal-off';
+        off.textContent = 'Sem horários.';
+        col.appendChild(off);
+      } else {
+        slots.forEach(slot => {
+          const el = document.createElement('div');
+          const isBooked = !!slot.appt;
+          const isWarn   = isBooked && (slot.appt.status === 'cancelled' || slot.appt.status === 'no_show');
+          el.className = 'adm-cal-slot ' + (isBooked ? 'booked' + (isWarn ? ' overdue' : '') : 'available');
+          el.innerHTML = isBooked
+            ? `<div class="adm-cal-slot-time">${slot.time}</div>
+               <div class="adm-cal-slot-client">${admEscape(slot.appt.client_name || '—')}</div>
+               <div class="adm-cal-slot-client" style="font-size:10px;opacity:.7">${admEscape(slot.appt.service_name || '')}</div>`
+            : `<div class="adm-cal-slot-time">${slot.time}</div>
+               <div class="adm-cal-slot-client">disponível</div>`;
+          col.appendChild(el);
+        });
+      }
+      container.appendChild(col);
+    });
+  }
+
+  function admCalGenerateSlots(date, startStr, endStr, durationMin, breakMin, appts, blockedList) {
+    const toMin = str => { const [h, m] = str.split(':').map(Number); return h * 60 + m; };
+    const fmt   = min => `${String(Math.floor(min/60)).padStart(2,'0')}:${String(min%60).padStart(2,'0')}`;
+
+    const startTotal = toMin(startStr);
+    const endTotal   = toMin(endStr);
+    const step = durationMin + breakMin;
+    const slots = [];
+
+    const busy = [
+      ...appts.map(a => ({ start: new Date(a.start_time), end: new Date(a.end_time), appt: a })),
+      ...blockedList.map(b => ({ start: new Date(b.start_time), end: new Date(b.end_time), appt: null })),
+    ];
+
+    for (let t = startTotal; t + durationMin <= endTotal; t += step) {
+      const slotStart = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Math.floor(t/60), t%60, 0, 0);
+      const slotEnd   = new Date(slotStart.getTime() + durationMin * 60000);
+      const hit = busy.find(b => slotStart < b.end && slotEnd > b.start);
+      slots.push({ time: fmt(t), appt: hit ? hit.appt : null });
+    }
+    return slots;
+  }
+
   // --- BOOT ---
   // Called by switchPortalTab('admin') — only initialises once
   window.admBootPanel = function () {
@@ -2258,6 +2519,7 @@ document.addEventListener('DOMContentLoaded', () => {
     admInitHours();
     admInitClients();
     admInitStore();
+    admInitCalendario();
     admLoadBarbers();
   };
 })();

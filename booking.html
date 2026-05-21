@@ -1505,6 +1505,16 @@ async function confirmBooking() {
 
     if (apptErr) throw apptErr;
 
+    // Atualiza stats do cliente (last_appointment e total_appointments)
+    await sb.from('clients').update({
+      last_appointment: startTime.toISOString(),
+      total_appointments: (await sb.from('appointments')
+        .select('id', { count: 'exact', head: true })
+        .eq('client_id', clientId)
+        .in('status', ['scheduled', 'completed', 'confirmed'])
+      ).count || 1,
+    }).eq('id', clientId);
+
     // GA tracking
     if (typeof gtag !== 'undefined') {
       gtag('event', 'booking_confirmed', {

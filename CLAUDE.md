@@ -8,6 +8,19 @@
 - A CLI `supabase link` requer token pessoal (`supabase login`) — se não estiver logado, usar a REST API ou o Dashboard
 - **Método confiável para DDL/DML:** `psql` com connection string do Dashboard → Settings → Database (se disponível)
 
+### Limitações de execução SQL remoto
+
+- **`query_sql` RPC** existe no projeto mas só aceita SELECT — DDL (`CREATE FUNCTION`, `CREATE TRIGGER`) falha com "INTO used with a command that cannot return data"
+- **Management API** (`api.supabase.com/v1/projects/.../database/query`) requer token pessoal OAuth — service role key e sb_secret não funcionam (JWT could not be decoded)
+- **`supabase db query --linked`** requer `supabase link` previamente executado — sem Docker rodando, `supabase status` falha mas o link remoto ainda funciona se feito antes
+- **Para DML via JS** (INSERT/UPDATE sem DDL): usar `@supabase/supabase-js` com service role key em `/tmp/sb-test` — funciona e é o método mais rápido para backfills e queries admin
+- **Para DDL (triggers, functions, policies):** única opção confiável é o **Dashboard → SQL Editor** — Lucas precisa colar e executar manualmente
+
+### Chaves do projeto (`.env`)
+- `SUPABASE_ANON_KEY` — JWT anon (safe para browser com RLS)
+- `SUPABASE_SERVICE_ROLE_KEY` — JWT service role (backend, bypassa RLS)
+- `SUPABASE_SECRET_KEY` — novo formato `sb_secret_*` (registrado, mas ainda não aceito pelo Management API)
+
 ## Projeto
 
 Landing page estática (HTML/CSS/JS puro) para barbearia. Sem framework, sem bundler.
@@ -351,3 +364,24 @@ app.post('/api/webhook-asaas', (req, res) => webhookHandler(req, res));
 5. **`clients.name` não popula a saudação se a query retorna `null` e `user_metadata` é vazio**
    - Usuários cadastrados via email/senha têm `user_metadata = {email_verified: true}` — sem `full_name`. Se `clients` row existir, o nome vem de lá. Se não existir, usar `email.split('@')[0]` como fallback último.
    - **Padrão correto:** `currentClient?.name || metaName || session.user.email?.split('@')[0] || 'Você'`
+
+---
+
+## Lições aprendidas (painel admin — stats de clientes)
+
+### O que custou tempo e como evitar da próxima vez
+
+1. **`last_appointment` e `total_appointments` na tabela `clients` não são atualizados automaticamente**
+   - O `booking.html` inseria em `appointments` mas nunca fazia UPDATE em `clients`. Os campos ficavam `null` e `0` indefinidamente.
+   - **Fix correto:** duas camadas — (1) trigger PostgreSQL `AFTER INSERT OR UPDATE OR DELETE ON appointments` que recalcula os stats; (2) update explícito no `booking.html` após o insert como fallback.
+   - **Próxima vez:** ao adicionar qualquer campo agregado em `clients` (contadores, datas de última ação), sempre criar trigger imediatamente — nunca confiar só no código do frontend.
+
+2. **DDL no Supabase remoto sem token pessoal: única opção é o Dashboard → SQL Editor**
+   - `query_sql` RPC: só funciona para SELECT. `CREATE FUNCTION`/`CREATE TRIGGER` falham com "INTO used with a command that cannot return data".
+   - Management API (`api.supabase.com`): requer token OAuth pessoal — service role key e `sb_secret` não funcionam.
+   - `supabase db query --linked`: requer `supabase link` prévio (que precisa de token pessoal via `supabase login`).
+   - **Fluxo correto:** gerar o SQL, passar para Lucas colar no Dashboard → SQL Editor.
+
+3. **Backfill de dados existentes via `@supabase/supabase-js` em `/tmp/sb-test` é rápido e confiável**
+   - Para corrigir registros existentes sem DDL, buscar os dados em JS, calcular os valores e fazer `.update()` por cliente.
+   - Mais rápido que tentar acesso direto ao banco quando não há `psql` disponível.
