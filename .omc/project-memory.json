@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1779282357179,
+  "lastScanned": 1779369346462,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
     "languages": [
@@ -46,19 +46,21 @@
     "api": {
       "path": "api",
       "purpose": "API routes",
-      "fileCount": 3,
-      "lastAccessed": 1779282357147,
+      "fileCount": 5,
+      "lastAccessed": 1779369346297,
       "keyFiles": [
         "package-lock.json",
         "package.json",
-        "server.js"
+        "server.js",
+        "subscribe.js",
+        "webhook-asaas.js"
       ]
     },
     "assets": {
       "path": "assets",
       "purpose": "Static assets",
-      "fileCount": 16,
-      "lastAccessed": 1779282357148,
+      "fileCount": 18,
+      "lastAccessed": 1779369346300,
       "keyFiles": [
         "design-system.css",
         "espaco-1.jpg",
@@ -71,15 +73,15 @@
       "path": "api/node_modules",
       "purpose": "Dependencies",
       "fileCount": 1,
-      "lastAccessed": 1779282357156,
+      "lastAccessed": 1779369346378,
       "keyFiles": []
     }
   },
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 155,
-      "lastAccessed": 1779367683526,
+      "accessCount": 156,
+      "lastAccessed": 1779369457453,
       "type": "file"
     },
     {
@@ -90,8 +92,8 @@
     },
     {
       "path": "admin.html",
-      "accessCount": 63,
-      "lastAccessed": 1779367677327,
+      "accessCount": 70,
+      "lastAccessed": 1779369456349,
       "type": "file"
     },
     {
@@ -107,15 +109,15 @@
       "type": "file"
     },
     {
-      "path": "blog.html",
-      "accessCount": 28,
-      "lastAccessed": 1779293424180,
+      "path": "CLAUDE.md",
+      "accessCount": 33,
+      "lastAccessed": 1779369778527,
       "type": "file"
     },
     {
-      "path": "CLAUDE.md",
-      "accessCount": 20,
-      "lastAccessed": 1779320166866,
+      "path": "blog.html",
+      "accessCount": 28,
+      "lastAccessed": 1779293424180,
       "type": "file"
     },
     {
@@ -144,8 +146,8 @@
     },
     {
       "path": ".env",
-      "accessCount": 8,
-      "lastAccessed": 1779366608427,
+      "accessCount": 9,
+      "lastAccessed": 1779369461898,
       "type": "file"
     },
     {

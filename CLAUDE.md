@@ -1,5 +1,13 @@
 # TH Mourão Barbearia & Spa — CLAUDE.md
 
+## Supabase — Autorização e Acesso
+
+- **Claude tem autorização explícita para fazer alterações no Supabase** (criar policies, editar tabelas, inserir dados, etc.)
+- A service role key está em `.env` como `SUPABASE_SERVICE_ROLE_KEY` — usar para queries admin via REST
+- Para executar SQL diretamente: usar `supabase db query --linked` (requer projeto linkado) ou REST API com service role
+- A CLI `supabase link` requer token pessoal (`supabase login`) — se não estiver logado, usar a REST API ou o Dashboard
+- **Método confiável para DDL/DML:** `psql` com connection string do Dashboard → Settings → Database (se disponível)
+
 ## Projeto
 
 Landing page estática (HTML/CSS/JS puro) para barbearia. Sem framework, sem bundler.
@@ -264,6 +272,57 @@ sb.auth.onAuthStateChange(async (event, session) => {
 
 5. **Sempre testar o endpoint em produção via `curl` antes de fechar a tarefa**
    - Um `NOT_FOUND` indica rota não registrada ou deploy desatualizado. Um erro do Asaas (ex: celular inválido) confirma que a função está rodando.
+
+---
+
+## Assinaturas — Arquitetura e Padrões
+
+### Tabelas Supabase
+
+- `subscriptions` — assinaturas ativas. Colunas: `user_id`, `asaas_id` (UNIQUE), `asaas_customer`, `plan_name`, `status`, `value`, `cycle`, `next_due_date`
+- `webhook_events` — idempotência do webhook. `event_id` como PRIMARY KEY — insert duplicado é rejeitado e o handler retorna silenciosamente.
+- RLS: usuário lê apenas a própria assinatura (`auth.uid() = user_id`). Service role escreve sem restrição.
+
+### Webhook Asaas (`/api/webhook-asaas.js`)
+
+- Autenticação: header `asaas-access-token` comparado com `ASAAS_WEBHOOK_TOKEN` (env var)
+- **Responder 200 imediatamente** antes de qualquer operação — Asaas faz retry em qualquer outro status
+- Idempotência via `webhook_events`: tentativa de insert com `event_id` — se falhar (duplicate), retorna sem reprocessar
+- Eventos tratados: `PAYMENT_CONFIRMED/RECEIVED` → ACTIVE, `PAYMENT_OVERDUE` → OVERDUE, `PAYMENT_REFUNDED` → INACTIVE, `SUBSCRIPTION_UPDATED`, `SUBSCRIPTION_INACTIVATED/DELETED` → INACTIVE, `SUBSCRIPTION_CREATED` (fallback upsert)
+
+### `user_id` em assinaturas criadas via `/api/subscribe`
+
+- A página `/assinaturas` não tem sessão Supabase — nunca passar `userId` pelo body do frontend
+- **Solução:** resolver `user_id` server-side consultando `clients.user_id` por email após criação no Asaas
+- Se o usuário ainda não tem conta (`user_id = null`), a linha é inserida sem `user_id` — linkagem ocorre no login via `loadClientProfile()`
+
+### Aba "Minha Assinatura" em `minha-conta.html`
+
+- `loadSubscription(userId)` chamada em `onLoggedIn()` sem `await` (não bloqueia o resto do portal)
+- Query: `subscriptions` filtrado por `user_id` + `status IN ('ACTIVE','OVERDUE')`, ordem por `updated_at DESC`, `limit 1`
+- Estado ativo: card com badge, plano, valor e próximo vencimento
+- Estado vazio: CTA com cards dos dois planos + botão "Assinar agora →" para `/assinaturas`
+- Badge OVERDUE recebe classe `.overdue` (cor laranja) via JS
+
+### Variáveis de ambiente necessárias
+
+| Variável | Uso |
+|---|---|
+| `ASAAS_WEBHOOK_TOKEN` | `webhook-asaas.js` — validação do header `asaas-access-token` |
+| `SUPABASE_URL` | `subscribe.js` e `webhook-asaas.js` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Ambos os serverless — nunca usar anon key no backend |
+
+### Teste local do webhook
+
+Adicionar rota no `api/server.js`:
+```js
+const webhookHandler = require('./webhook-asaas');
+app.post('/api/webhook-asaas', (req, res) => webhookHandler(req, res));
+```
+`@supabase/supabase-js` deve estar instalado em `api/` (`npm install` dentro de `api/`).
+
+### Cartão de teste Asaas (sandbox)
+- Sucesso: `4444 4444 4444 4444` | CVV: `123` | Validade: qualquer futura (ex: `02/2029`)
 
 ---
 

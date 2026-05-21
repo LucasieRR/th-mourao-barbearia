@@ -1,7 +1,7 @@
 {
   "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"export NVM_DIR=\\\"$HOME/.nvm\\\" && [ -s \\\"$NVM_DIR/nvm.sh\\\" ] && \\\\. \\\"$NVM_DIR/nvm.sh\\\" && cd \\\"/Users/lucasreis/Desktop/TH - LP\\\" && node -e \\\"\\nconst { createClient } = require('@supabase...",
-  "error": "Exit code 1\nnode:internal/modules/cjs/loader:1386\n  throw err;\n  ^\n\nError: Cannot find module '@supabase/supabase-js'\nRequire stack:\n- /Users/lucasreis/Desktop/TH - LP/[eval]\n    at Function._resolveFilename (node:internal/modules/cjs/loader:1383:15)\n    at defaultResolveImpl (node:internal/modules/cjs/loader:1025:19)\n    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1030:22)\n    at Function._load (node:internal/modules/cjs/loader:1192:37)\n    at TracingChannel.traceSync (node:diag...",
-  "timestamp": "2026-05-21T12:42:21.217Z",
-  "retry_count": 1
+  "tool_input_preview": "{\"command\":\"which psql && psql --version 2>&1\",\"description\":\"Check if psql is available\"}",
+  "error": "Exit code 1\npsql not found",
+  "timestamp": "2026-05-21T13:22:43.499Z",
+  "retry_count": 4
 }
