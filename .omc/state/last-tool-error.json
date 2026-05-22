@@ -1,7 +1,0 @@
-{
-  "tool_name": "Bash",
-  "tool_input_preview": "{\"command\":\"cat > /Users/lucasreis/Desktop/TH\\\\ -\\\\ LP/test-minha-conta.js << 'EOF'\\nconst puppeteer = require('puppeteer');\\n\\n(async () => {\\n  // Usa Chrome real instalado no Mac\\n  const browser =...",
-  "error": "Exit code 1\n=== Step 1: Login ===\n/Users/lucasreis/Desktop/TH - LP/node_modules/puppeteer-core/lib/cjs/puppeteer/cdp/CdpSession.js:72\n            return Promise.reject(new Errors_js_1.TargetCloseError(`Protocol error (${method}): Session closed. Most likely the ${this.#targetType} has been closed.`));\n                                  ^\n\nTargetCloseError: Protocol error (Page.navigate): Session closed. Most likely the page has been closed.\n    at CdpCDPSession.send (/Users/lucasreis/Desktop/TH -...",
-  "timestamp": "2026-05-21T23:30:29.481Z",
-  "retry_count": 1
-}
