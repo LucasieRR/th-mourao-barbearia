@@ -1234,10 +1234,13 @@ sb.auth.onAuthStateChange(async (event, session) => {
   console.log('[auth] event:', event, '| session:', session?.user?.email || 'null', '| _booted:', _booted);
   if (event === 'SIGNED_OUT') { _booted = false; currentUser = null; showAuthScreen(); return; }
   if (_booted) return;
-  if (!session) return; // aguarda INITIAL_SESSION com sessão válida
+  if (!session) return;
+  // Garante token fresco antes de qualquer query — evita queries travadas durante refresh
+  const { data: { session: freshSession } } = await sb.auth.getSession();
+  if (!freshSession) return;
   _booted = true;
-  currentUser = session.user;
-  await onLoggedIn(session);
+  currentUser = freshSession.user;
+  await onLoggedIn(freshSession);
 });
 
 async function onLoggedIn(session) {
@@ -1332,21 +1335,36 @@ async function loadSubscription(userId) {
 }
 
 async function loadClientProfile(user) {
-  let { data } = await sb.from('clients')
-    .select('*')
-    .eq('user_id', user.id)
-    .maybeSingle();
+  const withTimeout = (promise, ms) => Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('query timeout')), ms))
+  ]);
+
+  let data = null;
+  try {
+    const res = await withTimeout(
+      sb.from('clients').select('*').eq('user_id', user.id).maybeSingle(),
+      5000
+    );
+    data = res.data;
+    console.log('[loadClientProfile] query result:', data?.name || 'null', '| error:', res.error?.message || 'none');
+  } catch (e) {
+    console.error('[loadClientProfile] query threw:', e.message);
+  }
 
   // Fallback: agendamento feito sem login — tenta vincular pelo email
   if (!data && user.email) {
-    const res = await sb.from('clients')
-      .select('*')
-      .eq('email', user.email)
-      .is('user_id', null)
-      .maybeSingle();
-    if (res.data) {
-      data = res.data;
-      await sb.from('clients').update({ user_id: user.id }).eq('id', data.id);
+    try {
+      const res = await withTimeout(
+        sb.from('clients').select('*').eq('email', user.email).is('user_id', null).maybeSingle(),
+        5000
+      );
+      if (res.data) {
+        data = res.data;
+        await sb.from('clients').update({ user_id: user.id }).eq('id', data.id);
+      }
+    } catch (e) {
+      console.error('[loadClientProfile] fallback query threw:', e.message);
     }
   }
 
