@@ -329,19 +329,30 @@ img { max-width: 100%; display: block; }
 .cal-day {
   aspect-ratio: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
   border-radius: 3px;
   font-size: 13px;
   cursor: pointer;
   transition: all 0.2s;
   border: 1px solid transparent;
+  padding-bottom: 5px;
 }
 .cal-day.empty { cursor: default; }
 .cal-day.past { color: var(--creme3); cursor: not-allowed; }
 .cal-day.available:hover { background: var(--creme2); border-color: var(--verde); color: var(--verde-dark); }
 .cal-day.selected { background: var(--verde); color: #fff; }
+.cal-day.selected .cal-day-bar { background: rgba(255,255,255,0.4) !important; }
 .cal-day.today { font-weight: 600; }
+.cal-day-bar {
+  width: 70%;
+  height: 3px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
 
 /* ========== SLOTS ========== */
 .slots-wrap {
@@ -1174,7 +1185,72 @@ const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
                    'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const DAYS_PT = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
-function renderCalendar() {
+function availabilityColor(ratio) {
+  // ratio: 0 = sem vagas (vermelho), 1 = totalmente livre (verde)
+  const r = Math.round(192 - ratio * (192 - 46));
+  const g = Math.round(57 + ratio * (160 - 57));
+  const b = Math.round(43 + ratio * (43 - 43));
+  return `rgb(${r},${g},${b})`;
+}
+
+async function fetchMonthOccupancy(year, month) {
+  // Retorna mapa { 'YYYY-MM-DD': { free, total } } somando todos os barbeiros
+  const result = {};
+  try {
+    const dateFrom = `${year}-${String(month + 1).padStart(2,'0')}-01`;
+    const lastDay = new Date(year, month + 1, 0).getDate();
+    const dateTo = `${year}-${String(month + 1).padStart(2,'0')}-${String(lastDay).padStart(2,'0')}`;
+
+    // Busca todos os barbeiros ativos com working_hours
+    const barbers = await prefetchBarbers();
+    if (!barbers || barbers.length === 0) return result;
+
+    // Agendamentos do mês de todos os barbeiros
+    const { data: appts } = await sb.from('appointments')
+      .select('professional_id, start_time, end_time')
+      .not('status', 'in', '("cancelled","no_show")')
+      .gte('start_time', `${dateFrom}T00:00:00`)
+      .lte('start_time', `${dateTo}T23:59:59`);
+
+    const apptsByBarberDay = {};
+    (appts || []).forEach(a => {
+      const day = a.start_time.slice(0, 10);
+      const key = `${a.professional_id}|${day}`;
+      if (!apptsByBarberDay[key]) apptsByBarberDay[key] = [];
+      apptsByBarberDay[key].push({ start: new Date(a.start_time), end: new Date(a.end_time) });
+    });
+
+    const dayNames = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+    const today = new Date(); today.setHours(0,0,0,0);
+
+    for (let d = 1; d <= lastDay; d++) {
+      const date = new Date(year, month, d);
+      if (date < today) continue;
+      const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const dayName = dayNames[date.getDay()];
+      let totalSlots = 0, freeSlots = 0;
+
+      barbers.forEach(b => {
+        if (!b.active) return;
+        const wh = b.working_hours?.[dayName];
+        if (!wh || !wh.enabled) return;
+        const duration = state.service?.duration_minutes || 30;
+        const brk = b.break_between_appointments || 0;
+        const busy = apptsByBarberDay[`${b.id}|${dateStr}`] || [];
+        const all = generateSlots(wh.start, wh.end, duration, brk, busy, date);
+        // total = slots sem considerar ocupação
+        const allTotal = generateSlots(wh.start, wh.end, duration, brk, [], date);
+        totalSlots += allTotal.length;
+        freeSlots += all.length;
+      });
+
+      if (totalSlots > 0) result[dateStr] = { free: freeSlots, total: totalSlots };
+    }
+  } catch(e) { /* silencioso — barrinhas ficam cinza */ }
+  return result;
+}
+
+async function renderCalendar() {
   const now = new Date();
   if (!state.calYear) {
     state.calYear = now.getFullYear();
@@ -1215,11 +1291,16 @@ function renderCalendar() {
     grid.appendChild(el);
   }
 
+  // Renderiza dias sem barrinhas primeiro (resposta imediata)
+  const dayEls = {};
   for (let d = 1; d <= daysInMonth; d++) {
     const date = new Date(year, month, d);
     const el = document.createElement('div');
     el.className = 'cal-day';
-    el.textContent = d;
+
+    const numSpan = document.createElement('span');
+    numSpan.textContent = d;
+    el.appendChild(numSpan);
 
     if (date < today || date > maxDate) {
       el.classList.add('past');
@@ -1228,9 +1309,31 @@ function renderCalendar() {
       if (date.toDateString() === today.toDateString()) el.classList.add('today');
       if (state.date && date.toDateString() === state.date.toDateString()) el.classList.add('selected');
 
+      // Placeholder da barrinha — cinza enquanto carrega
+      const bar = document.createElement('div');
+      bar.className = 'cal-day-bar';
+      bar.style.background = '#d1cdc7';
+      el.appendChild(bar);
+      dayEls[d] = { el, bar };
+
       el.addEventListener('click', () => selectDate(date, el));
     }
     grid.appendChild(el);
+  }
+
+  // Busca ocupação e pinta as barrinhas
+  const occupancy = await fetchMonthOccupancy(year, month);
+  for (let d = 1; d <= daysInMonth; d++) {
+    if (!dayEls[d]) continue;
+    const dateStr = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const occ = occupancy[dateStr];
+    const { bar } = dayEls[d];
+    if (occ) {
+      const ratio = occ.total > 0 ? occ.free / occ.total : 1;
+      bar.style.background = availabilityColor(ratio);
+    } else {
+      bar.style.background = '#d1cdc7';
+    }
   }
 }
 
