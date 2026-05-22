@@ -413,4 +413,34 @@ app.post('/api/webhook-asaas', (req, res) => webhookHandler(req, res));
 
 3. **Backfill de dados existentes via `@supabase/supabase-js` em `/tmp/sb-test` é rápido e confiável**
    - Para corrigir registros existentes sem DDL, buscar os dados em JS, calcular os valores e fazer `.update()` por cliente.
+
+---
+
+## Lições aprendidas (queries travadas após navegação interna — minha-conta)
+
+### O que custou tempo e como evitar da próxima vez
+
+1. **O Supabase SDK enfileira queries durante o token refresh — causando hang indefinido**
+   - Ao navegar de uma página para outra (ex: booking → minha-conta), o Supabase dispara `SIGNED_IN` enquanto ainda está renovando o access token internamente. Qualquer query feita via `sb.from(...)` fica na fila e nunca resolve — nem rejeita, nem dá timeout.
+   - Sintoma: log `[onLoggedIn] loadClientProfile...` aparece, mas `done` nunca aparece. Spinner infinito, saudação "Olá, Você!".
+   - **Fix correto:** nas funções de boot (`loadClientProfile`, `loadAppointments`, `loadSubscription`), usar `fetch` direto com o `access_token` da sessão em vez do SDK:
+     ```js
+     async function loadClientProfile(user, accessToken) {
+       const token = accessToken || SUPABASE_ANON;
+       const r = await fetch(`${SUPABASE_URL}/rest/v1/clients?user_id=eq.${user.id}&select=*`, {
+         headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.pgrst.object+json' }
+       });
+       // ...
+     }
+     ```
+   - O `access_token` vem da `session` recebida no `onAuthStateChange` — passá-lo como parâmetro, nunca chamar `getSession()` dentro da função (também pode travar pelo mesmo motivo).
+   - **Próxima vez:** qualquer função chamada no boot do portal (imediatamente após auth) deve usar `fetch` direto com o token da sessão, não o SDK.
+
+2. **`getSession()` também trava se chamado durante refresh**
+   - Tentativa de forçar token fresco com `await sb.auth.getSession()` antes das queries também pendura — é parte do mesmo refresh lock interno.
+   - **Não usar** `getSession()` como "garantia de token fresco" em páginas destino de navegação.
+
+3. **Diagnóstico pelo console: log para entre `loadXxx...` e `loadXxx done` → é hang de refresh, não RLS**
+   - Se o log de início aparece mas o de fim nunca aparece, não é RLS (que retorna null/error imediatamente). É a query pendurada no refresh queue.
+   - **Ordem de diagnóstico:** (1) chegou em `onLoggedIn`? (2) `loadClientProfile...` apareceu? (3) `done` apareceu? Se travou entre 2 e 3, é refresh queue — converter para fetch direto.
    - Mais rápido que tentar acesso direto ao banco quando não há `psql` disponível.
