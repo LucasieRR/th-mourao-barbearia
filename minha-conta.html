@@ -1260,7 +1260,7 @@ async function onLoggedIn(session) {
 
   try {
     console.log('[onLoggedIn] loadAppointments...');
-    await loadAppointments();
+    await loadAppointments(session.access_token);
     console.log('[onLoggedIn] loadAppointments done');
   } catch(e) {
     console.error('[onLoggedIn] loadAppointments error:', e.message);
@@ -1269,7 +1269,7 @@ async function onLoggedIn(session) {
     document.getElementById('appt-list').style.display = 'flex';
   }
 
-  loadSubscription(session.user.id);
+  loadSubscription(session.user.id, session.access_token);
 
   // Atualiza saudação com nome real do perfil (clients table tem prioridade)
   const profileName = currentClient?.name || metaName || session.user.email?.split('@')[0] || '';
@@ -1303,15 +1303,16 @@ async function onLoggedIn(session) {
   }
 }
 
-async function loadSubscription(userId) {
-  const { data } = await sb
-    .from('subscriptions')
-    .select('*')
-    .eq('user_id', userId)
-    .in('status', ['ACTIVE', 'OVERDUE'])
-    .order('updated_at', { ascending: false })
-    .limit(1)
-    .maybeSingle();
+async function loadSubscription(userId, accessToken) {
+  const token = accessToken || SUPABASE_ANON;
+  let data = null;
+  try {
+    const url = `${SUPABASE_URL}/rest/v1/subscriptions?user_id=eq.${userId}&status=in.(ACTIVE,OVERDUE)&order=updated_at.desc&limit=1`;
+    const r = await fetch(url, {
+      headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${token}`, 'Accept': 'application/json' }
+    });
+    if (r.ok) { const arr = await r.json(); data = arr?.[0] || null; }
+  } catch (e) { /* não bloqueia — assinatura é opcional */ }
 
   document.getElementById('sub-loading').style.display = 'none';
 
@@ -1545,7 +1546,7 @@ function switchPortalTab(tab) {
 // ============================================================
 // AGENDAMENTOS
 // ============================================================
-async function loadAppointments() {
+async function loadAppointments(accessToken) {
   if (!currentUser) return;
 
   document.getElementById('appt-loading').style.display = 'block';
@@ -1555,17 +1556,20 @@ async function loadAppointments() {
 
   if (currentClient?.id) {
     try {
-      const withTimeout = (p, ms) => Promise.race([p, new Promise((_, r) => setTimeout(() => r(new Error('timeout')), ms))]);
-      const { data } = await withTimeout(
-        sb.from('appointments')
-          .select(`id, start_time, end_time, status, service_name, service_price, duration_minutes, professionals ( name, avatar_url )`)
-          .eq('client_id', currentClient.id)
-          .order('start_time', { ascending: false }),
-        5000
-      );
-      appointments = data || [];
+      const token = accessToken || SUPABASE_ANON;
+      const select = 'id,start_time,end_time,status,service_name,service_price,duration_minutes,professionals(name,avatar_url)';
+      const url = `${SUPABASE_URL}/rest/v1/appointments?client_id=eq.${currentClient.id}&select=${encodeURIComponent(select)}&order=start_time.desc`;
+      const r = await fetch(url, {
+        headers: {
+          'apikey': SUPABASE_ANON,
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/json',
+        }
+      });
+      if (r.ok) appointments = await r.json() || [];
+      else console.error('[loadAppointments] status:', r.status);
     } catch (e) {
-      console.error('[loadAppointments] query threw:', e.message);
+      console.error('[loadAppointments] fetch threw:', e.message);
     }
   }
 
