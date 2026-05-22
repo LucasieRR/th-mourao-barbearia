@@ -80,8 +80,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 226,
-      "lastAccessed": 1779404872180,
+      "accessCount": 232,
+      "lastAccessed": 1779406335930,
       "type": "file"
     },
     {
@@ -103,15 +103,15 @@
       "type": "file"
     },
     {
-      "path": "index.html",
-      "accessCount": 41,
-      "lastAccessed": 1779404507198,
+      "path": "CLAUDE.md",
+      "accessCount": 42,
+      "lastAccessed": 1779405609173,
       "type": "file"
     },
     {
-      "path": "CLAUDE.md",
-      "accessCount": 40,
-      "lastAccessed": 1779385647438,
+      "path": "index.html",
+      "accessCount": 41,
+      "lastAccessed": 1779404507198,
       "type": "file"
     },
     {
