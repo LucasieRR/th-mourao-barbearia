@@ -747,7 +747,7 @@ img { max-width: 100%; display: block; }
     </div>
     <div class="service-list" id="services-list"></div>
     <div class="action-bar">
-      <button class="btn-back" onclick="goToStep(1)">← Voltar</button>
+      <button class="btn-back" onclick="state.service=null; state.date=null; state.slot=null; document.getElementById('btn-2').disabled=true; goToStep(1)">← Voltar</button>
       <button class="btn-next" id="btn-2" disabled onclick="goToStep(3)">Próximo →</button>
     </div>
   </div>
@@ -773,7 +773,7 @@ img { max-width: 100%; display: block; }
       </div>
     </div>
     <div class="action-bar">
-      <button class="btn-back" onclick="goToStep(2)">← Voltar</button>
+      <button class="btn-back" onclick="state.date=null; state.slot=null; document.getElementById('btn-3').disabled=true; goToStep(2)">← Voltar</button>
       <button class="btn-next" id="btn-3" disabled onclick="goToStep(4)">Próximo →</button>
     </div>
   </div>
@@ -853,6 +853,7 @@ img { max-width: 100%; display: block; }
       <a href="/store" class="btn-next" style="text-decoration:none">
         Visitar nossa loja →
       </a>
+      <a id="btn-rebook" href="/booking" class="btn-account">Garante já a vaga para o seu próximo serviço.</a>
       <a onclick="localStorage.setItem('th_nav_ts', Date.now()); window.location.href='/minha-conta';" class="btn-account" id="btn-account-link" style="display:none;cursor:pointer">Criar conta para acompanhar agendamentos</a>
     </div>
   </div>
@@ -1123,6 +1124,7 @@ function selectBarber(barber, card) {
   document.getElementById('step-sub-1').textContent = barber.name;
   // Pré-carrega serviços deste barbeiro imediatamente ao selecionar
   prefetchServices(barber.id);
+  setTimeout(() => goToStep(2), 220);
 }
 
 // ============================================================
@@ -1176,6 +1178,7 @@ function selectService(service, card) {
   state.slot = null;
   document.getElementById('btn-2').disabled = false;
   document.getElementById('step-sub-2').textContent = service.name;
+  setTimeout(() => goToStep(3), 220);
 }
 
 // ============================================================
@@ -1438,6 +1441,7 @@ async function loadSlots(date) {
         state.slot = slot;
         document.getElementById('btn-3').disabled = false;
         document.getElementById('step-sub-3').textContent = `${date.toLocaleDateString('pt-BR')} às ${slot}`;
+        setTimeout(() => goToStep(4), 320);
       });
       grid.appendChild(btn);
     });
@@ -1729,6 +1733,10 @@ function showSuccessScreen(clientName, startTime, endTime, hasAccount = false) {
   if (!hasAccount) {
     document.getElementById('btn-account-link').style.display = '';
   }
+
+  // Link para reagendar com serviço e barbeiro pré-selecionados
+  document.getElementById('btn-rebook').href =
+    `/booking?service=${state.service.id}&barber=${state.barber.id}`;
 }
 
 // ============================================================
@@ -1741,7 +1749,28 @@ prefetchBarbers();
 Promise.all([
   checkLastBooking(),
   loadBarbers(),
-]).catch(() => {});
+]).then(async () => {
+  // Pré-seleciona serviço e barbeiro via query params (?service=ID&barber=ID)
+  const params = new URLSearchParams(window.location.search);
+  const serviceId = params.get('service');
+  const barberId  = params.get('barber');
+  if (!serviceId || !barberId) return;
+
+  const barbers = await prefetchBarbers();
+  const barber  = barbers?.find(b => b.id === barberId);
+  if (!barber) return;
+
+  const services = await prefetchServices(barberId);
+  const service  = services?.find(s => s.id === serviceId);
+  if (!service) return;
+
+  state.barber  = barber;
+  state.service = service;
+  document.getElementById('step-sub-1').textContent = barber.name;
+  document.getElementById('step-sub-2').textContent = service.name;
+  document.getElementById('stepper').style.opacity = '1';
+  goToStep(3);
+}).catch(() => {});
 </script>
 </body>
 </html>
