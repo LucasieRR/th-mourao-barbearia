@@ -1061,11 +1061,17 @@ img { max-width: 100%; display: block; }
           </div>
           <div class="adm-form-group">
             <label class="adm-form-label">Das</label>
-            <input type="time" class="adm-form-control" id="adm-bsTimeFrom" />
+            <div style="display:flex;gap:4px">
+              <select class="adm-form-control" id="adm-bsTimeFromH" style="flex:1"></select>
+              <select class="adm-form-control" id="adm-bsTimeFromM" style="flex:1"></select>
+            </div>
           </div>
           <div class="adm-form-group">
             <label class="adm-form-label">Às</label>
-            <input type="time" class="adm-form-control" id="adm-bsTimeTo" />
+            <div style="display:flex;gap:4px">
+              <select class="adm-form-control" id="adm-bsTimeToH" style="flex:1"></select>
+              <select class="adm-form-control" id="adm-bsTimeToM" style="flex:1"></select>
+            </div>
           </div>
         </div>
 
@@ -2082,7 +2088,23 @@ document.addEventListener('DOMContentLoaded', () => {
     if (barberId) admLoadBlockedSlots(barberId);
   }
 
+  function admBsPopulateTimeSelects() {
+    const hours = Array.from({length:24}, (_,i) => String(i).padStart(2,'0'));
+    const mins  = ['00','15','30','45'];
+    ['adm-bsTimeFromH','adm-bsTimeToH'].forEach(id => {
+      const el = admQ('#' + id);
+      if (el && !el.options.length) el.innerHTML = hours.map(h => `<option value="${h}">${h}h</option>`).join('');
+    });
+    ['adm-bsTimeFromM','adm-bsTimeToM'].forEach(id => {
+      const el = admQ('#' + id);
+      if (el && !el.options.length) el.innerHTML = mins.map(m => `<option value="${m}">${m}min</option>`).join('');
+    });
+    const fH = admQ('#adm-bsTimeFromH'); if (fH && !fH.value) fH.value = '08';
+    const tH = admQ('#adm-bsTimeToH');   if (tH && !tH.value) tH.value = '09';
+  }
+
   function admInitBlockedSlots() {
+    admBsPopulateTimeSelects();
     ['adm-bsDateFrom','adm-bsDateTo','adm-bsPartialDate'].forEach(id => {
       const el = admQ('#' + id);
       if (el) el.addEventListener('input', admBsDateMask);
@@ -2114,10 +2136,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (endISO < startISO) { admToast('A data final deve ser após a inicial.', 'error'); return; }
       } else {
         const dayRaw  = admQ('#adm-bsPartialDate').value.trim();
-        const timeFrom = admQ('#adm-bsTimeFrom').value;
-        const timeTo   = admQ('#adm-bsTimeTo').value;
+        const timeFrom = (admQ('#adm-bsTimeFromH').value || '00') + ':' + (admQ('#adm-bsTimeFromM').value || '00');
+        const timeTo   = (admQ('#adm-bsTimeToH').value   || '00') + ':' + (admQ('#adm-bsTimeToM').value   || '00');
         if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dayRaw)) { admToast('Preencha o dia no formato DD/MM/AAAA.', 'error'); return; }
-        if (!timeFrom || !timeTo) { admToast('Preencha os horários.', 'error'); return; }
         if (timeTo <= timeFrom) { admToast('O horário final deve ser após o inicial.', 'error'); return; }
         const dayISO = admBsParseDMY(dayRaw);
         startISO = `${dayISO}T${timeFrom}:00`;
@@ -2153,8 +2174,10 @@ document.addEventListener('DOMContentLoaded', () => {
       admQ('#adm-bsDateFrom').value = '';
       admQ('#adm-bsDateTo').value   = '';
       admQ('#adm-bsPartialDate').value = '';
-      admQ('#adm-bsTimeFrom').value = '';
-      admQ('#adm-bsTimeTo').value   = '';
+      admQ('#adm-bsTimeFromH').value = '08';
+      admQ('#adm-bsTimeFromM').value = '00';
+      admQ('#adm-bsTimeToH').value   = '09';
+      admQ('#adm-bsTimeToM').value   = '00';
       admQ('#adm-bsReason').value   = '';
       admLoadBlockedSlots(barberId);
     });
@@ -2174,7 +2197,6 @@ document.addEventListener('DOMContentLoaded', () => {
         profession: admQ('#adm-bProfession').value.trim() || null,
         city: admQ('#adm-bCity').value.trim() || null,
         phone: admQ('#adm-bPhone').value.trim() || null,
-        whatsapp: admQ('#adm-bWhats').value.trim() || null,
         bio: admQ('#adm-bBio').value.trim() || null,
         avatar_url: admQ('#adm-bAvatar').value.trim() || null,
         active: admQ('#adm-bActive').checked,
