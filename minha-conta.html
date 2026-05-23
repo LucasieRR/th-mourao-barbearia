@@ -1230,11 +1230,42 @@ function togglePassword(inputId, btn) {
 // AUTH STATE
 // ============================================================
 let _booted = false;
+
+function _hasStoredSession() {
+  try {
+    return Object.keys(localStorage).some(k => k.startsWith('sb-') && k.includes('-auth-token'));
+  } catch(e) { return false; }
+}
+
+async function _retrySession(attempt) {
+  if (_booted) return;
+  try {
+    const { data } = await sb.auth.getSession();
+    if (data?.session) {
+      _booted = true;
+      currentUser = data.session.user;
+      await onLoggedIn(data.session);
+      return;
+    }
+  } catch(e) {
+    console.warn('[auth] retry getSession failed:', e.message);
+  }
+  if (attempt < 3) setTimeout(() => _retrySession(attempt + 1), 2000 * attempt);
+}
+
 sb.auth.onAuthStateChange(async (event, session) => {
   console.log('[auth] event:', event, '| session:', session?.user?.email || 'null', '| _booted:', _booted);
   if (event === 'SIGNED_OUT') { _booted = false; currentUser = null; showAuthScreen(); return; }
   if (_booted) return;
-  if (!session) return;
+  if (!session) {
+    // INITIAL_SESSION null pode indicar falha de rede durante o refresh do token.
+    // Se há token no storage, tenta recuperar a sessão após um breve delay.
+    if (event === 'INITIAL_SESSION' && _hasStoredSession()) {
+      console.log('[auth] INITIAL_SESSION null mas storage tem token — agendando retry');
+      setTimeout(() => _retrySession(1), 1500);
+    }
+    return;
+  }
   _booted = true;
   currentUser = session.user;
   await onLoggedIn(session);

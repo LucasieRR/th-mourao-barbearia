@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1779369346462,
+  "lastScanned": 1779544006765,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
     "languages": [
@@ -47,7 +47,7 @@
       "path": "api",
       "purpose": "API routes",
       "fileCount": 5,
-      "lastAccessed": 1779369346297,
+      "lastAccessed": 1779544006424,
       "keyFiles": [
         "package-lock.json",
         "package.json",
@@ -60,7 +60,7 @@
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 18,
-      "lastAccessed": 1779369346300,
+      "lastAccessed": 1779544006430,
       "keyFiles": [
         "design-system.css",
         "espaco-1.jpg",
@@ -73,15 +73,15 @@
       "path": "api/node_modules",
       "purpose": "Dependencies",
       "fileCount": 1,
-      "lastAccessed": 1779369346378,
+      "lastAccessed": 1779544006702,
       "keyFiles": []
     }
   },
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 252,
-      "lastAccessed": 1779410200780,
+      "accessCount": 258,
+      "lastAccessed": 1779544376562,
       "type": "file"
     },
     {
