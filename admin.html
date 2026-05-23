@@ -846,14 +846,15 @@ async function checkAuthAndAdmin(session) {
   }
   state.user = session.user;
 
-  const { data: roles, error } = await sb
-    .from('user_roles')
-    .select('role')
-    .eq('user_id', session.user.id)
-    .eq('role', 'admin')
-    .limit(1);
+  // Usa fetch direto para evitar hang do SDK durante token refresh
+  const token = session.access_token || SUPABASE_ANON_KEY;
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/user_roles?user_id=eq.${session.user.id}&role=eq.admin&limit=1`,
+    { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}` } }
+  );
+  const roles = res.ok ? await res.json() : [];
 
-  if (error || !roles || roles.length === 0) {
+  if (!roles || roles.length === 0) {
     toast('Acesso restrito a administradores.', 'error');
     setTimeout(() => { localStorage.setItem('th_nav_ts', Date.now()); window.location.href = '/minha-conta'; }, 1200);
     return false;
