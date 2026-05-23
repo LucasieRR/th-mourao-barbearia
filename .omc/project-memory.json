@@ -80,8 +80,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 268,
-      "lastAccessed": 1779555454964,
+      "accessCount": 283,
+      "lastAccessed": 1779576314050,
       "type": "file"
     },
     {
@@ -121,15 +121,15 @@
       "type": "file"
     },
     {
-      "path": "supabase-migration.sql",
-      "accessCount": 22,
-      "lastAccessed": 1779555570291,
+      "path": "vercel.json",
+      "accessCount": 23,
+      "lastAccessed": 1779575964434,
       "type": "file"
     },
     {
-      "path": "vercel.json",
-      "accessCount": 21,
-      "lastAccessed": 1779547976535,
+      "path": "supabase-migration.sql",
+      "accessCount": 22,
+      "lastAccessed": 1779555570291,
       "type": "file"
     },
     {
