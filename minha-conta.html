@@ -1029,6 +1029,68 @@ img { max-width: 100%; display: block; }
           <div class="adm-form-group full"><label class="adm-form-check"><input type="checkbox" id="adm-bActive" checked /> Ativo</label></div>
         </div>
       </form>
+      <!-- Folgas e Férias — visível só ao editar -->
+      <div id="adm-blockedSlotsSection" style="display:none; margin-top:20px; border-top:1px solid #e0d8cc; padding-top:16px">
+        <div style="font-weight:600; margin-bottom:12px; color:#1C1C1A">Folgas e Férias</div>
+
+        <div class="adm-form-grid" style="margin-bottom:8px">
+          <div class="adm-form-group full">
+            <label class="adm-form-label">Tipo</label>
+            <select class="adm-form-control" id="adm-bsType">
+              <option value="period">Período (De — Até)</option>
+              <option value="partial">Horário específico</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="adm-bsPeriodInputs" class="adm-form-grid">
+          <div class="adm-form-group">
+            <label class="adm-form-label">De</label>
+            <input type="text" class="adm-form-control" id="adm-bsDateFrom" placeholder="DD/MM/AAAA" maxlength="10" />
+          </div>
+          <div class="adm-form-group">
+            <label class="adm-form-label">Até</label>
+            <input type="text" class="adm-form-control" id="adm-bsDateTo" placeholder="DD/MM/AAAA" maxlength="10" />
+          </div>
+        </div>
+
+        <div id="adm-bsPartialInputs" class="adm-form-grid" style="display:none">
+          <div class="adm-form-group">
+            <label class="adm-form-label">Dia</label>
+            <input type="text" class="adm-form-control" id="adm-bsPartialDate" placeholder="DD/MM/AAAA" maxlength="10" />
+          </div>
+          <div class="adm-form-group">
+            <label class="adm-form-label">Das</label>
+            <input type="time" class="adm-form-control" id="adm-bsTimeFrom" />
+          </div>
+          <div class="adm-form-group">
+            <label class="adm-form-label">Às</label>
+            <input type="time" class="adm-form-control" id="adm-bsTimeTo" />
+          </div>
+        </div>
+
+        <div class="adm-form-grid" style="margin-top:8px">
+          <div class="adm-form-group full">
+            <label class="adm-form-label">Motivo (opcional)</label>
+            <input type="text" class="adm-form-control" id="adm-bsReason" placeholder="Ex: Férias, consulta médica…" />
+          </div>
+        </div>
+
+        <button class="adm-btn adm-btn-primary" id="adm-btnAddBlockedSlot" style="margin-top:10px">+ Adicionar</button>
+
+        <div id="adm-bsConflictAlert" style="display:none; margin-top:12px; padding:10px; background:#fff3cd; border:1px solid #ffc107; border-radius:4px; font-size:13px">
+          <strong>Agendamentos no período selecionado:</strong>
+          <ul id="adm-bsConflictList" style="margin:6px 0 0 16px; padding:0"></ul>
+        </div>
+
+        <div id="adm-bsListWrap" style="margin-top:14px">
+          <div style="font-size:13px; color:#888" id="adm-bsListEmpty">Nenhuma folga cadastrada.</div>
+          <table class="adm-tbl" id="adm-bsTable" style="display:none; font-size:13px">
+            <thead><tr><th>Período / Horário</th><th>Motivo</th><th style="width:60px"></th></tr></thead>
+            <tbody id="adm-bsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="adm-modal-foot">
       <button class="adm-btn adm-btn-ghost" data-adm-close>Cancelar</button>
@@ -1934,7 +1996,168 @@ document.addEventListener('DOMContentLoaded', () => {
     admQ('#adm-bBio').value = b?.bio || '';
     admQ('#adm-bAvatar').value = b?.avatar_url || '';
     admQ('#adm-bActive').checked = b ? !!b.active : true;
+    const section = admQ('#adm-blockedSlotsSection');
+    if (section) section.style.display = b ? 'block' : 'none';
+    if (b) admLoadBlockedSlots(b.id);
     admOpenModal('#adm-modalBarber');
+  }
+
+  // --- FOLGAS E FÉRIAS ---
+  function admBsParseDMY(s) {
+    const [d, m, y] = s.split('/');
+    return `${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}`;
+  }
+  function admBsFmtDMY(iso) {
+    const [y, m, d] = iso.split('T')[0].split('-');
+    return `${d}/${m}/${y}`;
+  }
+  function admBsDateMask(e) {
+    let v = e.target.value.replace(/\D/g,'');
+    if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
+    if (v.length > 5) v = v.slice(0,5) + '/' + v.slice(5,9);
+    e.target.value = v;
+  }
+
+  async function admLoadBlockedSlots(professionalId) {
+    const tbody = admQ('#adm-bsTableBody');
+    const table = admQ('#adm-bsTable');
+    const empty = admQ('#adm-bsListEmpty');
+    if (!tbody) return;
+    tbody.innerHTML = '<tr><td colspan="3" style="color:#aaa;font-size:12px">Carregando…</td></tr>';
+    if (table) table.style.display = 'table';
+    if (empty) empty.style.display = 'none';
+
+    const now = new Date().toISOString();
+    const { data, error } = await sb.from('blocked_slots')
+      .select('*')
+      .eq('professional_id', professionalId)
+      .gte('end_time', now)
+      .order('start_time', { ascending: true });
+
+    if (error || !data || data.length === 0) {
+      if (table) table.style.display = 'none';
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+    admBsRenderSlots(data);
+  }
+
+  function admBsRenderSlots(slots) {
+    const tbody = admQ('#adm-bsTableBody');
+    const table = admQ('#adm-bsTable');
+    const empty = admQ('#adm-bsListEmpty');
+    if (!tbody) return;
+    tbody.innerHTML = '';
+    if (!slots.length) {
+      if (table) table.style.display = 'none';
+      if (empty) empty.style.display = 'block';
+      return;
+    }
+    if (table) table.style.display = 'table';
+    if (empty) empty.style.display = 'none';
+    slots.forEach(s => {
+      const start = new Date(s.start_time);
+      const end   = new Date(s.end_time);
+      const startDate = admBsFmtDMY(s.start_time);
+      const endDate   = admBsFmtDMY(s.end_time);
+      const startH = start.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+      const endH   = end.toLocaleTimeString('pt-BR',   { hour:'2-digit', minute:'2-digit' });
+      const isFullDay = startH === '00:00' && endH === '23:59';
+      let label = isFullDay
+        ? (startDate === endDate ? startDate : `${startDate} — ${endDate}`)
+        : `${startDate} ${startH}–${endH}`;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `<td>${label}</td><td>${admEscape(s.reason || '—')}</td><td><button class="adm-btn adm-btn-ghost" style="padding:2px 8px;font-size:12px" data-bs-del="${s.id}">🗑</button></td>`;
+      tbody.appendChild(tr);
+    });
+    tbody.querySelectorAll('[data-bs-del]').forEach(btn => {
+      btn.addEventListener('click', () => admDeleteBlockedSlot(btn.dataset.bsDel));
+    });
+  }
+
+  async function admDeleteBlockedSlot(slotId) {
+    const { error } = await sb.from('blocked_slots').delete().eq('id', slotId);
+    if (error) { admToast('Erro ao remover folga.', 'error'); return; }
+    const barberId = admQ('#adm-bId').value;
+    if (barberId) admLoadBlockedSlots(barberId);
+  }
+
+  function admInitBlockedSlots() {
+    ['adm-bsDateFrom','adm-bsDateTo','adm-bsPartialDate'].forEach(id => {
+      const el = admQ('#' + id);
+      if (el) el.addEventListener('input', admBsDateMask);
+    });
+
+    const typeEl = admQ('#adm-bsType');
+    if (typeEl) typeEl.addEventListener('change', () => {
+      const isPeriod = typeEl.value === 'period';
+      admQ('#adm-bsPeriodInputs').style.display  = isPeriod ? '' : 'none';
+      admQ('#adm-bsPartialInputs').style.display = isPeriod ? 'none' : '';
+    });
+
+    const btnAdd = admQ('#adm-btnAddBlockedSlot');
+    if (btnAdd) btnAdd.addEventListener('click', async () => {
+      const barberId = admQ('#adm-bId').value;
+      if (!barberId) return;
+      const type = admQ('#adm-bsType').value;
+      const reason = admQ('#adm-bsReason').value.trim() || null;
+      let startISO, endISO;
+
+      if (type === 'period') {
+        const fromRaw = admQ('#adm-bsDateFrom').value.trim();
+        const toRaw   = admQ('#adm-bsDateTo').value.trim();
+        if (!/^\d{2}\/\d{2}\/\d{4}$/.test(fromRaw) || !/^\d{2}\/\d{2}\/\d{4}$/.test(toRaw)) {
+          admToast('Preencha as datas no formato DD/MM/AAAA.', 'error'); return;
+        }
+        startISO = admBsParseDMY(fromRaw) + 'T00:00:00';
+        endISO   = admBsParseDMY(toRaw)   + 'T23:59:59';
+        if (endISO < startISO) { admToast('A data final deve ser após a inicial.', 'error'); return; }
+      } else {
+        const dayRaw  = admQ('#adm-bsPartialDate').value.trim();
+        const timeFrom = admQ('#adm-bsTimeFrom').value;
+        const timeTo   = admQ('#adm-bsTimeTo').value;
+        if (!/^\d{2}\/\d{2}\/\d{4}$/.test(dayRaw)) { admToast('Preencha o dia no formato DD/MM/AAAA.', 'error'); return; }
+        if (!timeFrom || !timeTo) { admToast('Preencha os horários.', 'error'); return; }
+        if (timeTo <= timeFrom) { admToast('O horário final deve ser após o inicial.', 'error'); return; }
+        const dayISO = admBsParseDMY(dayRaw);
+        startISO = `${dayISO}T${timeFrom}:00`;
+        endISO   = `${dayISO}T${timeTo}:00`;
+      }
+
+      // Verificar conflitos
+      const conflictAlert = admQ('#adm-bsConflictAlert');
+      const conflictList  = admQ('#adm-bsConflictList');
+      if (conflictAlert) conflictAlert.style.display = 'none';
+      const { data: conflicts } = await sb.from('appointments')
+        .select('start_time,client_name,service_name')
+        .eq('professional_id', barberId)
+        .not('status', 'in', '("cancelled","no_show")')
+        .gte('start_time', startISO)
+        .lte('start_time', endISO);
+      if (conflicts && conflicts.length > 0 && conflictAlert && conflictList) {
+        conflictList.innerHTML = conflicts.map(c => {
+          const d = new Date(c.start_time).toLocaleDateString('pt-BR');
+          return `<li>${d} — ${admEscape(c.client_name || '?')} — ${admEscape(c.service_name || '?')}</li>`;
+        }).join('');
+        conflictAlert.style.display = 'block';
+      }
+
+      const { error } = await sb.from('blocked_slots').insert({
+        professional_id: barberId,
+        start_time: startISO,
+        end_time: endISO,
+        reason,
+      });
+      if (error) { admToast('Erro ao salvar folga: ' + error.message, 'error'); return; }
+      admToast('Folga adicionada.', 'success');
+      admQ('#adm-bsDateFrom').value = '';
+      admQ('#adm-bsDateTo').value   = '';
+      admQ('#adm-bsPartialDate').value = '';
+      admQ('#adm-bsTimeFrom').value = '';
+      admQ('#adm-bsTimeTo').value   = '';
+      admQ('#adm-bsReason').value   = '';
+      admLoadBlockedSlots(barberId);
+    });
   }
 
   function admInitBarbers() {
@@ -2615,6 +2838,7 @@ document.addEventListener('DOMContentLoaded', () => {
     _admBooted = true;
     admInitTabs();
     admInitBarbers();
+    admInitBlockedSlots();
     admInitServices();
     admInitHours();
     admInitClients();
