@@ -892,13 +892,13 @@ function onTabChange(tab) {
 // BARBEIROS
 // ============================================================
 async function loadBarbers() {
-  const { data, error } = await sb
-    .from('professionals')
-    .select('*')
-    .eq('company_id', COMPANY_ID)
-    .order('name', { ascending: true });
-  if (error) { toast('Erro ao carregar barbeiros: ' + error.message, 'error'); return; }
-  state.barbers = data || [];
+  const token = _accessToken || SUPABASE_ANON_KEY;
+  const res = await fetch(
+    `${SUPABASE_URL}/rest/v1/professionals?company_id=eq.${COMPANY_ID}&order=name.asc`,
+    { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${token}` } }
+  );
+  if (!res.ok) { toast('Erro ao carregar barbeiros.', 'error'); return; }
+  state.barbers = await res.json();
   renderBarbers();
   refreshBarberDropdowns();
 }
@@ -1651,11 +1651,13 @@ $('#btnLogout').addEventListener('click', doLogout);
 // Usa onAuthStateChange para pegar a sessão corretamente mesmo após redirect
 // getSession() pode retornar null se o token ainda está sendo restaurado
 let _booted = false;
+let _accessToken = null; // token da sessão, usado em fetch direto para evitar hang do SDK
 sb.auth.onAuthStateChange(async (event, session) => {
   if (_booted) return;
   if (event === 'SIGNED_OUT') { window.location.href = '/minha-conta'; return; }
   if (!session) return;
   _booted = true;
+  _accessToken = session.access_token;
   const ok = await checkAuthAndAdmin(session);
   if (!ok) return;
   $('#authGate').style.display = 'none';
