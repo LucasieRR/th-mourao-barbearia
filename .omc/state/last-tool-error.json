@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"cd /tmp/puppeteer-test && node test_blocked_slots.js 2>&1\",\"timeout\":90000,\"description\":\"Run Puppeteer test with custom domain\"}",
+  "error": "Exit code 1\n1. Abrindo admin...\n3. Screenshot após login\n4. Buscando aba Barbeiros...\nfile:///private/tmp/puppeteer-test/node_modules/puppeteer-core/lib/puppeteer/api/ElementHandle.js:692\n                throw new Error('Node is either not clickable or not an Element');\n                      ^\n\nError: Node is either not clickable or not an Element\n    at CdpElementHandle.clickablePoint (file:///private/tmp/puppeteer-test/node_modules/puppeteer-core/lib/puppeteer/api/ElementHandle.js:692:23)\n    ...",
+  "timestamp": "2026-05-23T22:00:00.978Z",
+  "retry_count": 1
+}
