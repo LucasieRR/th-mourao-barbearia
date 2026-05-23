@@ -86,20 +86,26 @@
     },
     {
       "path": "booking.html",
-      "accessCount": 105,
-      "lastAccessed": 1779412266949,
+      "accessCount": 106,
+      "lastAccessed": 1779545931648,
       "type": "file"
     },
     {
       "path": "admin.html",
-      "accessCount": 86,
-      "lastAccessed": 1779410838351,
+      "accessCount": 87,
+      "lastAccessed": 1779545931833,
       "type": "file"
     },
     {
       "path": "store.html",
-      "accessCount": 71,
-      "lastAccessed": 1779293887947,
+      "accessCount": 72,
+      "lastAccessed": 1779545931941,
+      "type": "file"
+    },
+    {
+      "path": "index.html",
+      "accessCount": 48,
+      "lastAccessed": 1779546855579,
       "type": "file"
     },
     {
@@ -109,27 +115,21 @@
       "type": "file"
     },
     {
-      "path": "index.html",
-      "accessCount": 41,
-      "lastAccessed": 1779404507198,
-      "type": "file"
-    },
-    {
       "path": "blog.html",
       "accessCount": 31,
       "lastAccessed": 1779404508715,
       "type": "file"
     },
     {
-      "path": "supabase-migration.sql",
-      "accessCount": 19,
-      "lastAccessed": 1779279555975,
+      "path": "vercel.json",
+      "accessCount": 20,
+      "lastAccessed": 1779546854625,
       "type": "file"
     },
     {
-      "path": "vercel.json",
-      "accessCount": 17,
-      "lastAccessed": 1779321370109,
+      "path": "supabase-migration.sql",
+      "accessCount": 19,
+      "lastAccessed": 1779279555975,
       "type": "file"
     },
     {
@@ -140,32 +140,32 @@
     },
     {
       "path": "api/server.js",
-      "accessCount": 12,
-      "lastAccessed": 1779365586955,
+      "accessCount": 13,
+      "lastAccessed": 1779546006264,
       "type": "file"
     },
     {
       "path": ".env",
-      "accessCount": 12,
-      "lastAccessed": 1779384234990,
+      "accessCount": 13,
+      "lastAccessed": 1779546605376,
       "type": "file"
     },
     {
       "path": "assinaturas.html",
-      "accessCount": 6,
-      "lastAccessed": 1779361502207,
+      "accessCount": 7,
+      "lastAccessed": 1779545932017,
       "type": "file"
     },
     {
       "path": "api/subscribe.js",
-      "accessCount": 6,
-      "lastAccessed": 1779361516898,
+      "accessCount": 7,
+      "lastAccessed": 1779545937175,
       "type": "file"
     },
     {
       "path": ".env.example",
-      "accessCount": 3,
-      "lastAccessed": 1779220205342,
+      "accessCount": 4,
+      "lastAccessed": 1779546015743,
       "type": "file"
     },
     {
@@ -199,15 +199,27 @@
       "type": "file"
     },
     {
+      "path": "api/webhook-asaas.js",
+      "accessCount": 2,
+      "lastAccessed": 1779545937748,
+      "type": "file"
+    },
+    {
       "path": "seed-professionals.sql",
       "accessCount": 1,
       "lastAccessed": 1779228975186,
       "type": "file"
     },
     {
-      "path": "api/webhook-asaas.js",
+      "path": "politica-de-privacidade.html",
       "accessCount": 1,
-      "lastAccessed": 1779321339578,
+      "lastAccessed": 1779546578338,
+      "type": "file"
+    },
+    {
+      "path": "termos-de-uso.html",
+      "accessCount": 1,
+      "lastAccessed": 1779546757788,
       "type": "file"
     }
   ],

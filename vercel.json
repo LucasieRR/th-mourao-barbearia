@@ -28,7 +28,9 @@
     { "src": "/assinaturas",  "dest": "/assinaturas.html" },
     { "src": "/minha-conta",  "dest": "/minha-conta.html" },
     { "src": "/booking",      "dest": "/booking.html" },
-    { "src": "/admin",        "dest": "/admin.html" },
-    { "src": "/(.*)",         "dest": "/$1" }
+    { "src": "/admin",                      "dest": "/admin.html" },
+    { "src": "/politica-de-privacidade",   "dest": "/politica-de-privacidade.html" },
+    { "src": "/termos-de-uso",             "dest": "/termos-de-uso.html" },
+    { "src": "/(.*)",                      "dest": "/$1" }
   ]
 }
