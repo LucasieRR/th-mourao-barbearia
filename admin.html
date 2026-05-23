@@ -529,7 +529,7 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
       </form>
 
       <!-- Folgas e Férias — visível apenas ao editar -->
-      <div id="blockedSlotsSection" style="display:none; margin-top:20px; border-top:1px solid var(--border); padding-top:16px">
+      <div id="blockedSlotsSection" style="display:none; margin-top:20px; border-top:1px solid var(--creme3); padding-top:16px">
         <div style="font-weight:600; margin-bottom:12px">Folgas e Férias</div>
 
         <div class="form-group full" style="margin-bottom:10px">
@@ -1246,9 +1246,10 @@ function applyDateMask(input) {
   });
 }
 
-(function initBlockedSlotMasks() {
-  ['bsDateFrom','bsDateTo','bsPartialDate'].forEach(id => applyDateMask($(`#${id}`)));
-})();
+['bsDateFrom','bsDateTo','bsPartialDate'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) applyDateMask(el);
+});
 
 $('#bsType').addEventListener('change', () => {
   const isPeriod = $('#bsType').value === 'period';
