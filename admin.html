@@ -127,6 +127,7 @@ img { max-width: 100%; display: block; }
   font-size: 14px;
 }
 .btn-icon:hover { color: var(--preto); border-color: var(--cinza); }
+.btn-icon-danger:hover { color: var(--vermelho); border-color: var(--vermelho); }
 
 /* ========== FORM ========== */
 .form-grid { display: grid; gap: 14px; grid-template-columns: repeat(2, 1fr); }
@@ -526,6 +527,65 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
           </div>
         </div>
       </form>
+
+      <!-- Folgas e Férias — visível apenas ao editar -->
+      <div id="blockedSlotsSection" style="display:none; margin-top:20px; border-top:1px solid var(--border); padding-top:16px">
+        <div style="font-weight:600; margin-bottom:12px">Folgas e Férias</div>
+
+        <div class="form-group full" style="margin-bottom:10px">
+          <label class="form-label">Tipo</label>
+          <select class="form-control" id="bsType">
+            <option value="period">Período (De — Até)</option>
+            <option value="partial">Horário específico</option>
+          </select>
+        </div>
+
+        <div id="bsPeriodInputs" class="form-grid">
+          <div class="form-group">
+            <label class="form-label">De</label>
+            <input type="text" class="form-control" id="bsDateFrom" placeholder="DD/MM/AAAA" maxlength="10" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Até</label>
+            <input type="text" class="form-control" id="bsDateTo" placeholder="DD/MM/AAAA" maxlength="10" />
+          </div>
+        </div>
+
+        <div id="bsPartialInputs" class="form-grid" style="display:none">
+          <div class="form-group">
+            <label class="form-label">Dia</label>
+            <input type="text" class="form-control" id="bsPartialDate" placeholder="DD/MM/AAAA" maxlength="10" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Das</label>
+            <input type="time" class="form-control" id="bsTimeFrom" />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Às</label>
+            <input type="time" class="form-control" id="bsTimeTo" />
+          </div>
+        </div>
+
+        <div class="form-group full" style="margin-top:8px">
+          <label class="form-label">Motivo (opcional)</label>
+          <input type="text" class="form-control" id="bsReason" placeholder="Ex: Férias, consulta médica…" />
+        </div>
+
+        <button class="btn btn-primary" id="btnAddBlockedSlot" style="margin-top:10px">+ Adicionar</button>
+
+        <div id="bsConflictAlert" style="display:none; margin-top:12px; padding:10px; background:#fff3cd; border:1px solid #ffc107; border-radius:4px; font-size:13px">
+          <strong>⚠ Agendamentos no período selecionado:</strong>
+          <ul id="bsConflictList" style="margin:6px 0 0 16px; padding:0"></ul>
+        </div>
+
+        <div id="bsListWrap" style="margin-top:16px">
+          <div class="muted" id="bsListEmpty" style="font-size:13px">Nenhuma folga cadastrada.</div>
+          <table class="tbl" id="bsTable" style="display:none; font-size:13px">
+            <thead><tr><th>Período / Horário</th><th>Motivo</th><th style="width:60px"></th></tr></thead>
+            <tbody id="bsTableBody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <div class="modal-foot">
       <button class="btn btn-ghost" data-close>Cancelar</button>
@@ -898,6 +958,28 @@ function openBarberModal(id) {
   $('#bBio').value = b?.bio || '';
   $('#bAvatar').value = b?.avatar_url || '';
   $('#bActive').checked = b ? !!b.active : true;
+
+  // Seção de folgas: só exibe ao editar barbeiro existente
+  const bsSection = $('#blockedSlotsSection');
+  if (b) {
+    bsSection.style.display = 'block';
+    // Resetar estado da seção
+    $('#bsType').value = 'period';
+    $('#bsPeriodInputs').style.display  = '';
+    $('#bsPartialInputs').style.display = 'none';
+    $('#bsConflictAlert').style.display = 'none';
+    $('#bsDateFrom').value = '';
+    $('#bsDateTo').value   = '';
+    $('#bsPartialDate').value = '';
+    $('#bsTimeFrom').value = '';
+    $('#bsTimeTo').value   = '';
+    $('#bsReason').value   = '';
+    loadBlockedSlots(b.id);
+  } else {
+    bsSection.style.display = 'none';
+    _bsBarberCurrentId = null;
+  }
+
   openModal('#modalBarber');
 }
 
@@ -984,7 +1066,7 @@ function renderServicesTable() {
       <td>
         <div class="tbl-actions">
           <button class="btn-icon" data-edit-svc="${s.id}" title="Editar">&#9998;</button>
-          ${s.active ? `<button class="btn-icon" data-del-svc="${s.id}" title="Desativar">&#128465;</button>` : ''}
+          <button class="btn-icon btn-icon-danger" data-del-svc="${s.id}" title="Excluir">&#128465;</button>
         </div>
       </td>
     </tr>
@@ -1041,10 +1123,10 @@ $('#btnSaveService').addEventListener('click', async (e) => {
 });
 
 async function softDeleteService(id) {
-  if (!confirm('Desativar este serviço?')) return;
-  const { error } = await sb.from('services').update({ active: false }).eq('id', id);
+  if (!confirm('Excluir este serviço permanentemente?')) return;
+  const { error } = await sb.from('services').delete().eq('id', id);
   if (error) { toast('Erro: ' + error.message, 'error'); return; }
-  toast('Serviço desativado.', 'success');
+  toast('Serviço excluído.', 'success');
   loadServicesFor(state.selectedBarberForServices);
 }
 
@@ -1137,6 +1219,174 @@ $('#btnSaveHours').addEventListener('click', async (e) => {
     const b = state.barbers.find(x => x.id === state.selectedBarberForHours);
     if (b) { b.working_hours = working_hours; b.break_between_appointments = breakMin; }
   });
+});
+
+// ============================================================
+// FOLGAS E FÉRIAS (blocked_slots)
+// ============================================================
+
+function parseDMY(s) {
+  const [d, m, y] = s.split('/');
+  if (!d || !m || !y || y.length !== 4) return null;
+  const date = new Date(`${y}-${m.padStart(2,'0')}-${d.padStart(2,'0')}T00:00:00`);
+  return isNaN(date.getTime()) ? null : date;
+}
+
+function fmtDMYfromISO(iso) {
+  const [y, m, d] = iso.split('T')[0].split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function applyDateMask(input) {
+  input.addEventListener('input', () => {
+    let v = input.value.replace(/\D/g, '').slice(0, 8);
+    if (v.length > 4) v = v.slice(0,2) + '/' + v.slice(2,4) + '/' + v.slice(4);
+    else if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
+    input.value = v;
+  });
+}
+
+(function initBlockedSlotMasks() {
+  ['bsDateFrom','bsDateTo','bsPartialDate'].forEach(id => applyDateMask($(`#${id}`)));
+})();
+
+$('#bsType').addEventListener('change', () => {
+  const isPeriod = $('#bsType').value === 'period';
+  $('#bsPeriodInputs').style.display  = isPeriod ? '' : 'none';
+  $('#bsPartialInputs').style.display = isPeriod ? 'none' : '';
+  $('#bsConflictAlert').style.display = 'none';
+});
+
+let _bsBarberCurrentId = null;
+
+async function loadBlockedSlots(professionalId) {
+  _bsBarberCurrentId = professionalId;
+  const now = new Date().toISOString();
+  const { data, error } = await sb
+    .from('blocked_slots')
+    .select('id, start_time, end_time, reason')
+    .eq('professional_id', professionalId)
+    .gte('end_time', now)
+    .order('start_time', { ascending: true });
+  if (error) { toast('Erro ao carregar folgas: ' + error.message, 'error'); return; }
+  renderBlockedSlots(data || []);
+}
+
+function renderBlockedSlots(slots) {
+  const empty = $('#bsListEmpty');
+  const table = $('#bsTable');
+  const tbody = $('#bsTableBody');
+  if (!slots.length) {
+    empty.style.display = 'block';
+    table.style.display = 'none';
+    return;
+  }
+  empty.style.display = 'none';
+  table.style.display = '';
+  tbody.innerHTML = slots.map(s => {
+    const start = new Date(s.start_time);
+    const end   = new Date(s.end_time);
+    const startDate = fmtDMYfromISO(s.start_time);
+    const endDate   = fmtDMYfromISO(s.end_time);
+    const startH = start.toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+    const endH   = end.toLocaleTimeString('pt-BR',   { hour:'2-digit', minute:'2-digit' });
+    const isFullDay = startH === '00:00' && (endH === '23:59' || endH === '00:00');
+    const label = startDate === endDate
+      ? (isFullDay ? startDate : `${startDate} ${startH}–${endH}`)
+      : `${startDate} → ${endDate}`;
+    return `<tr>
+      <td>${escapeHtml(label)}</td>
+      <td>${escapeHtml(s.reason || '—')}</td>
+      <td style="text-align:center">
+        <button class="btn-icon" title="Remover" data-delete-slot="${s.id}">&#128465;</button>
+      </td>
+    </tr>`;
+  }).join('');
+  tbody.querySelectorAll('[data-delete-slot]').forEach(btn =>
+    btn.addEventListener('click', () => deleteBlockedSlot(btn.dataset.deleteSlot))
+  );
+}
+
+async function deleteBlockedSlot(slotId) {
+  if (!confirm('Remover este bloqueio?')) return;
+  const { error } = await sb.from('blocked_slots').delete().eq('id', slotId);
+  if (error) { toast('Erro ao remover: ' + error.message, 'error'); return; }
+  toast('Folga removida.', 'success');
+  loadBlockedSlots(_bsBarberCurrentId);
+}
+
+$('#btnAddBlockedSlot').addEventListener('click', async () => {
+  if (!_bsBarberCurrentId) return;
+  const type = $('#bsType').value;
+  const reason = $('#bsReason').value.trim() || null;
+  $('#bsConflictAlert').style.display = 'none';
+
+  let startISO, endISO;
+
+  if (type === 'period') {
+    const fromVal = $('#bsDateFrom').value.trim();
+    const toVal   = $('#bsDateTo').value.trim();
+    const from = parseDMY(fromVal);
+    const to   = parseDMY(toVal);
+    if (!from) { toast('Data "De" inválida.', 'error'); return; }
+    if (!to)   { toast('Data "Até" inválida.', 'error'); return; }
+    if (to < from) { toast('"Até" deve ser depois de "De".', 'error'); return; }
+    const [fy, fm, fd] = fromVal.split('/').reverse();
+    const [ty, tm, td] = toVal.split('/').reverse();
+    startISO = `${fy}-${fm.padStart(2,'0')}-${fd.padStart(2,'0')}T00:00:00`;
+    endISO   = `${ty}-${tm.padStart(2,'0')}-${td.padStart(2,'0')}T23:59:59`;
+  } else {
+    const dayVal  = $('#bsPartialDate').value.trim();
+    const timeFrom = $('#bsTimeFrom').value;
+    const timeTo   = $('#bsTimeTo').value;
+    const day = parseDMY(dayVal);
+    if (!day)     { toast('Dia inválido.', 'error'); return; }
+    if (!timeFrom) { toast('Informe o horário inicial.', 'error'); return; }
+    if (!timeTo)   { toast('Informe o horário final.', 'error'); return; }
+    if (timeTo <= timeFrom) { toast('"Às" deve ser depois de "Das".', 'error'); return; }
+    const [dy, dm, dd] = dayVal.split('/').reverse();
+    const dateStr = `${dy}-${dm.padStart(2,'0')}-${dd.padStart(2,'0')}`;
+    startISO = `${dateStr}T${timeFrom}:00`;
+    endISO   = `${dateStr}T${timeTo}:00`;
+  }
+
+  // Verificar conflitos com agendamentos existentes
+  const { data: conflicts } = await sb
+    .from('appointments')
+    .select('start_time, client_name, service_name')
+    .eq('professional_id', _bsBarberCurrentId)
+    .not('status', 'in', '("cancelled","no_show")')
+    .gte('start_time', startISO)
+    .lte('start_time', endISO);
+
+  if (conflicts && conflicts.length > 0) {
+    $('#bsConflictList').innerHTML = conflicts.map(c => {
+      const d = fmtDMYfromISO(c.start_time);
+      const h = new Date(c.start_time).toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' });
+      return `<li>${escapeHtml(d)} ${h} – ${escapeHtml(c.client_name)} – ${escapeHtml(c.service_name)}</li>`;
+    }).join('');
+    $('#bsConflictAlert').style.display = 'block';
+  }
+
+  // Inserir o bloqueio mesmo com conflitos (admin decide)
+  const { error } = await sb.from('blocked_slots').insert({
+    professional_id: _bsBarberCurrentId,
+    start_time: startISO,
+    end_time: endISO,
+    reason,
+  });
+  if (error) { toast('Erro ao salvar folga: ' + error.message, 'error'); return; }
+  toast('Folga adicionada.', 'success');
+
+  // Limpar inputs
+  $('#bsDateFrom').value = '';
+  $('#bsDateTo').value   = '';
+  $('#bsPartialDate').value = '';
+  $('#bsTimeFrom').value = '';
+  $('#bsTimeTo').value   = '';
+  $('#bsReason').value   = '';
+
+  loadBlockedSlots(_bsBarberCurrentId);
 });
 
 // ============================================================
