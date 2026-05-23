@@ -80,8 +80,8 @@
   "hotPaths": [
     {
       "path": "minha-conta.html",
-      "accessCount": 258,
-      "lastAccessed": 1779544376562,
+      "accessCount": 260,
+      "lastAccessed": 1779547964015,
       "type": "file"
     },
     {
@@ -122,8 +122,8 @@
     },
     {
       "path": "vercel.json",
-      "accessCount": 20,
-      "lastAccessed": 1779546854625,
+      "accessCount": 21,
+      "lastAccessed": 1779547976535,
       "type": "file"
     },
     {

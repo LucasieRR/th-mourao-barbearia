@@ -22,6 +22,8 @@
   "routes": [
     { "src": "/api/subscribe",      "dest": "/api/subscribe.js" },
     { "src": "/api/webhook-asaas", "dest": "/api/webhook-asaas.js" },
+    { "src": "/index",             "dest": "/", "status": 301 },
+    { "src": "/index.html",        "dest": "/", "status": 301 },
     { "src": "/blog/([^/]+)", "dest": "/blog-post.html" },
     { "src": "/blog",         "dest": "/blog.html" },
     { "src": "/store",        "dest": "/store.html" },
