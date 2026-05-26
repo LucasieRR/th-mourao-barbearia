@@ -734,9 +734,9 @@ img { max-width: 100%; display: block; }
     </div>
 
     <div class="portal-tabs">
-      <button class="portal-tab active" onclick="switchPortalTab('agendamentos')">Meus Agendamentos</button>
-      <button class="portal-tab" onclick="switchPortalTab('perfil')">Meu Perfil</button>
-      <button class="portal-tab" onclick="switchPortalTab('assinatura')">Minha Assinatura</button>
+      <button class="portal-tab active" id="tab-btn-agendamentos" onclick="switchPortalTab('agendamentos')">Meus Agendamentos</button>
+      <button class="portal-tab" id="tab-btn-perfil" onclick="switchPortalTab('perfil')">Meu Perfil</button>
+      <button class="portal-tab" id="tab-btn-assinatura" onclick="switchPortalTab('assinatura')">Minha Assinatura</button>
     </div>
 
     <!-- Tab: Agendamentos -->
@@ -1375,14 +1375,15 @@ async function onLoggedIn(session) {
   document.getElementById('greeting-name').textContent = `Olá, ${profileName.split(' ')[0] || 'Você'}!`;
   console.log('[onLoggedIn] greeting set to:', profileName);
 
-  // Admin check — fetch direto para evitar hang durante token refresh
+  // Role check — 3 tiers: master (all tabs), admin (Painel Admin + Perfil only), user (default)
+  // Master is identified by user_id until 'master' enum is added to app_role in DB.
+  const MASTER_USER_ID = '639c58eb-509a-4f8a-b4d5-a2c3afea07a4';
   try {
     async function fetchRole(token) {
-      const r = await fetch(
+      return fetch(
         `${SUPABASE_URL}/rest/v1/user_roles?user_id=eq.${session.user.id}&select=role`,
         { headers: { 'apikey': SUPABASE_ANON, 'Authorization': `Bearer ${token}`, 'Accept': 'application/json' } }
       );
-      return r;
     }
     let roleToken = session.access_token || SUPABASE_ANON;
     let rr;
@@ -1394,11 +1395,14 @@ async function onLoggedIn(session) {
       roleToken = sd?.session?.access_token || SUPABASE_ANON;
       rr = await fetchRole(roleToken);
     }
-    let isAdmin = false;
+    let userRole = null;
     if (rr.ok) {
       const arr = await rr.json();
-      isAdmin = arr?.[0]?.role === 'admin';
+      userRole = arr?.[0]?.role || null;
     }
+    const isMaster = session.user.id === MASTER_USER_ID || userRole === 'master';
+    const isAdmin  = userRole === 'admin' || userRole === 'master' || isMaster;
+
     const tabs = document.querySelector('.portal-tabs');
     if (isAdmin && tabs && !document.getElementById('tab-btn-admin')) {
       const adminBtn = document.createElement('button');
@@ -1408,8 +1412,24 @@ async function onLoggedIn(session) {
       adminBtn.onclick = () => switchPortalTab('admin');
       tabs.appendChild(adminBtn);
     }
+
+    if (isAdmin && !isMaster) {
+      // Admin profile: show only Painel Admin + Meu Perfil
+      const btnAgend = document.getElementById('tab-btn-agendamentos');
+      const btnAssIn = document.getElementById('tab-btn-assinatura');
+      if (btnAgend) btnAgend.style.display = 'none';
+      if (btnAssIn) btnAssIn.style.display = 'none';
+      // Activate admin tab as default
+      document.querySelectorAll('.portal-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.portal-panel').forEach(p => p.classList.remove('active'));
+      const adminBtnEl = document.getElementById('tab-btn-admin');
+      if (adminBtnEl) adminBtnEl.classList.add('active');
+      const adminPanel = document.getElementById('tab-admin');
+      if (adminPanel) adminPanel.classList.add('active');
+      if (typeof window.admBootPanel === 'function') window.admBootPanel();
+    }
   } catch (e) {
-    // user_roles not accessible — not admin
+    // user_roles not accessible — treat as regular user
   }
 
   if (session.provider_token && session.user.app_metadata?.provider === 'google') {

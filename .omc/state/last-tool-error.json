@@ -1,0 +1,7 @@
+{
+  "tool_name": "Bash",
+  "tool_input_preview": "{\"command\":\"python3 -c \\\"\\nimport json, urllib.request\\n\\nurl = 'https://gwycwjhhdladlcvqlred.supabase.co/rest/v1/rpc/query_sql'\\nkey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsIn...",
+  "error": "Exit code 1\nTraceback (most recent call last):\n  File \"/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/urllib/request.py\", line 1344, in do_open\n    h.request(req.get_method(), req.selector, req.data, headers,\n  File \"/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/client.py\", line 1331, in request\n    self._send_request(method, url, body, headers, encode_chunked)\n  File \"/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/http/client.py\", l...",
+  "timestamp": "2026-05-26T23:04:33.485Z",
+  "retry_count": 1
+}

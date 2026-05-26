@@ -401,27 +401,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   letter-spacing: 0.05em;
 }
 
-/* ========== FEATURED SECTION ========== */
-.featured-section {
-  background: var(--creme2);
-  padding: 70px 0;
-  border-top: 1px solid var(--creme3);
-  border-bottom: 1px solid var(--creme3);
-}
-.featured-header {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  margin-bottom: 36px;
-}
-.section-h2 {
-  font-family: var(--font-display);
-  font-size: clamp(32px, 3.5vw, 48px);
-  color: var(--preto); line-height: 1;
-}
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
 
 /* ========== TRUST SECTION ========== */
 .trust-section {
@@ -549,7 +528,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 
 /* ========== RESPONSIVE ========== */
 @media (max-width: 1024px) {
-  .featured-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
   .products-grid { grid-template-columns: repeat(3, 1fr); }
 }
@@ -572,7 +550,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   .store-hero-stats { gap: 20px; }
   .store-hero-inner { flex-direction: column; }
   .products-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .featured-grid { grid-template-columns: repeat(2, 1fr); }
   .trust-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer-grid { grid-template-columns: 1fr; gap: 36px; padding-bottom: 40px; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
@@ -635,19 +612,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   </div>
 </div>
 
-<!-- FEATURED MAIS VENDIDOS -->
-<section class="featured-section" id="destaques">
-  <div class="container">
-    <div class="featured-header fade-up">
-      <div>
-        <div class="eyebrow" style="margin-bottom:10px;">Destaque da Semana</div>
-        <h2 class="section-h2">MAIS VENDIDOS</h2>
-      </div>
-      <a href="#produtos" class="btn btn-dark" style="font-size:12px;padding:12px 20px;">Ver Todos →</a>
-    </div>
-    <div class="featured-grid" id="featuredGrid"></div>
-  </div>
-</section>
 
 <!-- STORE MAIN -->
 <section class="store-section" id="produtos">
@@ -890,13 +854,6 @@ function renderProducts() {
   observeFadeUps();
 }
 
-// ========== RENDER FEATURED ==========
-function renderFeatured() {
-  const grid = document.getElementById('featuredGrid');
-  const featured = produtos.filter(p => p.featured).slice(0, 4);
-  grid.innerHTML = featured.map(buildCard).join('');
-  observeFadeUps();
-}
 
 // ========== SET FILTER ==========
 function setFilter(filter) {
@@ -999,7 +956,6 @@ async function loadProducts() {
     imagem: p.imagem || null
   }));
 
-  renderFeatured();
   renderProducts();
   observeFadeUps();
 }
