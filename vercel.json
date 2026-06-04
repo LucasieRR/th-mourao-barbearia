@@ -1,9 +1,17 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/subscribe.js",      "use": "@vercel/node" },
-    { "src": "api/webhook-asaas.js",  "use": "@vercel/node" },
+    { "src": "api/subscribe.js",        "use": "@vercel/node" },
+    { "src": "api/webhook-asaas.js",    "use": "@vercel/node" },
+    { "src": "api/fetch-ml-product.js", "use": "@vercel/node" },
+    { "src": "api/check-ml-prices.js",  "use": "@vercel/node" },
     { "src": "**/*", "use": "@vercel/static" }
+  ],
+  "functions": {
+    "api/check-ml-prices.js": { "maxDuration": 60 }
+  },
+  "crons": [
+    { "path": "/api/check-ml-prices", "schedule": "0 9 * * *" }
   ],
   "headers": [
     {
@@ -32,8 +40,10 @@
     }
   ],
   "routes": [
-    { "src": "/api/subscribe",      "dest": "/api/subscribe.js" },
-    { "src": "/api/webhook-asaas", "dest": "/api/webhook-asaas.js" },
+    { "src": "/api/subscribe",          "dest": "/api/subscribe.js" },
+    { "src": "/api/webhook-asaas",      "dest": "/api/webhook-asaas.js" },
+    { "src": "/api/fetch-ml-product",   "dest": "/api/fetch-ml-product.js" },
+    { "src": "/api/check-ml-prices",    "dest": "/api/check-ml-prices.js" },
     { "src": "/index",             "dest": "/", "status": 301 },
     { "src": "/index.html",        "dest": "/", "status": 301 },
     { "src": "/blog/([^/]+)", "dest": "/blog-post.html" },

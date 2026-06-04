@@ -646,6 +646,14 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
     <div class="modal-body">
       <form id="formProduct" autocomplete="off">
         <input type="hidden" id="pId" />
+        <div class="form-group full" style="margin-bottom:14px;padding:12px 14px;background:rgba(74,90,58,.08);border-radius:6px;border:1px solid rgba(74,90,58,.2)">
+          <label class="form-label" style="margin-bottom:6px">Buscar dados do Mercado Livre</label>
+          <div style="display:flex;gap:8px">
+            <input type="text" class="form-control" id="pMlUrl" placeholder="https://meli.la/… ou link do produto" style="flex:1" />
+            <button type="button" class="btn btn-ghost btn-sm" id="btnFetchML" style="white-space:nowrap">Buscar</button>
+          </div>
+          <div id="mlFetchMsg" style="font-size:12px;margin-top:5px;display:none"></div>
+        </div>
         <div class="form-grid">
           <div class="form-group full">
             <label class="form-label">Nome *</label>
@@ -1567,8 +1575,51 @@ function openProductModal(id) {
   $('#pImage').value = p?.imagem || '';
   $('#pFeatured').checked = !!p?.destaque;
   $('#pActive').checked = p ? !!p.ativo : true;
+  $('#pMlUrl').value = '';
+  $('#mlFetchMsg').style.display = 'none';
   openModal('#modalProduct');
 }
+
+$('#btnFetchML').addEventListener('click', async () => {
+  const url = $('#pMlUrl').value.trim();
+  if (!url) { toast('Cole o link do produto do Mercado Livre.', 'error'); return; }
+  const btn = $('#btnFetchML');
+  const msg = $('#mlFetchMsg');
+  btn.disabled = true;
+  btn.textContent = 'Buscando…';
+  msg.style.display = 'none';
+  try {
+    const res = await fetch('/api/fetch-ml-product', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url }),
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      msg.textContent = data.error || 'Erro ao buscar produto.';
+      msg.style.color = 'var(--vermelho, #e05)';
+      msg.style.display = 'block';
+      return;
+    }
+    if (data.nome)          $('#pName').value = data.nome;
+    if (data.preco !== null && data.preco !== undefined) $('#pPrice').value = data.preco;
+    if (data.preco_original) $('#pOriginalPrice').value = data.preco_original;
+    if (data.avaliacao)      $('#pRating').value = data.avaliacao;
+    if (data.avaliacoes)     $('#pReviews').value = data.avaliacoes;
+    if (data.imagem)         $('#pImage').value = data.imagem;
+    if (!$('#pLink').value)  $('#pLink').value = url;
+    msg.textContent = 'Dados preenchidos! Revise as informações e salve.';
+    msg.style.color = 'var(--verde, #4A5A3A)';
+    msg.style.display = 'block';
+  } catch (err) {
+    msg.textContent = 'Erro de conexão: ' + err.message;
+    msg.style.color = 'var(--vermelho, #e05)';
+    msg.style.display = 'block';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Buscar';
+  }
+});
 
 $('#btnNewProduct').addEventListener('click', () => openProductModal(null));
 

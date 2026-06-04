@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1779836206445,
+  "lastScanned": 1780502251423,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
     "languages": [
@@ -47,7 +47,7 @@
       "path": "api",
       "purpose": "API routes",
       "fileCount": 5,
-      "lastAccessed": 1779836206265,
+      "lastAccessed": 1780502251317,
       "keyFiles": [
         "package-lock.json",
         "package.json",
@@ -60,7 +60,7 @@
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 18,
-      "lastAccessed": 1779836206270,
+      "lastAccessed": 1780502251327,
       "keyFiles": [
         "design-system.css",
         "espaco-1.jpg",
@@ -73,153 +73,39 @@
       "path": "api/node_modules",
       "purpose": "Dependencies",
       "fileCount": 1,
-      "lastAccessed": 1779836206365,
+      "lastAccessed": 1780502251370,
       "keyFiles": []
     }
   },
   "hotPaths": [
     {
-      "path": "minha-conta.html",
-      "accessCount": 307,
-      "lastAccessed": 1779836778194,
-      "type": "file"
-    },
-    {
       "path": "admin.html",
-      "accessCount": 124,
-      "lastAccessed": 1779574974473,
-      "type": "file"
-    },
-    {
-      "path": "booking.html",
-      "accessCount": 108,
-      "lastAccessed": 1779555551607,
-      "type": "file"
-    },
-    {
-      "path": "store.html",
-      "accessCount": 84,
-      "lastAccessed": 1779836358298,
-      "type": "file"
-    },
-    {
-      "path": "index.html",
-      "accessCount": 48,
-      "lastAccessed": 1779546855579,
-      "type": "file"
-    },
-    {
-      "path": "CLAUDE.md",
-      "accessCount": 45,
-      "lastAccessed": 1779410513181,
-      "type": "file"
-    },
-    {
-      "path": "blog.html",
-      "accessCount": 31,
-      "lastAccessed": 1779404508715,
+      "accessCount": 9,
+      "lastAccessed": 1780503646463,
       "type": "file"
     },
     {
       "path": "vercel.json",
-      "accessCount": 23,
-      "lastAccessed": 1779575964434,
-      "type": "file"
-    },
-    {
-      "path": "supabase-migration.sql",
-      "accessCount": 22,
-      "lastAccessed": 1779555570291,
-      "type": "file"
-    },
-    {
-      "path": "blog-post.html",
-      "accessCount": 17,
-      "lastAccessed": 1779404524847,
-      "type": "file"
-    },
-    {
-      "path": "api/server.js",
-      "accessCount": 13,
-      "lastAccessed": 1779546006264,
-      "type": "file"
-    },
-    {
-      "path": ".env",
-      "accessCount": 13,
-      "lastAccessed": 1779546605376,
-      "type": "file"
-    },
-    {
-      "path": "assinaturas.html",
-      "accessCount": 7,
-      "lastAccessed": 1779545932017,
-      "type": "file"
-    },
-    {
-      "path": "api/subscribe.js",
-      "accessCount": 7,
-      "lastAccessed": 1779545937175,
-      "type": "file"
-    },
-    {
-      "path": ".env.example",
-      "accessCount": 4,
-      "lastAccessed": 1779546015743,
+      "accessCount": 5,
+      "lastAccessed": 1780503645520,
       "type": "file"
     },
     {
       "path": "api/package.json",
-      "accessCount": 3,
-      "lastAccessed": 1779318090728,
-      "type": "file"
-    },
-    {
-      "path": "package.json",
-      "accessCount": 3,
-      "lastAccessed": 1779318118865,
-      "type": "file"
-    },
-    {
-      "path": "_redirects",
-      "accessCount": 2,
-      "lastAccessed": 1779292534958,
-      "type": "file"
-    },
-    {
-      "path": "assets/design-system.css",
-      "accessCount": 2,
-      "lastAccessed": 1779292941631,
-      "type": "file"
-    },
-    {
-      "path": ".vercelignore",
-      "accessCount": 2,
-      "lastAccessed": 1779293484500,
-      "type": "file"
-    },
-    {
-      "path": "api/webhook-asaas.js",
-      "accessCount": 2,
-      "lastAccessed": 1779545937748,
-      "type": "file"
-    },
-    {
-      "path": "seed-professionals.sql",
       "accessCount": 1,
-      "lastAccessed": 1779228975186,
+      "lastAccessed": 1780503444787,
       "type": "file"
     },
     {
-      "path": "politica-de-privacidade.html",
+      "path": "api/fetch-ml-product.js",
       "accessCount": 1,
-      "lastAccessed": 1779546578338,
+      "lastAccessed": 1780503560044,
       "type": "file"
     },
     {
-      "path": "termos-de-uso.html",
+      "path": "api/check-ml-prices.js",
       "accessCount": 1,
-      "lastAccessed": 1779546757788,
+      "lastAccessed": 1780503583093,
       "type": "file"
     }
   ],
