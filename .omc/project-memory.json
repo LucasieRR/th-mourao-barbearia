@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1780502251423,
+  "lastScanned": 1786579756590,
   "projectRoot": "/Users/lucasreis/Desktop/TH - LP",
   "techStack": {
     "languages": [
@@ -46,21 +46,21 @@
     "api": {
       "path": "api",
       "purpose": "API routes",
-      "fileCount": 5,
-      "lastAccessed": 1780502251317,
+      "fileCount": 7,
+      "lastAccessed": 1786579756148,
       "keyFiles": [
+        "check-ml-prices.js",
+        "fetch-ml-product.js",
         "package-lock.json",
         "package.json",
-        "server.js",
-        "subscribe.js",
-        "webhook-asaas.js"
+        "server.js"
       ]
     },
     "assets": {
       "path": "assets",
       "purpose": "Static assets",
       "fileCount": 18,
-      "lastAccessed": 1780502251327,
+      "lastAccessed": 1786579756151,
       "keyFiles": [
         "design-system.css",
         "espaco-1.jpg",
@@ -73,7 +73,7 @@
       "path": "api/node_modules",
       "purpose": "Dependencies",
       "fileCount": 1,
-      "lastAccessed": 1780502251370,
+      "lastAccessed": 1786579756368,
       "keyFiles": []
     }
   },
