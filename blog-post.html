@@ -21,7 +21,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title id="page-title">Post | TH Mourão Barbearia & Spa</title>
   <meta name="description" id="page-desc" content="Blog da TH Mourão Barbearia & Spa — Baviera Office, Blumenau." />
-  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <!--SSR:HEAD-->
+  <link rel="icon" type="image/png" href="/assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet" />
@@ -309,7 +310,7 @@
 <nav class="navbar" id="navbar">
   <div class="container nav-inner">
     <a href="/" class="nav-brand">
-      <img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" />
+      <img src="/assets/logo.png" alt="TH Mourão Barbearia & Spa" />
       <div class="nav-brand-text">
         <div class="nav-brand-name">TH Mourão</div>
         <div class="nav-brand-sub">Barbearia & Spa</div>
@@ -322,7 +323,7 @@
       <a href="/blog" class="active">Blog</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-outline" onclick="localStorage.setItem('th_nav_ts', Date.now()); window.location.href='/minha-conta';" style="display:none;cursor:pointer">Minha Conta</a>
+      <a class="btn btn-outline" href="/minha-conta" onclick="localStorage.setItem('th_nav_ts', Date.now());" style="display:none;cursor:pointer">Minha Conta</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -370,7 +371,7 @@
   <div class="container" style="max-width: 820px;">
 
     <!-- Categoria + título -->
-    <div class="fade-up" style="margin-bottom: 32px;">
+    <div style="margin-bottom: 32px;">
       <span id="post-category" class="cat-badge" style="display:none; margin-bottom:16px;"></span>
       <h1 id="post-title" style="font-family:var(--font-serif);font-size:clamp(1.9rem,4vw,3rem);font-weight:900;line-height:1.1;color:var(--preto);margin-top:12px;"></h1>
       <div class="accent-bar" style="margin-bottom:20px;"></div>
@@ -380,12 +381,12 @@
     </div>
 
     <!-- Imagem destacada -->
-    <div id="featured-img-wrap" class="fade-up d100" style="display:none; margin-bottom: 48px;">
+    <div id="featured-img-wrap" style="display:none; margin-bottom: 48px;">
       <img id="featured-img" src="" alt="" style="width:100%;height:340px;object-fit:cover;border-radius:1.5rem;box-shadow:0 30px 60px -15px rgba(0,0,0,0.14);" />
     </div>
 
     <!-- Corpo -->
-    <div id="post-content" class="fade-up d200"></div>
+    <div id="post-content"></div>
 
     <!-- Categorias/tags -->
     <div id="post-tags" style="display:none; margin-top:56px; padding-top:28px; border-top:1px solid var(--creme3);">
@@ -440,7 +441,7 @@
     <div class="footer-grid">
       <div class="footer-col">
         <div class="footer-brand-row">
-          <img src="assets/logo.png" alt="TH Mourão" />
+          <img src="/assets/logo.png" alt="TH Mourão" />
           <div>
             <div class="footer-brand-name">TH Mourão</div>
             <div class="footer-brand-sub">Barbearia & Spa</div>
@@ -473,8 +474,8 @@
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Horários</div>
-        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 9h00–20h00</div>
-        <div class="footer-hours-row"><span>Sábado</span> · 9h00–18h00</div>
+        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 8h00–20h00</div>
+        <div class="footer-hours-row"><span>Sábado</span> · 8h00–15h00</div>
         <div class="footer-hours-row" style="margin-bottom:22px;"><span>Domingo</span> · Fechado</div>
         <a class="btn btn-verde" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Reserve Agora →</a>
       </div>
@@ -536,9 +537,33 @@
     document.getElementById('error-state').style.display = 'block';
   }
 
+  function afterRender() {
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.fade-up').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+      });
+    });
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fade-up:not(.visible)').forEach(el => io.observe(el));
+
+    document.querySelectorAll('#post-content a[href^="http"]').forEach(a => {
+      if (!a.href.includes(window.location.hostname)) {
+        a.setAttribute('target', '_blank');
+        a.setAttribute('rel', 'noopener noreferrer');
+      }
+    });
+  }
+
   async function init() {
+    // Em produção o post já vem renderizado por api/blog-post.js
+    if (document.getElementById('post-article').dataset.ssr) { afterRender(); return; }
+
     const params = new URLSearchParams(window.location.search);
-    const slug = params.get('slug');
+    const pathSlug = window.location.pathname.match(/^\/blog\/([^/]+)/);
+    const slug = params.get('slug') || (pathSlug && decodeURIComponent(pathSlug[1]));
 
     if (!slug) { showError(); return; }
 
@@ -584,24 +609,7 @@
       document.getElementById('post-skeleton').style.display = 'none';
       document.getElementById('post-article').style.display = 'block';
       document.getElementById('post-cta').style.display = 'block';
-
-      requestAnimationFrame(() => {
-        document.querySelectorAll('.fade-up').forEach(el => {
-          if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
-        });
-      });
-
-      const io = new IntersectionObserver((entries) => {
-        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.fade-up:not(.visible)').forEach(el => io.observe(el));
-
-      document.querySelectorAll('#post-content a[href^="http"]').forEach(a => {
-        if (!a.href.includes(window.location.hostname)) {
-          a.setAttribute('target', '_blank');
-          a.setAttribute('rel', 'noopener noreferrer');
-        }
-      });
+      afterRender();
 
     } catch (err) {
       console.error(err);

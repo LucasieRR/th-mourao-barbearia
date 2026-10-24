@@ -444,3 +444,18 @@ app.post('/api/webhook-asaas', (req, res) => webhookHandler(req, res));
    - Se o log de início aparece mas o de fim nunca aparece, não é RLS (que retorna null/error imediatamente). É a query pendurada no refresh queue.
    - **Ordem de diagnóstico:** (1) chegou em `onLoggedIn`? (2) `loadClientProfile...` apareceu? (3) `done` apareceu? Se travou entre 2 e 3, é refresh queue — converter para fetch direto.
    - Mais rápido que tentar acesso direto ao banco quando não há `psql` disponível.
+
+---
+
+## SEO — Blog renderizado no servidor
+
+- `/blog` → `api/blog.js` e `/blog/:slug` → `api/blog-post.js` usam `blog.html` / `blog-post.html` como **template** (via `includeFiles` no `vercel.json`) e injetam posts, title, description, canonical e JSON-LD `BlogPosting`. O JS das páginas só busca no WordPress se o SSR falhar (ou localmente no Live Server).
+- Ao editar `blog.html`/`blog-post.html`, preservar os marcadores `<!--SSR:HEAD-->`, `<!--SSR:GRID-->…<!--/SSR:GRID-->` e os ids usados em `replaceOnce()` (`api/_lib/wp.js`) — se um marcador sumir, a função cai para o template vazio.
+- `blog-post.html` é servido em `/blog/:slug` → caminhos de assets devem ser absolutos (`/assets/...`).
+- `/sitemap.xml` → `api/sitemap.js` (páginas indexáveis + todos os posts). Nova página indexável: adicionar em `STATIC_PAGES`.
+- Toda página indexável precisa de `<link rel="canonical" href="https://www.thmourao.com.br/...">` (sempre com `www`).
+
+## vercel.json — `headers` é ignorado quando há `routes`
+
+- Com `routes` presente, a chave `headers` não tem efeito (confirmado em produção: tudo saía com `max-age=0`). Cache-Control fica em rotas com `"continue": true` no topo de `routes`.
+- Assets em `/assets/` têm cache de 1 ano `immutable`: ao trocar uma imagem, usar **nome de arquivo novo**.

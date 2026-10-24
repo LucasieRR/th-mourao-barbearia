@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QMT52J8BXW"></script>
+<!-- Google tag (gtag.js) — carregado após o load para não competir com o LCP -->
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-QMT52J8BXW');
+  window.addEventListener('load', function() {
+    var t = document.createElement('script'); t.async = true;
+    t.src = 'https://www.googletagmanager.com/gtag/js?id=G-QMT52J8BXW';
+    document.head.appendChild(t);
+  });
 </script>
 <!-- Microsoft Clarity (deferred to idle) -->
 <script type="text/javascript">
@@ -21,11 +25,59 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>TH Mourão Barbearia & Spa · A Primeira Barbearia nas Alturas · Blumenau</title>
 <meta name="description" content="TH Mourão Barbearia & Spa — A primeira barbearia nas alturas. Baviera Office, Sala 1001 · Blumenau, SC. Cortes, barba, spa e experiência premium." />
+<link rel="canonical" href="https://www.thmourao.com.br/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="TH Mourão Barbearia & Spa" />
+<meta property="og:title" content="TH Mourão Barbearia & Spa · Barbearia em Blumenau" />
+<meta property="og:description" content="A primeira barbearia nas alturas. Baviera Office, Sala 1001 · Blumenau, SC. Cortes, barba, spa e experiência premium." />
+<meta property="og:url" content="https://www.thmourao.com.br/" />
+<meta property="og:image" content="https://www.thmourao.com.br/assets/foto-vista.jpg" />
+<meta property="og:locale" content="pt_BR" />
 <link rel="icon" type="image/png" href="assets/logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="image" href="assets/foto-vista.jpg" fetchpriority="high" />
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="assets/foto-vista.webp" type="image/webp" fetchpriority="high" />
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+<noscript><link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" /></noscript>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BarberShop",
+  "@id": "https://www.thmourao.com.br/#barbershop",
+  "name": "TH Mourão Barbearia & Spa",
+  "url": "https://www.thmourao.com.br/",
+  "telephone": "+55 47 99678-6835",
+  "priceRange": "R$ 70 – R$ 183",
+  "image": "https://www.thmourao.com.br/assets/foto-vista.jpg",
+  "logo": "https://www.thmourao.com.br/assets/logo.png",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Rua Nereu Ramos, 165, Baviera Office, Sala 1001",
+    "addressLocality": "Blumenau",
+    "addressRegion": "SC",
+    "postalCode": "89010-401",
+    "addressCountry": "BR"
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "08:00",
+      "closes": "20:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": "Saturday",
+      "opens": "08:00",
+      "closes": "15:00"
+    }
+  ],
+  "sameAs": [
+    "https://www.instagram.com/thmouraobarbearia/"
+  ]
+}
+</script>
 <style>
 :root {
   --verde: #4A5A3A;
@@ -40,7 +92,7 @@
   --creme3: #E4DDD3;
   --bege: #C8BBA4;
   --branco: #FDFBF7;
-  --cinza: #7A7A74;
+  --cinza: #5F5F59;
   --cinza-light: #AEAEA8;
   --font-serif: 'Playfair Display', Georgia, serif;
   --font-display: 'Bebas Neue', sans-serif;
@@ -132,6 +184,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex;
   align-items: center;
   background: url('assets/foto-vista.jpg') center 35% / cover no-repeat;
+  background-image: image-set(url('assets/foto-vista.webp') type('image/webp'), url('assets/foto-vista.jpg') type('image/jpeg'));
   overflow: hidden;
 }
 .hero::before {
@@ -200,6 +253,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 .hero-tagline {
   font-family: var(--font-serif);
   font-style: italic;
+  font-weight: 400;
   font-size: 16px;
   color: rgba(245,240,232,0.75);
   letter-spacing: 0.02em;
@@ -293,6 +347,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   position: relative;
   height: 460px;
   background: url('assets/foto-hero.jpg') center 55% / cover no-repeat;
+  background-image: image-set(url('assets/foto-hero.webp') type('image/webp'), url('assets/foto-hero.jpg') type('image/jpeg'));
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -355,6 +410,10 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   background: #000;
   cursor: pointer;
 }
+.gi picture { display: block; width: 100%; height: 100%; }
+.servicos-links { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 24px; }
+.servicos-links a { font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: var(--verde); border-bottom: 1px solid rgba(74,90,58,0.35); padding-bottom: 3px; }
+.servicos-links a:hover { border-bottom-color: var(--verde); }
 .gi img {
   width: 100%; height: 100%; object-fit: cover;
   transition: transform 0.7s cubic-bezier(0.32,0.72,0,1);
@@ -601,7 +660,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-size: 11px;
   letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--cinza-light);
+  color: var(--cinza);
 }
 .barber-name {
   font-family: var(--font-serif);
@@ -758,7 +817,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   display: flex; justify-content: space-between; align-items: center;
   gap: 24px;
   font-size: 12px;
-  color: rgba(245,240,232,0.4);
+  color: rgba(245,240,232,0.62);
   letter-spacing: 0.04em;
 }
 
@@ -850,7 +909,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 <nav class="navbar" id="navbar">
   <div class="container nav-inner">
     <a href="#hero" class="nav-brand">
-      <img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" />
+      <picture><source srcset="assets/logo-96.webp" type="image/webp" /><img src="assets/logo.png" alt="TH Mourão Barbearia & Spa" width="40" height="40" /></picture>
       <div class="nav-brand-text">
         <div class="nav-brand-name">TH Mourão</div>
         <div class="nav-brand-sub">Barbearia & Spa</div>
@@ -863,7 +922,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <a href="/blog">Blog</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-outline" onclick="localStorage.setItem('th_nav_ts', Date.now()); window.location.href='/minha-conta';" style="display:none;cursor:pointer">Minha Conta</a>
+      <a class="btn btn-outline" href="/minha-conta" onclick="localStorage.setItem('th_nav_ts', Date.now());" style="display:none;cursor:pointer">Minha Conta</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -871,12 +930,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   </div>
 </nav>
 
+<main>
 <!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-inner">
-    <div class="hero-right fade-up">
+    <div class="hero-right">
       <div class="hero-display">ONDE TRADIÇÃO<br />ENCONTRA ESTILO<br />MODERNO</div>
-      <div class="hero-tagline">Thiago Mourão · Barbearia & Spa · Desde 2020</div>
+      <h1 class="hero-tagline">Barbearia em Blumenau — TH Mourão Barbearia & Spa</h1>
       <div class="hero-actions" style="margin-top:36px;justify-content:flex-end;">
         <a class="btn btn-verde" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Agendar Horário →</a>
       </div>
@@ -915,7 +975,7 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
         <div class="info-icon">📞</div>
         <div>
           <div class="info-label">Contato</div>
-          <div class="info-text"><a href="https://wa.me/5547996786835?text=Ol%C3%A1!%20%F0%9F%91%8B%20Vim%20pelo%20site%20da%20TH%20Mour%C3%A3o%20e%20tenho%20interesse%20em%20agendar%20um%20hor%C3%A1rio.%F0%9F%92%88" target="_blank" rel="noopener">(47) 99678-6835</a><br/>Seg-Sex: 9h–20h · Sáb: 9h–18h</div>
+          <div class="info-text"><a href="https://wa.me/5547996786835?text=Ol%C3%A1!%20%F0%9F%91%8B%20Vim%20pelo%20site%20da%20TH%20Mour%C3%A3o%20e%20tenho%20interesse%20em%20agendar%20um%20hor%C3%A1rio.%F0%9F%92%88" target="_blank" rel="noopener">(47) 99678-6835</a><br/>Seg-Sex: 8h–20h · Sáb: 8h–15h</div>
         </div>
       </div>
       <div class="info-card">
@@ -954,11 +1014,11 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       <h2 class="galeria-h2">UM AMBIENTE FEITO PARA VOCÊ</h2>
     </div>
     <div class="galeria-grid fade-up">
-      <div class="gi gi-1"><img src="assets/foto-vista.jpg" alt="Vista privilegiada de Blumenau" loading="eager" fetchpriority="high" width="800" height="600" /><div class="gi-cap"><span>Vista Privilegiada</span></div></div>
-      <div class="gi gi-2"><img src="assets/foto-lounge.jpg" alt="Lounge premium" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>Lounge Premium</span></div></div>
-      <div class="gi gi-3"><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
-      <div class="gi gi-4"><img src="assets/espaco-1.jpg" alt="Espaço TH Mourão" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>O Espaço</span></div></div>
-      <div class="gi gi-5"><img src="assets/espaco-3.jpg" alt="Estrutura TH Mourão" loading="lazy" width="800" height="600" /><div class="gi-cap"><span>A Estrutura</span></div></div>
+      <div class="gi gi-1"><picture><source srcset="assets/foto-vista.webp" type="image/webp" /><img src="assets/foto-vista.jpg" alt="Vista privilegiada de Blumenau" loading="lazy" decoding="async" width="800" height="600" /></picture><div class="gi-cap"><span>Vista Privilegiada</span></div></div>
+      <div class="gi gi-2"><picture><source srcset="assets/foto-lounge.webp" type="image/webp" /><img src="assets/foto-lounge.jpg" alt="Lounge premium" loading="lazy" decoding="async" width="800" height="600" /></picture><div class="gi-cap"><span>Lounge Premium</span></div></div>
+      <div class="gi gi-3"><picture><source srcset="assets/foto-bar.webp" type="image/webp" /><img src="assets/foto-bar.jpg" alt="Bar exclusivo" loading="lazy" decoding="async" width="800" height="600" /></picture><div class="gi-cap"><span>Bar Exclusivo</span></div></div>
+      <div class="gi gi-4"><picture><source srcset="assets/espaco-1.webp" type="image/webp" /><img src="assets/espaco-1.jpg" alt="Espaço TH Mourão" loading="lazy" decoding="async" width="800" height="600" /></picture><div class="gi-cap"><span>O Espaço</span></div></div>
+      <div class="gi gi-5"><picture><source srcset="assets/espaco-3.webp" type="image/webp" /><img src="assets/espaco-3.jpg" alt="Estrutura TH Mourão" loading="lazy" decoding="async" width="800" height="600" /></picture><div class="gi-cap"><span>A Estrutura</span></div></div>
     </div>
   </div>
 </section>
@@ -999,6 +1059,12 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
           <tr><td>Cabelo + barba + sobrancelha + depilação</td><td class="price">R$ 183</td></tr>
         </tbody>
       </table>
+      <nav class="servicos-links" aria-label="Detalhes dos serviços">
+        <a href="/corte-de-cabelo-masculino-blumenau">Corte de cabelo</a>
+        <a href="/barba-blumenau">Barba</a>
+        <a href="/limpeza-de-pele-masculina-blumenau">Limpeza de pele</a>
+        <a href="/sobrancelha-masculina-blumenau">Sobrancelha</a>
+      </nav>
     </div>
   </div>
 </section>
@@ -1073,13 +1139,15 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-col">
         <div class="footer-brand-row">
-          <img src="assets/logo.png" alt="TH Mourão" />
+          <picture><source srcset="assets/logo-96.webp" type="image/webp" /><img src="assets/logo.png" alt="TH Mourão" width="48" height="48" loading="lazy" /></picture>
           <div>
             <div class="footer-brand-name">TH Mourão</div>
             <div class="footer-brand-sub">Barbearia & Spa</div>
@@ -1117,8 +1185,8 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Horários</div>
-        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 9h00–20h00</div>
-        <div class="footer-hours-row"><span>Sábado</span> · 9h00–18h00</div>
+        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 8h00–20h00</div>
+        <div class="footer-hours-row"><span>Sábado</span> · 8h00–15h00</div>
         <div class="footer-hours-row" style="margin-bottom:22px;"><span>Domingo</span> · Fechado</div>
         <a class="btn btn-verde" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Reserve Agora →</a>
       </div>

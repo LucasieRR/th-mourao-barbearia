@@ -1,60 +1,189 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/subscribe.js",        "use": "@vercel/node" },
-    { "src": "api/webhook-asaas.js",    "use": "@vercel/node" },
-    { "src": "api/fetch-ml-product.js", "use": "@vercel/node" },
-    { "src": "api/check-ml-prices.js",  "use": "@vercel/node" },
-    { "src": "**/*", "use": "@vercel/static" }
+    {
+      "src": "api/subscribe.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/webhook-asaas.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/fetch-ml-product.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/check-ml-prices.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "api/blog.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "blog.html"
+        ]
+      }
+    },
+    {
+      "src": "api/blog-post.js",
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": [
+          "blog-post.html"
+        ]
+      }
+    },
+    {
+      "src": "api/sitemap.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "**/*",
+      "use": "@vercel/static"
+    }
   ],
   "functions": {
-    "api/check-ml-prices.js": { "maxDuration": 60 }
+    "api/check-ml-prices.js": {
+      "maxDuration": 60
+    }
   },
   "crons": [
-    { "path": "/api/check-ml-prices", "schedule": "0 9 * * *" }
-  ],
-  "headers": [
     {
-      "source": "/:path*.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/(admin|booking|minha-conta|store|blog|assinaturas|politica-de-privacidade|termos-de-uso)",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate" }
-      ]
-    },
-    {
-      "source": "/assets/:path*",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
-    },
-    {
-      "source": "/:file.(jpg|jpeg|png|webp|avif|svg|ico|woff2|woff|ttf|css|js)",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
-      ]
+      "path": "/api/check-ml-prices",
+      "schedule": "0 9 * * *"
     }
   ],
   "routes": [
-    { "src": "/api/subscribe",          "dest": "/api/subscribe.js" },
-    { "src": "/api/webhook-asaas",      "dest": "/api/webhook-asaas.js" },
-    { "src": "/api/fetch-ml-product",   "dest": "/api/fetch-ml-product.js" },
-    { "src": "/api/check-ml-prices",    "dest": "/api/check-ml-prices.js" },
-    { "src": "/index",             "dest": "/", "status": 301 },
-    { "src": "/index.html",        "dest": "/", "status": 301 },
-    { "src": "/blog/([^/]+)", "dest": "/blog-post.html" },
-    { "src": "/blog",         "dest": "/blog.html" },
-    { "src": "/store",        "dest": "/store.html" },
-    { "src": "/assinaturas",  "dest": "/assinaturas.html" },
-    { "src": "/minha-conta",  "dest": "/minha-conta.html" },
-    { "src": "/booking",      "dest": "/booking.html" },
-    { "src": "/admin",                      "dest": "/admin.html" },
-    { "src": "/politica-de-privacidade",   "dest": "/politica-de-privacidade.html" },
-    { "src": "/termos-de-uso",             "dest": "/termos-de-uso.html" },
-    { "src": "/(.*)",                      "dest": "/$1" }
+    {
+      "src": "/assets/(.*)\\.(jpg|jpeg|png|webp|avif|svg|ico|woff2|woff|ttf)",
+      "headers": {
+        "Cache-Control": "public, max-age=31536000, immutable"
+      },
+      "continue": true
+    },
+    {
+      "src": "/assets/(.*)\\.(css|js)",
+      "headers": {
+        "Cache-Control": "public, max-age=86400, stale-while-revalidate=604800"
+      },
+      "continue": true
+    },
+    {
+      "src": "/[^/]+\\.(jpg|jpeg|png|webp|avif|svg|ico)",
+      "headers": {
+        "Cache-Control": "public, max-age=2592000"
+      },
+      "continue": true
+    },
+    {
+      "src": "/api/subscribe",
+      "dest": "/api/subscribe.js"
+    },
+    {
+      "src": "/api/webhook-asaas",
+      "dest": "/api/webhook-asaas.js"
+    },
+    {
+      "src": "/api/fetch-ml-product",
+      "dest": "/api/fetch-ml-product.js"
+    },
+    {
+      "src": "/api/check-ml-prices",
+      "dest": "/api/check-ml-prices.js"
+    },
+    {
+      "src": "/sitemap.xml",
+      "dest": "/api/sitemap.js"
+    },
+    {
+      "src": "/index",
+      "status": 301,
+      "headers": {
+        "Location": "/"
+      }
+    },
+    {
+      "src": "/index.html",
+      "status": 301,
+      "headers": {
+        "Location": "/"
+      }
+    },
+    {
+      "src": "/blog\\.html",
+      "status": 301,
+      "headers": {
+        "Location": "/blog"
+      }
+    },
+    {
+      "src": "/store\\.html",
+      "status": 301,
+      "headers": {
+        "Location": "/store"
+      }
+    },
+    {
+      "src": "/blog-post(?:\\.html)?",
+      "dest": "/api/blog-post.js"
+    },
+    {
+      "src": "/blog/([^/]+)/?",
+      "dest": "/api/blog-post.js"
+    },
+    {
+      "src": "/blog/?",
+      "dest": "/api/blog.js"
+    },
+    {
+      "src": "/store",
+      "dest": "/store.html"
+    },
+    {
+      "src": "/corte-de-cabelo-masculino-blumenau",
+      "dest": "/corte-de-cabelo-masculino-blumenau.html"
+    },
+    {
+      "src": "/barba-blumenau",
+      "dest": "/barba-blumenau.html"
+    },
+    {
+      "src": "/limpeza-de-pele-masculina-blumenau",
+      "dest": "/limpeza-de-pele-masculina-blumenau.html"
+    },
+    {
+      "src": "/sobrancelha-masculina-blumenau",
+      "dest": "/sobrancelha-masculina-blumenau.html"
+    },
+    {
+      "src": "/assinaturas",
+      "dest": "/assinaturas.html"
+    },
+    {
+      "src": "/minha-conta",
+      "dest": "/minha-conta.html"
+    },
+    {
+      "src": "/booking",
+      "dest": "/booking.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "/admin.html"
+    },
+    {
+      "src": "/politica-de-privacidade",
+      "dest": "/politica-de-privacidade.html"
+    },
+    {
+      "src": "/termos-de-uso",
+      "dest": "/termos-de-uso.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/$1"
+    }
   ]
 }

@@ -21,6 +21,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog | TH Mourão Barbearia & Spa</title>
   <meta name="description" content="Dicas de barbearia, cuidados masculinos, tendências de grooming e estilo para o homem moderno. Blog da TH Mourão — Baviera Office, Blumenau." />
+  <link rel="canonical" href="https://www.thmourao.com.br/blog" />
+  <!--SSR:HEAD-->
   <link rel="icon" type="image/png" href="assets/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -171,7 +173,7 @@
     }
     .pagination-btn:hover { border-color: var(--verde); color: var(--verde); }
     .pagination-btn.active { background: var(--verde); color: #fff; border-color: var(--verde); }
-    .pagination-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .pagination-btn:disabled, .pagination-btn[aria-disabled="true"] { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
 
     /* ── Eyebrow ── */
     .eyebrow {
@@ -336,7 +338,7 @@
       <a href="/blog" class="active">Blog</a>
     </div>
     <div class="nav-cta">
-      <a class="btn btn-outline" onclick="localStorage.setItem('th_nav_ts', Date.now()); window.location.href='/minha-conta';" style="display:none;cursor:pointer">Minha Conta</a>
+      <a class="btn btn-outline" href="/minha-conta" onclick="localStorage.setItem('th_nav_ts', Date.now());" style="display:none;cursor:pointer">Minha Conta</a>
       <button class="hamburger" id="hamburger" aria-label="Menu">
         <span></span><span></span><span></span>
       </button>
@@ -351,15 +353,15 @@
 
       <!-- Texto -->
       <div>
-        <div class="fade-up eyebrow" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;color:var(--verde);">
+        <div class="eyebrow" style="display:flex;align-items:center;gap:12px;margin-bottom:20px;color:var(--verde);">
           <span style="width:32px;height:1px;background:var(--verde);display:inline-block;"></span>
           Conteúdo & Estilo
         </div>
-        <h1 class="fade-up d100" style="font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:900;line-height:1;color:var(--preto);margin-bottom:8px;">
+        <h1 style="font-family:var(--font-serif);font-size:clamp(2.4rem,5vw,4rem);font-weight:900;line-height:1;color:var(--preto);margin-bottom:8px;">
           Blog TH Mourão
         </h1>
-        <div class="fade-up d100 accent-bar"></div>
-        <p class="fade-up d200" style="font-size:1.05rem;color:var(--cinza);line-height:1.75;max-width:46ch;margin-bottom:32px;">
+        <div class="accent-bar"></div>
+        <p style="font-size:1.05rem;color:var(--cinza);line-height:1.75;max-width:46ch;margin-bottom:32px;">
           Dicas de barbearia, cuidados com a pele, tendências de grooming e tudo sobre o universo do homem moderno.
         </p>
       </div>
@@ -380,6 +382,7 @@
 
     <!-- Grid -->
     <div id="posts-grid">
+      <!--SSR:GRID-->
       <!-- Skeletons iniciais -->
       <div class="post-card">
         <div class="skeleton" style="height:208px;width:100%;"></div>
@@ -432,6 +435,7 @@
           <div class="skeleton" style="height:14px;width:83%;border-radius:8px;"></div>
         </div>
       </div>
+      <!--/SSR:GRID-->
     </div>
 
     <!-- Estado de erro -->
@@ -501,8 +505,8 @@
       </div>
       <div class="footer-col">
         <div class="footer-col-title">Horários</div>
-        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 9h00–20h00</div>
-        <div class="footer-hours-row"><span>Sábado</span> · 9h00–18h00</div>
+        <div class="footer-hours-row"><span>Segunda a Sexta</span> · 8h00–20h00</div>
+        <div class="footer-hours-row"><span>Sábado</span> · 8h00–15h00</div>
         <div class="footer-hours-row" style="margin-bottom:22px;"><span>Domingo</span> · Fechado</div>
         <a class="btn btn-verde" href="https://cashbarber.com.br/THMouraobarbeariaespa" target="_blank" rel="noopener">Reserve Agora →</a>
       </div>
@@ -568,7 +572,7 @@
       featuredImage: post._embedded?.['wp:featuredmedia']?.[0]?.source_url || null,
       imageAlt: post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || '',
       categories: post._embedded?.['wp:term']?.[0]?.map(c => c.name) || [],
-      link: `blog-post.html?slug=${post.slug}`,
+      link: `/blog/${encodeURIComponent(post.slug)}`,
     };
   }
 
@@ -620,25 +624,24 @@
     `;
   }
 
-  // ── Paginação ──
+  // ── Paginação ── (links reais para o Google rastrear; mesma marcação de api/blog.js)
+  function pageHref(p) { return p === 1 ? '/blog' : `/blog?page=${p}`; }
   function renderPagination(current, total) {
     const container = document.getElementById('pagination');
     if (total <= 1) { container.innerHTML = ''; return; }
 
-    let html = '';
-    html += `<button class="pagination-btn" onclick="loadPage(${current - 1})" ${current === 1 ? 'disabled' : ''}>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 3L6 8l4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>`;
+    const arrow = (d) => `<svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="${d}" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const navLink = (p, enabled, label, d) => enabled
+      ? `<a class="pagination-btn" href="${pageHref(p)}" aria-label="${label}">${arrow(d)}</a>`
+      : `<span class="pagination-btn" aria-disabled="true">${arrow(d)}</span>`;
 
-    const start = Math.max(1, current - 2);
+    let html = navLink(current - 1, current > 1, 'Página anterior', 'M10 3L6 8l4 5');
+    const start = Math.max(1, Math.min(current - 2, total - 4));
     const end = Math.min(total, start + 4);
     for (let p = start; p <= end; p++) {
-      html += `<button class="pagination-btn ${p === current ? 'active' : ''}" onclick="loadPage(${p})">${p}</button>`;
+      html += `<a class="pagination-btn ${p === current ? 'active' : ''}" href="${pageHref(p)}"${p === current ? ' aria-current="page"' : ''}>${p}</a>`;
     }
-
-    html += `<button class="pagination-btn" onclick="loadPage(${current + 1})" ${current === total ? 'disabled' : ''}>
-      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 3l4 5-4 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </button>`;
+    html += navLink(current + 1, current < total, 'Próxima página', 'M6 3l4 5-4 5');
 
     container.innerHTML = html;
   }
@@ -735,8 +738,19 @@
     }
   })();
 
-  // Init
-  loadPage(1);
+  // Init — em produção a primeira renderização vem de api/blog.js;
+  // o fetch no cliente é só fallback (ex.: Live Server local ou WordPress fora do ar no SSR)
+  if (window.__BLOG_SSR) {
+    currentPage = window.__BLOG_SSR.page;
+    totalPages = window.__BLOG_SSR.totalPages;
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.fade-up').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+      });
+    });
+  } else {
+    loadPage(Math.max(1, parseInt(new URLSearchParams(location.search).get('page'), 10) || 1));
+  }
   setupScrollReveal();
 </script>
 </body>

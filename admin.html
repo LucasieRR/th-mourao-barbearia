@@ -317,7 +317,7 @@ table.tbl { width: 100%; border-collapse: collapse; font-size: 13px; }
         <span class="nav-brand-name">TH Mourão · Admin</span>
       </a>
       <div style="display:flex;align-items:center;gap:10px">
-        <a onclick="localStorage.setItem('th_nav_ts', Date.now()); window.location.href='/minha-conta';" class="nav-logout" style="cursor:pointer">Minha Conta</a>
+        <a href="/minha-conta" onclick="localStorage.setItem('th_nav_ts', Date.now());" class="nav-logout" style="cursor:pointer">Minha Conta</a>
         <button class="nav-logout" id="btnLogout">Sair</button>
       </div>
     </div>
