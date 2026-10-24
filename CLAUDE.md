@@ -459,3 +459,4 @@ app.post('/api/webhook-asaas', (req, res) => webhookHandler(req, res));
 
 - Com `routes` presente, a chave `headers` não tem efeito (confirmado em produção: tudo saía com `max-age=0`). Cache-Control fica em rotas com `"continue": true` no topo de `routes`.
 - Assets em `/assets/` têm cache de 1 ano `immutable`: ao trocar uma imagem, usar **nome de arquivo novo**.
+- **`functions` não pode coexistir com `builds`** — o deploy falha antes do build, sem log ("build duration unavailable"). Configs como `maxDuration` vão em `builds[].config`. Após cada push, conferir `npx vercel ls th-mourao-barbearia --scope kings-projectz`: um deploy com status `Error` deixa produção na versão anterior sem aviso.
