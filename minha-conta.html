@@ -2985,5 +2985,19 @@ async function saveProfile() {
   }
 }
 </script>
+<!-- GA4: cliques em Agendar (Cash Barber) e WhatsApp — importados como conversão no Google Ads -->
+<script>
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href]');
+    if (!a || typeof gtag !== 'function') return;
+    var href = a.href || '';
+
+    if (href.indexOf('cashbarber.com.br') !== -1) {
+      gtag('event', 'click_agendar', { link_url: href });
+    } else if (href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1) {
+      gtag('event', 'click_whatsapp', { link_url: href });
+    }
+  });
+</script>
 </body>
 </html>
