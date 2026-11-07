@@ -16,11 +16,12 @@
 
 ### Limitações de execução SQL remoto
 
-- **`query_sql` RPC** existe no projeto mas só aceita SELECT — DDL (`CREATE FUNCTION`, `CREATE TRIGGER`) falha com "INTO used with a command that cannot return data"
+- **`exec_sql` RPC (método preferido para DDL/DML):** `POST /rest/v1/rpc/exec_sql` com body `{"query": "<sql>"}` e service role key → executa qualquer SQL (CREATE TABLE, policies, triggers), retorna 204. Usado para criar as tabelas GA4.
+- **`query_sql` RPC** só aceita SELECT, body `{"q": "..."}`, e a query deve retornar JSON — envolver em `select json_agg(t) from (...) t`
 - **Management API** (`api.supabase.com/v1/projects/.../database/query`) requer token pessoal OAuth — service role key e sb_secret não funcionam (JWT could not be decoded)
 - **`supabase db query --linked`** requer `supabase link` previamente executado — sem Docker rodando, `supabase status` falha mas o link remoto ainda funciona se feito antes
 - **Para DML via JS** (INSERT/UPDATE sem DDL): usar `@supabase/supabase-js` com service role key em `/tmp/sb-test` — funciona e é o método mais rápido para backfills e queries admin
-- **Para DDL (triggers, functions, policies):** única opção confiável é o **Dashboard → SQL Editor** — Lucas precisa colar e executar manualmente
+- **Para DDL (triggers, functions, policies):** usar `exec_sql` RPC (acima); Dashboard → SQL Editor só como fallback
 
 ### Chaves do projeto (`.env`)
 - `SUPABASE_ANON_KEY` — JWT anon (safe para browser com RLS)
@@ -460,3 +461,10 @@ app.post('/api/webhook-asaas', (req, res) => webhookHandler(req, res));
 - Com `routes` presente, a chave `headers` não tem efeito (confirmado em produção: tudo saía com `max-age=0`). Cache-Control fica em rotas com `"continue": true` no topo de `routes`.
 - Assets em `/assets/` têm cache de 1 ano `immutable`: ao trocar uma imagem, usar **nome de arquivo novo**.
 - **`functions` não pode coexistir com `builds`** — o deploy falha antes do build, sem log ("build duration unavailable"). Configs como `maxDuration` vão em `builds[].config`. Após cada push, conferir `npx vercel ls th-mourao-barbearia --scope kings-projectz`: um deploy com status `Error` deixa produção na versão anterior sem aviso.
+
+## GA4 → Supabase (sync semanal)
+
+- `api/sync-ga4.js` roda via cron do Vercel toda segunda 09:00 UTC (`0 9 * * 1`) e faz upsert dos últimos 14 dias (cobre revisões tardias do GA4) em `ga4_daily`, `ga4_daily_pages`, `ga4_daily_traffic`, `ga4_daily_events`. Schema em `supabase/ga4_tables.sql`.
+- Auth Google via service account (JWT assinado com `crypto`, sem `googleapis`). Env: `GA4_PROPERTY_ID` (numérico, **não** o `G-QMT52J8BXW`), `GA4_SERVICE_ACCOUNT_JSON`. Protegido por `CRON_SECRET` como o `check-ml-prices`.
+- Backfill manual: `curl -H "Authorization: Bearer $CRON_SECRET" "https://www.thmourao.com.br/api/sync-ga4?days=400"` (máx 730).
+- RLS: leitura só para admins (`user_roles.role = 'admin'`); escrita só service role.

@@ -21,6 +21,13 @@
       }
     },
     {
+      "src": "api/sync-ga4.js",
+      "use": "@vercel/node",
+      "config": {
+        "maxDuration": 60
+      }
+    },
+    {
       "src": "api/blog.js",
       "use": "@vercel/node",
       "config": {
@@ -51,6 +58,10 @@
     {
       "path": "/api/check-ml-prices",
       "schedule": "0 9 * * *"
+    },
+    {
+      "path": "/api/sync-ga4",
+      "schedule": "0 9 * * 1"
     }
   ],
   "routes": [
@@ -90,6 +101,10 @@
     {
       "src": "/api/check-ml-prices",
       "dest": "/api/check-ml-prices.js"
+    },
+    {
+      "src": "/api/sync-ga4",
+      "dest": "/api/sync-ga4.js"
     },
     {
       "src": "/sitemap.xml",
